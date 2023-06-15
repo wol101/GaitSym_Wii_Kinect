@@ -1,0 +1,10 @@
+localhost 8086
+localhost 8087
+localhost 8088
+localhost 8089
+localhost 8090
+localhost 8091
+localhost 8092
+localhost 8093
+localhost 8094
+localhost 8187

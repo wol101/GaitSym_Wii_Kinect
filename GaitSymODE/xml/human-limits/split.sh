@@ -1,0 +1,9 @@
+grep Ankle joints.txt | grep Angle | tail -1000 > Ankle.txt
+grep Knee joints.txt | grep Angle | tail -1000 > Knee.txt
+grep Hip joints.txt | grep Angle | tail -1000 > Hip.txt
+grep AnkleFlexor muscle.txt | grep SetStim | tail -1000 > AnkleFlexor.txt
+grep AnkleExtensor muscle.txt | grep SetStim | tail -1000 > AnkleExtensor.txt
+grep KneeFlexor muscle.txt | grep SetStim | tail -1000 > KneeFlexor.txt
+grep KneeExtensor muscle.txt | grep SetStim | tail -1000 > KneeExtensor.txt
+grep HipFlexor muscle.txt | grep SetStim | tail -1000 > HipFlexor.txt
+grep HipExtensor muscle.txt | grep SetStim | tail -1000 > HipExtensor.txt

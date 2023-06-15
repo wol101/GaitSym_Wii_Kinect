@@ -1,0 +1,3070 @@
+(* Content-type: application/mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 6.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       145,          7]
+NotebookDataLength[    118619,       3061]
+NotebookOptionsPosition[    114140,       2905]
+NotebookOutlinePosition[    114499,       2921]
+CellTagsIndexPosition[    114456,       2918]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Adding Springs to Minetti-Alexander Model", "Title"],
+
+Cell[CellGroupData[{
+
+Cell["Initialisation", "Section"],
+
+Cell[BoxData[
+ RowBox[{"Off", "[", 
+  RowBox[{"General", "::", "spell1"}], "]"}]], "Input"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Remove", "[", "\"\<Global`*\>\"", "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"Remove", "::", "rmnsm"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"There are no symbols matching \
+\\\"\[NoBreak]\\!\\(\\\"Global`*\\\"\\)\[NoBreak]\\\". \
+\\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", \
+ButtonFrame->None, ButtonData:>\\\"paclet:ref/message/Remove/rmnsm\\\", \
+ButtonNote -> \\\"Remove::rmnsm\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.501864073648883*^9, 3.501866161746336*^9, 
+  3.511334055912282*^9}]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Old Minetti-Alexander Model", "Subtitle"],
+
+Cell["Program snippet:", "Text"],
+
+Cell["\<\
+if (v<0) // eccentric
+{
+\tfFull=m_F0*(1.8-0.8*((m_VMax+v)/(m_VMax-(7.56/m_K)*v)));
+}
+else // concentric
+{
+\tfFull=m_F0*(m_VMax-v)/(m_VMax+(v/m_K));
+}
+
+//now set the tension as a proportion of fFull
+fCE=m_Alpha*fFull;
+\
+\>", "Program"],
+
+Cell["\<\
+But, v is positive when muscle shortening which is illogical so we need to do \
+rearranging\
+\>", "Text"],
+
+Cell["eccentric:", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Simplify", "[", 
+  RowBox[{"fce", "\[Equal]", 
+   RowBox[{"alpha", 
+    RowBox[{"(", 
+     RowBox[{"f0", "*", 
+      RowBox[{"(", 
+       RowBox[{"1.8", "-", 
+        RowBox[{"0.8", "*", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"vmax", "+", 
+             RowBox[{"(", 
+              RowBox[{"-", "vce"}], ")"}]}], ")"}], "/", 
+           RowBox[{"(", 
+            RowBox[{"vmax", "-", 
+             RowBox[{
+              RowBox[{"(", 
+               RowBox[{"7.56", "/", "k"}], ")"}], "*", 
+              RowBox[{"(", 
+               RowBox[{"-", "vce"}], ")"}]}]}], ")"}]}], ")"}]}]}], ")"}]}], 
+     ")"}]}]}], "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"fce", "\[Equal]", 
+  RowBox[{"alpha", " ", "f0", " ", 
+   RowBox[{"(", 
+    RowBox[{"1.8`", "\[VeryThinSpace]", "+", 
+     FractionBox[
+      RowBox[{"0.8`", " ", "k", " ", 
+       RowBox[{"(", 
+        RowBox[{"vce", "-", 
+         RowBox[{"1.`", " ", "vmax"}]}], ")"}]}], 
+      RowBox[{
+       RowBox[{"7.56`", " ", "vce"}], "+", 
+       RowBox[{"k", " ", "vmax"}]}]]}], ")"}]}]}]], "Output",
+ CellChangeTimes->{3.50186407370607*^9, 3.501866161787402*^9, 
+  3.511334055950081*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"eq1", ":=", 
+  RowBox[{"fce", "\[Equal]", 
+   RowBox[{"alpha", " ", "f0", " ", 
+    RowBox[{"(", 
+     RowBox[{"1.8`", "\[InvisibleSpace]", "+", 
+      FractionBox[
+       RowBox[{"0.8`", " ", "k", " ", 
+        RowBox[{"(", 
+         RowBox[{"vce", "-", 
+          RowBox[{"1.`", " ", "vmax"}]}], ")"}]}], 
+       RowBox[{
+        RowBox[{"7.56`", " ", "vce"}], "+", 
+        RowBox[{"k", " ", "vmax"}]}]]}], ")"}]}]}]}]], "Input"],
+
+Cell["concentric:", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Simplify", "[", 
+  RowBox[{"fce", "\[Equal]", 
+   RowBox[{"alpha", 
+    RowBox[{"(", 
+     RowBox[{"f0", "*", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{"vmax", "-", 
+         RowBox[{"(", 
+          RowBox[{"-", "vce"}], ")"}]}], ")"}], "/", 
+       RowBox[{"(", 
+        RowBox[{"vmax", "+", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"-", "vce"}], ")"}], "/", "k"}], ")"}]}], ")"}]}]}], 
+     ")"}]}]}], "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"fce", "\[Equal]", 
+  FractionBox[
+   RowBox[{"alpha", " ", "f0", " ", "k", " ", 
+    RowBox[{"(", 
+     RowBox[{"vce", "+", "vmax"}], ")"}]}], 
+   RowBox[{
+    RowBox[{"-", "vce"}], "+", 
+    RowBox[{"k", " ", "vmax"}]}]]}]], "Output",
+ CellChangeTimes->{3.501864073778015*^9, 3.501866161861928*^9, 
+  3.511334056062517*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"eq2", ":=", 
+  RowBox[{"fce", "\[Equal]", 
+   FractionBox[
+    RowBox[{"alpha", " ", "f0", " ", "k", " ", 
+     RowBox[{"(", 
+      RowBox[{"vce", "+", "vmax"}], ")"}]}], 
+    RowBox[{
+     RowBox[{"-", "vce"}], "+", 
+     RowBox[{"k", " ", "vmax"}]}]]}]}]], "Input"],
+
+Cell["\<\
+Where:
+\tfce contractile element force (N)
+\talpha activation (0 to 1)
+\tk shape constant
+\tvce contractile element velocity (m/s)
+\tvmax maximum shortening velocity (m/s)
+\tf0 isometric force (N)\
+\>", "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Springs", "Subtitle"],
+
+Cell["\<\
+Definitions:
+\tlpe contractile length (m)
+\tlse serial length (m)
+\tsse slack length serial element (m)
+\tese elastic constant serial element (N/m)
+\tlen total length of system (m)\
+\>", "Text",
+ CellChangeTimes->{{3.501858741288103*^9, 3.501858763462414*^9}, {
+  3.501858804095216*^9, 3.5018588050790567`*^9}, {3.501858840521288*^9, 
+  3.501858844065301*^9}, {3.5018639347385263`*^9, 3.5018639348876667`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Equations", "Subsubtitle"],
+
+Cell[BoxData[
+ RowBox[{"eq3", ":=", 
+  RowBox[{"fce", "==", 
+   RowBox[{"ese", 
+    RowBox[{"(", 
+     RowBox[{"lse", "-", "sse"}], ")"}]}]}]}]], "Input",
+ CellChangeTimes->{{3.501858906332581*^9, 3.5018589069962587`*^9}, {
+  3.5018591986400957`*^9, 3.5018591987027693`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"eq4", ":=", 
+  RowBox[{"len", "\[Equal]", 
+   RowBox[{"lse", "+", "lpe"}]}]}]], "Input",
+ CellChangeTimes->{{3.501858957475816*^9, 3.501858994478957*^9}, {
+   3.501859202783104*^9, 3.50185920286298*^9}, 3.501859472450235*^9, {
+   3.5018639434973917`*^9, 3.50186394360916*^9}}],
+
+Cell["\<\
+Extra information :
+\tlastlpe is the previous contractile length (m)
+\ttimeIncrement is the simulation time step (s)\
+\>", "Text",
+ CellChangeTimes->{{3.501859503858635*^9, 3.501859580954906*^9}, 
+   3.501864021146562*^9}],
+
+Cell[BoxData[
+ RowBox[{"eq5", ":=", 
+  RowBox[{"vce", "==", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{"lpe", "-", "lastlpe"}], ")"}], "/", 
+    "timeIncrement"}]}]}]], "Input",
+ CellChangeTimes->{{3.501859483906515*^9, 3.501859496785411*^9}, {
+  3.501864024386239*^9, 3.501864025013934*^9}}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Integrated Model", "Subtitle"],
+
+Cell["Conditions", "Subsubtitle"],
+
+Cell["We know  len, ese, sse, alpha, k, vmax", "Text",
+ CellChangeTimes->{{3.501859105258181*^9, 3.501859113042111*^9}}],
+
+Cell["And we are going to have to assume we know vce", "Text"],
+
+Cell["We don't know  lpe, lse, fce", "Text",
+ CellChangeTimes->{{3.501859131563121*^9, 3.50185914305123*^9}, {
+  3.501863955024261*^9, 3.501863955080339*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Concentric", "Subsubtitle"],
+
+Cell["i.e. vce <= 0", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FullSimplify", "[", 
+  RowBox[{"Solve", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"eq2", ",", "eq3", ",", "eq4", ",", "eq5"}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"lpe", ",", "fce", ",", "lse", ",", "vce"}], "}"}]}], "]"}], 
+  "]"}]], "Input",
+ CellChangeTimes->{
+  3.501859273363237*^9, {3.501859315126101*^9, 3.501859330749251*^9}, {
+   3.501859606775588*^9, 3.501859611434072*^9}, {3.5018596983468113`*^9, 
+   3.501859698880934*^9}, {3.5018597367958*^9, 3.501859745962488*^9}, {
+   3.501859817438918*^9, 3.501859822277587*^9}, {3.501859954141814*^9, 
+   3.501859954754161*^9}, {3.501859984780877*^9, 3.501860038269762*^9}, 
+   3.501863969697687*^9}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"lpe", "\[Rule]", 
+      RowBox[{
+       FractionBox["1", 
+        RowBox[{"2", " ", "ese"}]], 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"alpha", " ", "f0", " ", "k"}], "+", 
+         RowBox[{"ese", " ", 
+          RowBox[{"(", 
+           RowBox[{"lastlpe", "+", "len", "-", "sse", "+", 
+            RowBox[{"k", " ", "timeIncrement", " ", "vmax"}]}], ")"}]}], "-", 
+         
+         SqrtBox[
+          RowBox[{
+           RowBox[{"4", " ", "ese", " ", "k", " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"alpha", " ", "f0"}], "+", 
+              RowBox[{"ese", " ", 
+               RowBox[{"(", 
+                RowBox[{"lastlpe", "-", "len", "+", "sse"}], ")"}]}]}], ")"}],
+             " ", "timeIncrement", " ", "vmax"}], "+", 
+           SuperscriptBox[
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"alpha", " ", "f0", " ", "k"}], "+", 
+              RowBox[{"ese", " ", 
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"-", "lastlpe"}], "+", "len", "-", "sse", "+", 
+                 RowBox[{"k", " ", "timeIncrement", " ", "vmax"}]}], 
+                ")"}]}]}], ")"}], "2"]}]]}], ")"}]}]}], ",", 
+     RowBox[{"fce", "\[Rule]", 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"-", "alpha"}], " ", "f0", " ", "k"}], "-", 
+         RowBox[{"ese", " ", 
+          RowBox[{"(", 
+           RowBox[{"lastlpe", "-", "len", "+", "sse", "+", 
+            RowBox[{"k", " ", "timeIncrement", " ", "vmax"}]}], ")"}]}], "+", 
+         
+         SqrtBox[
+          RowBox[{
+           RowBox[{"4", " ", "ese", " ", "k", " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"alpha", " ", "f0"}], "+", 
+              RowBox[{"ese", " ", 
+               RowBox[{"(", 
+                RowBox[{"lastlpe", "-", "len", "+", "sse"}], ")"}]}]}], ")"}],
+             " ", "timeIncrement", " ", "vmax"}], "+", 
+           SuperscriptBox[
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"alpha", " ", "f0", " ", "k"}], "+", 
+              RowBox[{"ese", " ", 
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"-", "lastlpe"}], "+", "len", "-", "sse", "+", 
+                 RowBox[{"k", " ", "timeIncrement", " ", "vmax"}]}], 
+                ")"}]}]}], ")"}], "2"]}]]}], ")"}]}]}], ",", 
+     RowBox[{"lse", "\[Rule]", 
+      RowBox[{
+       FractionBox["1", 
+        RowBox[{"2", " ", "ese"}]], 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"-", "alpha"}], " ", "f0", " ", "k"}], "-", 
+         RowBox[{"ese", " ", "lastlpe"}], "+", 
+         RowBox[{"ese", " ", "len"}], "+", 
+         RowBox[{"ese", " ", "sse"}], "-", 
+         RowBox[{"ese", " ", "k", " ", "timeIncrement", " ", "vmax"}], "+", 
+         SqrtBox[
+          RowBox[{
+           RowBox[{"4", " ", "ese", " ", "k", " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"alpha", " ", "f0"}], "+", 
+              RowBox[{"ese", " ", 
+               RowBox[{"(", 
+                RowBox[{"lastlpe", "-", "len", "+", "sse"}], ")"}]}]}], ")"}],
+             " ", "timeIncrement", " ", "vmax"}], "+", 
+           SuperscriptBox[
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"alpha", " ", "f0", " ", "k"}], "+", 
+              RowBox[{"ese", " ", 
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"-", "lastlpe"}], "+", "len", "-", "sse", "+", 
+                 RowBox[{"k", " ", "timeIncrement", " ", "vmax"}]}], 
+                ")"}]}]}], ")"}], "2"]}]]}], ")"}]}]}], ",", 
+     RowBox[{"vce", "\[Rule]", 
+      RowBox[{
+       FractionBox["1", 
+        RowBox[{"2", " ", "ese", " ", "timeIncrement"}]], 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"alpha", " ", "f0", " ", "k"}], "+", 
+         RowBox[{"ese", " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"-", "lastlpe"}], "+", "len", "-", "sse", "+", 
+            RowBox[{"k", " ", "timeIncrement", " ", "vmax"}]}], ")"}]}], "-", 
+         
+         SqrtBox[
+          RowBox[{
+           RowBox[{"4", " ", "ese", " ", "k", " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"alpha", " ", "f0"}], "+", 
+              RowBox[{"ese", " ", 
+               RowBox[{"(", 
+                RowBox[{"lastlpe", "-", "len", "+", "sse"}], ")"}]}]}], ")"}],
+             " ", "timeIncrement", " ", "vmax"}], "+", 
+           SuperscriptBox[
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"alpha", " ", "f0", " ", "k"}], "+", 
+              RowBox[{"ese", " ", 
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"-", "lastlpe"}], "+", "len", "-", "sse", "+", 
+                 RowBox[{"k", " ", "timeIncrement", " ", "vmax"}]}], 
+                ")"}]}]}], ")"}], "2"]}]]}], ")"}]}]}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"lpe", "\[Rule]", 
+      RowBox[{
+       FractionBox["1", 
+        RowBox[{"2", " ", "ese"}]], 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"alpha", " ", "f0", " ", "k"}], "+", 
+         RowBox[{"ese", " ", 
+          RowBox[{"(", 
+           RowBox[{"lastlpe", "+", "len", "-", "sse", "+", 
+            RowBox[{"k", " ", "timeIncrement", " ", "vmax"}]}], ")"}]}], "+", 
+         
+         SqrtBox[
+          RowBox[{
+           RowBox[{"4", " ", "ese", " ", "k", " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"alpha", " ", "f0"}], "+", 
+              RowBox[{"ese", " ", 
+               RowBox[{"(", 
+                RowBox[{"lastlpe", "-", "len", "+", "sse"}], ")"}]}]}], ")"}],
+             " ", "timeIncrement", " ", "vmax"}], "+", 
+           SuperscriptBox[
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"alpha", " ", "f0", " ", "k"}], "+", 
+              RowBox[{"ese", " ", 
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"-", "lastlpe"}], "+", "len", "-", "sse", "+", 
+                 RowBox[{"k", " ", "timeIncrement", " ", "vmax"}]}], 
+                ")"}]}]}], ")"}], "2"]}]]}], ")"}]}]}], ",", 
+     RowBox[{"fce", "\[Rule]", 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"-", "alpha"}], " ", "f0", " ", "k"}], "-", 
+         RowBox[{"ese", " ", 
+          RowBox[{"(", 
+           RowBox[{"lastlpe", "-", "len", "+", "sse", "+", 
+            RowBox[{"k", " ", "timeIncrement", " ", "vmax"}]}], ")"}]}], "-", 
+         
+         SqrtBox[
+          RowBox[{
+           RowBox[{"4", " ", "ese", " ", "k", " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"alpha", " ", "f0"}], "+", 
+              RowBox[{"ese", " ", 
+               RowBox[{"(", 
+                RowBox[{"lastlpe", "-", "len", "+", "sse"}], ")"}]}]}], ")"}],
+             " ", "timeIncrement", " ", "vmax"}], "+", 
+           SuperscriptBox[
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"alpha", " ", "f0", " ", "k"}], "+", 
+              RowBox[{"ese", " ", 
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"-", "lastlpe"}], "+", "len", "-", "sse", "+", 
+                 RowBox[{"k", " ", "timeIncrement", " ", "vmax"}]}], 
+                ")"}]}]}], ")"}], "2"]}]]}], ")"}]}]}], ",", 
+     RowBox[{"lse", "\[Rule]", 
+      RowBox[{"-", 
+       RowBox[{
+        FractionBox["1", 
+         RowBox[{"2", " ", "ese"}]], 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"alpha", " ", "f0", " ", "k"}], "+", 
+          RowBox[{"ese", " ", 
+           RowBox[{"(", 
+            RowBox[{"lastlpe", "-", "len", "-", "sse", "+", 
+             RowBox[{"k", " ", "timeIncrement", " ", "vmax"}]}], ")"}]}], "+", 
+          SqrtBox[
+           RowBox[{
+            RowBox[{"4", " ", "ese", " ", "k", " ", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"alpha", " ", "f0"}], "+", 
+               RowBox[{"ese", " ", 
+                RowBox[{"(", 
+                 RowBox[{"lastlpe", "-", "len", "+", "sse"}], ")"}]}]}], 
+              ")"}], " ", "timeIncrement", " ", "vmax"}], "+", 
+            SuperscriptBox[
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"alpha", " ", "f0", " ", "k"}], "+", 
+               RowBox[{"ese", " ", 
+                RowBox[{"(", 
+                 RowBox[{
+                  RowBox[{"-", "lastlpe"}], "+", "len", "-", "sse", "+", 
+                  RowBox[{"k", " ", "timeIncrement", " ", "vmax"}]}], 
+                 ")"}]}]}], ")"}], "2"]}]]}], ")"}]}]}]}], ",", 
+     RowBox[{"vce", "\[Rule]", 
+      RowBox[{
+       FractionBox["1", 
+        RowBox[{"2", " ", "ese", " ", "timeIncrement"}]], 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"alpha", " ", "f0", " ", "k"}], "+", 
+         RowBox[{"ese", " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"-", "lastlpe"}], "+", "len", "-", "sse", "+", 
+            RowBox[{"k", " ", "timeIncrement", " ", "vmax"}]}], ")"}]}], "+", 
+         
+         SqrtBox[
+          RowBox[{
+           RowBox[{"4", " ", "ese", " ", "k", " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"alpha", " ", "f0"}], "+", 
+              RowBox[{"ese", " ", 
+               RowBox[{"(", 
+                RowBox[{"lastlpe", "-", "len", "+", "sse"}], ")"}]}]}], ")"}],
+             " ", "timeIncrement", " ", "vmax"}], "+", 
+           SuperscriptBox[
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"alpha", " ", "f0", " ", "k"}], "+", 
+              RowBox[{"ese", " ", 
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"-", "lastlpe"}], "+", "len", "-", "sse", "+", 
+                 RowBox[{"k", " ", "timeIncrement", " ", "vmax"}]}], 
+                ")"}]}]}], ")"}], "2"]}]]}], ")"}]}]}]}], "}"}]}], 
+  "}"}]], "Output",
+ CellChangeTimes->{3.501864077073058*^9, 3.501866165217503*^9, 
+  3.511334060828506*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"CForm", "[", 
+  RowBox[{"FullSimplify", "[", 
+   RowBox[{"Solve", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"eq2", ",", "eq3", ",", "eq4", ",", "eq5"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"lpe", ",", "fce", ",", "lse", ",", "vce"}], "}"}]}], "]"}], 
+   "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.5018601306149273`*^9, 3.501860142401043*^9}, 
+   3.50186402840732*^9}],
+
+Cell["\<\
+List(List(Rule(lpe,(alpha*f0*k + ese*(lastlpe + len - sse + \
+k*timeIncrement*vmax) - 
+        Sqrt(4*ese*k*(alpha*f0 + ese*(lastlpe - len + \
+sse))*timeIncrement*vmax + 
+          Power(alpha*f0*k + ese*(-lastlpe + len - sse + \
+k*timeIncrement*vmax),2)))/(2.*ese)),
+    Rule(fce,(-(alpha*f0*k) - ese*(lastlpe - len + sse + \
+k*timeIncrement*vmax) + 
+        Sqrt(4*ese*k*(alpha*f0 + ese*(lastlpe - len + \
+sse))*timeIncrement*vmax + 
+          Power(alpha*f0*k + ese*(-lastlpe + len - sse + \
+k*timeIncrement*vmax),2)))/2.),
+    Rule(lse,(-(alpha*f0*k) - ese*lastlpe + ese*len + ese*sse - \
+ese*k*timeIncrement*vmax + 
+        Sqrt(4*ese*k*(alpha*f0 + ese*(lastlpe - len + \
+sse))*timeIncrement*vmax + 
+          Power(alpha*f0*k + ese*(-lastlpe + len - sse + \
+k*timeIncrement*vmax),2)))/(2.*ese)),
+    Rule(vce,(alpha*f0*k + ese*(-lastlpe + len - sse + k*timeIncrement*vmax) - 
+        Sqrt(4*ese*k*(alpha*f0 + ese*(lastlpe - len + \
+sse))*timeIncrement*vmax + 
+          Power(alpha*f0*k + ese*(-lastlpe + len - sse + \
+k*timeIncrement*vmax),2)))/(2.*ese*timeIncrement))),
+   List(Rule(lpe,(alpha*f0*k + ese*(lastlpe + len - sse + \
+k*timeIncrement*vmax) + 
+        Sqrt(4*ese*k*(alpha*f0 + ese*(lastlpe - len + \
+sse))*timeIncrement*vmax + 
+          Power(alpha*f0*k + ese*(-lastlpe + len - sse + \
+k*timeIncrement*vmax),2)))/(2.*ese)),
+    Rule(fce,(-(alpha*f0*k) - ese*(lastlpe - len + sse + \
+k*timeIncrement*vmax) - 
+        Sqrt(4*ese*k*(alpha*f0 + ese*(lastlpe - len + \
+sse))*timeIncrement*vmax + 
+          Power(alpha*f0*k + ese*(-lastlpe + len - sse + \
+k*timeIncrement*vmax),2)))/2.),
+    Rule(lse,-(alpha*f0*k + ese*(lastlpe - len - sse + k*timeIncrement*vmax) + 
+         Sqrt(4*ese*k*(alpha*f0 + ese*(lastlpe - len + \
+sse))*timeIncrement*vmax + 
+           Power(alpha*f0*k + ese*(-lastlpe + len - sse + \
+k*timeIncrement*vmax),2)))/(2.*ese)),
+    Rule(vce,(alpha*f0*k + ese*(-lastlpe + len - sse + k*timeIncrement*vmax) + 
+        Sqrt(4*ese*k*(alpha*f0 + ese*(lastlpe - len + \
+sse))*timeIncrement*vmax + 
+          Power(alpha*f0*k + ese*(-lastlpe + len - sse + \
+k*timeIncrement*vmax),2)))/(2.*ese*timeIncrement))))\
+\>", "Output",
+ CellChangeTimes->{3.501864077241646*^9, 3.501865251600778*^9, 
+  3.501866165343544*^9, 3.511334060946905*^9}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Special condition when vce = 0 (i.e. at the beginning of the simulation)\
+\>", "Subsubtitle",
+ CellChangeTimes->{{3.501862449394019*^9, 3.501862473124412*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FullSimplify", "[", 
+  RowBox[{
+   RowBox[{"Solve", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"eq2", ",", "eq3", ",", "eq4"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"lpe", ",", "fce", ",", "lse"}], "}"}]}], "]"}], "/.", 
+   RowBox[{"vce", "\[Rule]", "0"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.501862496150858*^9, 3.5018625276465483`*^9}, 
+   3.5018640295505447`*^9}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"lpe", "\[Rule]", 
+     RowBox[{
+      RowBox[{"-", 
+       FractionBox[
+        RowBox[{"alpha", " ", "f0"}], "ese"]}], "+", "len", "-", "sse"}]}], 
+    ",", 
+    RowBox[{"fce", "\[Rule]", 
+     RowBox[{"alpha", " ", "f0"}]}], ",", 
+    RowBox[{"lse", "\[Rule]", 
+     RowBox[{
+      FractionBox[
+       RowBox[{"alpha", " ", "f0"}], "ese"], "+", "sse"}]}]}], "}"}], 
+  "}"}]], "Output",
+ CellChangeTimes->{3.501864077301325*^9, 3.501866165400099*^9, 
+  3.511334060988833*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"CForm", "[", 
+  RowBox[{"FullSimplify", "[", 
+   RowBox[{
+    RowBox[{"Solve", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"eq2", ",", "eq3", ",", "eq4"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"lpe", ",", "fce", ",", "lse"}], "}"}]}], "]"}], "/.", 
+    RowBox[{"vce", "\[Rule]", "0"}]}], "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.501862603826803*^9, 3.5018626078416653`*^9}, 
+   3.501864033559174*^9}],
+
+Cell["\<\
+List(List(Rule(lpe,-((alpha*f0)/ese) + len - \
+sse),Rule(fce,alpha*f0),Rule(lse,(alpha*f0)/ese + sse)))\
+\>", "Output",
+ CellChangeTimes->{3.50186407734725*^9, 3.5018661654499283`*^9, 
+  3.5113340610220613`*^9}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Fixup condition - using an assumed value for vce", "Subsubtitle",
+ CellChangeTimes->{{3.501865661904035*^9, 3.5018656739830513`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FullSimplify", "[", 
+  RowBox[{"Solve", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"eq2", ",", "eq3", ",", "eq4"}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"lpe", ",", "fce", ",", "lse"}], "}"}]}], "]"}], "]"}]], "Input",\
+
+ CellChangeTimes->{3.501865737860104*^9}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"lpe", "\[Rule]", 
+     RowBox[{"len", "-", "sse", "+", 
+      FractionBox[
+       RowBox[{"alpha", " ", "f0", " ", "k", " ", 
+        RowBox[{"(", 
+         RowBox[{"vce", "+", "vmax"}], ")"}]}], 
+       RowBox[{"ese", " ", 
+        RowBox[{"(", 
+         RowBox[{"vce", "-", 
+          RowBox[{"k", " ", "vmax"}]}], ")"}]}]]}]}], ",", 
+    RowBox[{"fce", "\[Rule]", 
+     FractionBox[
+      RowBox[{"alpha", " ", "f0", " ", "k", " ", 
+       RowBox[{"(", 
+        RowBox[{"vce", "+", "vmax"}], ")"}]}], 
+      RowBox[{
+       RowBox[{"-", "vce"}], "+", 
+       RowBox[{"k", " ", "vmax"}]}]]}], ",", 
+    RowBox[{"lse", "\[Rule]", 
+     RowBox[{"sse", "+", 
+      FractionBox[
+       RowBox[{"alpha", " ", "f0", " ", "k", " ", 
+        RowBox[{"(", 
+         RowBox[{"vce", "+", "vmax"}], ")"}]}], 
+       RowBox[{"ese", " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"-", "vce"}], "+", 
+          RowBox[{"k", " ", "vmax"}]}], ")"}]}]]}]}]}], "}"}], 
+  "}"}]], "Output",
+ CellChangeTimes->{3.501865739005571*^9, 3.501866165637578*^9, 
+  3.511334061256616*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"CForm", "[", 
+  RowBox[{"FullSimplify", "[", 
+   RowBox[{"Solve", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"eq2", ",", "eq3", ",", "eq4"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"lpe", ",", "fce", ",", "lse"}], "}"}]}], "]"}], "]"}], 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.501865743735783*^9, 3.50186575181161*^9}}],
+
+Cell["\<\
+List(List(Rule(lpe,len - sse + (alpha*f0*k*(vce + vmax))/(ese*(vce - \
+k*vmax))),Rule(fce,(alpha*f0*k*(vce + vmax))/(-vce + k*vmax)),
+    Rule(lse,sse + (alpha*f0*k*(vce + vmax))/(ese*(-vce + k*vmax)))))\
+\>", "Output",
+ CellChangeTimes->{3.5018657522803*^9, 3.501866165680358*^9, 
+  3.511334061289125*^9}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Eccentric", "Subsubtitle"],
+
+Cell["i.e. vce > 0", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FullSimplify", "[", 
+  RowBox[{"Solve", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"eq1", ",", "eq3", ",", "eq4", ",", "eq5"}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"lpe", ",", "fce", ",", "lse", ",", "vce"}], "}"}]}], "]"}], 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.501860189979774*^9, 3.501860190044313*^9}, 
+   3.501864039237337*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"Solve", "::", "ratnz"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Solve was unable to solve the system with inexact \
+coefficients. The answer was obtained by solving a corresponding exact system \
+and numericizing the result. \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", \
+ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/Solve\\\", ButtonNote -> \
+\\\"Solve::ratnz\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.511334061399457*^9}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"lpe", "\[Rule]", 
+      RowBox[{
+       FractionBox["1", "ese"], 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"-", "0.9`"}], " ", "alpha", " ", "f0"}], "-", 
+         RowBox[{"0.05291005291005291`", " ", "alpha", " ", "f0", " ", "k"}], 
+         "+", 
+         RowBox[{"0.5`", " ", "ese", " ", "lastlpe"}], "+", 
+         RowBox[{"0.5`", " ", "ese", " ", "len"}], "-", 
+         RowBox[{"0.5`", " ", "ese", " ", "sse"}], "-", 
+         RowBox[{
+         "0.06613756613756613`", " ", "ese", " ", "k", " ", "timeIncrement", 
+          " ", "vmax"}], "-", 
+         RowBox[{"0.0005291005291005291`", " ", 
+          RowBox[{"\[Sqrt]", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"ese", " ", "k", " ", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{
+                 RowBox[{"-", "472500.`"}], " ", "alpha", " ", "f0"}], "+", 
+                RowBox[{"ese", " ", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{
+                    RowBox[{"-", "472500.`"}], " ", "lastlpe"}], "+", 
+                   RowBox[{"472500.`", " ", "len"}], "-", 
+                   RowBox[{"472500.`", " ", "sse"}]}], ")"}]}]}], ")"}], " ", 
+              "timeIncrement", " ", "vmax"}], "+", 
+             SuperscriptBox[
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"alpha", " ", "f0", " ", 
+                 RowBox[{"(", 
+                  RowBox[{"1701.`", "\[VeryThinSpace]", "+", 
+                   RowBox[{"100.`", " ", "k"}]}], ")"}]}], "+", 
+                RowBox[{"ese", " ", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"945.`", " ", "lastlpe"}], "-", 
+                   RowBox[{"945.`", " ", "len"}], "+", 
+                   RowBox[{"945.`", " ", "sse"}], "+", 
+                   RowBox[{
+                   "125.`", " ", "k", " ", "timeIncrement", " ", "vmax"}]}], 
+                  ")"}]}]}], ")"}], "2"]}], ")"}]}]}]}], ")"}]}]}], ",", 
+     RowBox[{"fce", "\[Rule]", 
+      RowBox[{
+       RowBox[{"0.9`", " ", "alpha", " ", "f0"}], "+", 
+       RowBox[{"0.05291005291005291`", " ", "alpha", " ", "f0", " ", "k"}], 
+       "-", 
+       RowBox[{"0.5`", " ", "ese", " ", "lastlpe"}], "+", 
+       RowBox[{"0.5`", " ", "ese", " ", "len"}], "-", 
+       RowBox[{"0.5`", " ", "ese", " ", "sse"}], "+", 
+       RowBox[{
+       "0.06613756613756613`", " ", "ese", " ", "k", " ", "timeIncrement", 
+        " ", "vmax"}], "+", 
+       RowBox[{"0.0005291005291005291`", " ", 
+        RowBox[{"\[Sqrt]", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"ese", " ", "k", " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"-", "472500.`"}], " ", "alpha", " ", "f0"}], "+", 
+              RowBox[{"ese", " ", 
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"-", "472500.`"}], " ", "lastlpe"}], "+", 
+                 RowBox[{"472500.`", " ", "len"}], "-", 
+                 RowBox[{"472500.`", " ", "sse"}]}], ")"}]}]}], ")"}], " ", 
+            "timeIncrement", " ", "vmax"}], "+", 
+           SuperscriptBox[
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"alpha", " ", "f0", " ", 
+               RowBox[{"(", 
+                RowBox[{"1701.`", "\[VeryThinSpace]", "+", 
+                 RowBox[{"100.`", " ", "k"}]}], ")"}]}], "+", 
+              RowBox[{"ese", " ", 
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"945.`", " ", "lastlpe"}], "-", 
+                 RowBox[{"945.`", " ", "len"}], "+", 
+                 RowBox[{"945.`", " ", "sse"}], "+", 
+                 RowBox[{
+                 "125.`", " ", "k", " ", "timeIncrement", " ", "vmax"}]}], 
+                ")"}]}]}], ")"}], "2"]}], ")"}]}]}]}]}], ",", 
+     RowBox[{"lse", "\[Rule]", 
+      RowBox[{
+       FractionBox["1", "ese"], 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"0.9`", " ", "alpha", " ", "f0"}], "+", 
+         RowBox[{"0.05291005291005291`", " ", "alpha", " ", "f0", " ", "k"}], 
+         "-", 
+         RowBox[{"0.5`", " ", "ese", " ", "lastlpe"}], "+", 
+         RowBox[{"0.5`", " ", "ese", " ", "len"}], "+", 
+         RowBox[{"0.5`", " ", "ese", " ", "sse"}], "+", 
+         RowBox[{
+         "0.06613756613756613`", " ", "ese", " ", "k", " ", "timeIncrement", 
+          " ", "vmax"}], "+", 
+         RowBox[{"0.0005291005291005291`", " ", 
+          RowBox[{"\[Sqrt]", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"ese", " ", "k", " ", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{
+                 RowBox[{"-", "472500.`"}], " ", "alpha", " ", "f0"}], "+", 
+                RowBox[{"ese", " ", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{
+                    RowBox[{"-", "472500.`"}], " ", "lastlpe"}], "+", 
+                   RowBox[{"472500.`", " ", "len"}], "-", 
+                   RowBox[{"472500.`", " ", "sse"}]}], ")"}]}]}], ")"}], " ", 
+              "timeIncrement", " ", "vmax"}], "+", 
+             SuperscriptBox[
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"alpha", " ", "f0", " ", 
+                 RowBox[{"(", 
+                  RowBox[{"1701.`", "\[VeryThinSpace]", "+", 
+                   RowBox[{"100.`", " ", "k"}]}], ")"}]}], "+", 
+                RowBox[{"ese", " ", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"945.`", " ", "lastlpe"}], "-", 
+                   RowBox[{"945.`", " ", "len"}], "+", 
+                   RowBox[{"945.`", " ", "sse"}], "+", 
+                   RowBox[{
+                   "125.`", " ", "k", " ", "timeIncrement", " ", "vmax"}]}], 
+                  ")"}]}]}], ")"}], "2"]}], ")"}]}]}]}], ")"}]}]}], ",", 
+     RowBox[{"vce", "\[Rule]", 
+      RowBox[{
+       FractionBox["1", 
+        RowBox[{"ese", " ", "timeIncrement"}]], 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"-", "0.9`"}], " ", "alpha", " ", "f0"}], "-", 
+         RowBox[{"0.052910052910052914`", " ", "alpha", " ", "f0", " ", "k"}],
+          "-", 
+         RowBox[{"0.5`", " ", "ese", " ", "lastlpe"}], "+", 
+         RowBox[{"0.5`", " ", "ese", " ", "len"}], "-", 
+         RowBox[{"0.5`", " ", "ese", " ", "sse"}], "-", 
+         RowBox[{
+         "0.06613756613756615`", " ", "ese", " ", "k", " ", "timeIncrement", 
+          " ", "vmax"}], "-", 
+         RowBox[{"0.0005291005291005291`", " ", 
+          RowBox[{"\[Sqrt]", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"ese", " ", "k", " ", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{
+                 RowBox[{"-", "472500.`"}], " ", "alpha", " ", "f0"}], "+", 
+                RowBox[{"ese", " ", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{
+                    RowBox[{"-", "472500.`"}], " ", "lastlpe"}], "+", 
+                   RowBox[{"472500.`", " ", "len"}], "-", 
+                   RowBox[{"472500.`", " ", "sse"}]}], ")"}]}]}], ")"}], " ", 
+              "timeIncrement", " ", "vmax"}], "+", 
+             SuperscriptBox[
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"alpha", " ", "f0", " ", 
+                 RowBox[{"(", 
+                  RowBox[{"1701.`", "\[VeryThinSpace]", "+", 
+                   RowBox[{"100.`", " ", "k"}]}], ")"}]}], "+", 
+                RowBox[{"ese", " ", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"945.`", " ", "lastlpe"}], "-", 
+                   RowBox[{"945.`", " ", "len"}], "+", 
+                   RowBox[{"945.`", " ", "sse"}], "+", 
+                   RowBox[{
+                   "125.`", " ", "k", " ", "timeIncrement", " ", "vmax"}]}], 
+                  ")"}]}]}], ")"}], "2"]}], ")"}]}]}]}], ")"}]}]}]}], "}"}], 
+   ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"lpe", "\[Rule]", 
+      RowBox[{
+       FractionBox["1", "ese"], 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"-", "0.9`"}], " ", "alpha", " ", "f0"}], "-", 
+         RowBox[{"0.05291005291005291`", " ", "alpha", " ", "f0", " ", "k"}], 
+         "+", 
+         RowBox[{"0.5`", " ", "ese", " ", "lastlpe"}], "+", 
+         RowBox[{"0.5`", " ", "ese", " ", "len"}], "-", 
+         RowBox[{"0.5`", " ", "ese", " ", "sse"}], "-", 
+         RowBox[{
+         "0.06613756613756613`", " ", "ese", " ", "k", " ", "timeIncrement", 
+          " ", "vmax"}], "+", 
+         RowBox[{"0.0005291005291005291`", " ", 
+          RowBox[{"\[Sqrt]", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"ese", " ", "k", " ", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{
+                 RowBox[{"-", "472500.`"}], " ", "alpha", " ", "f0"}], "+", 
+                RowBox[{"ese", " ", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{
+                    RowBox[{"-", "472500.`"}], " ", "lastlpe"}], "+", 
+                   RowBox[{"472500.`", " ", "len"}], "-", 
+                   RowBox[{"472500.`", " ", "sse"}]}], ")"}]}]}], ")"}], " ", 
+              "timeIncrement", " ", "vmax"}], "+", 
+             SuperscriptBox[
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"alpha", " ", "f0", " ", 
+                 RowBox[{"(", 
+                  RowBox[{"1701.`", "\[VeryThinSpace]", "+", 
+                   RowBox[{"100.`", " ", "k"}]}], ")"}]}], "+", 
+                RowBox[{"ese", " ", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"945.`", " ", "lastlpe"}], "-", 
+                   RowBox[{"945.`", " ", "len"}], "+", 
+                   RowBox[{"945.`", " ", "sse"}], "+", 
+                   RowBox[{
+                   "125.`", " ", "k", " ", "timeIncrement", " ", "vmax"}]}], 
+                  ")"}]}]}], ")"}], "2"]}], ")"}]}]}]}], ")"}]}]}], ",", 
+     RowBox[{"fce", "\[Rule]", 
+      RowBox[{
+       RowBox[{"0.9`", " ", "alpha", " ", "f0"}], "+", 
+       RowBox[{"0.05291005291005291`", " ", "alpha", " ", "f0", " ", "k"}], 
+       "-", 
+       RowBox[{"0.5`", " ", "ese", " ", "lastlpe"}], "+", 
+       RowBox[{"0.5`", " ", "ese", " ", "len"}], "-", 
+       RowBox[{"0.5`", " ", "ese", " ", "sse"}], "+", 
+       RowBox[{
+       "0.06613756613756613`", " ", "ese", " ", "k", " ", "timeIncrement", 
+        " ", "vmax"}], "-", 
+       RowBox[{"0.0005291005291005291`", " ", 
+        RowBox[{"\[Sqrt]", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"ese", " ", "k", " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"-", "472500.`"}], " ", "alpha", " ", "f0"}], "+", 
+              RowBox[{"ese", " ", 
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"-", "472500.`"}], " ", "lastlpe"}], "+", 
+                 RowBox[{"472500.`", " ", "len"}], "-", 
+                 RowBox[{"472500.`", " ", "sse"}]}], ")"}]}]}], ")"}], " ", 
+            "timeIncrement", " ", "vmax"}], "+", 
+           SuperscriptBox[
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"alpha", " ", "f0", " ", 
+               RowBox[{"(", 
+                RowBox[{"1701.`", "\[VeryThinSpace]", "+", 
+                 RowBox[{"100.`", " ", "k"}]}], ")"}]}], "+", 
+              RowBox[{"ese", " ", 
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"945.`", " ", "lastlpe"}], "-", 
+                 RowBox[{"945.`", " ", "len"}], "+", 
+                 RowBox[{"945.`", " ", "sse"}], "+", 
+                 RowBox[{
+                 "125.`", " ", "k", " ", "timeIncrement", " ", "vmax"}]}], 
+                ")"}]}]}], ")"}], "2"]}], ")"}]}]}]}]}], ",", 
+     RowBox[{"lse", "\[Rule]", 
+      RowBox[{
+       FractionBox["1", "ese"], 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"0.9`", " ", "alpha", " ", "f0"}], "+", 
+         RowBox[{"0.05291005291005291`", " ", "alpha", " ", "f0", " ", "k"}], 
+         "-", 
+         RowBox[{"0.5`", " ", "ese", " ", "lastlpe"}], "+", 
+         RowBox[{"0.5`", " ", "ese", " ", "len"}], "+", 
+         RowBox[{"0.5`", " ", "ese", " ", "sse"}], "+", 
+         RowBox[{
+         "0.06613756613756613`", " ", "ese", " ", "k", " ", "timeIncrement", 
+          " ", "vmax"}], "-", 
+         RowBox[{"0.0005291005291005291`", " ", 
+          RowBox[{"\[Sqrt]", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"ese", " ", "k", " ", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{
+                 RowBox[{"-", "472500.`"}], " ", "alpha", " ", "f0"}], "+", 
+                RowBox[{"ese", " ", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{
+                    RowBox[{"-", "472500.`"}], " ", "lastlpe"}], "+", 
+                   RowBox[{"472500.`", " ", "len"}], "-", 
+                   RowBox[{"472500.`", " ", "sse"}]}], ")"}]}]}], ")"}], " ", 
+              "timeIncrement", " ", "vmax"}], "+", 
+             SuperscriptBox[
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"alpha", " ", "f0", " ", 
+                 RowBox[{"(", 
+                  RowBox[{"1701.`", "\[VeryThinSpace]", "+", 
+                   RowBox[{"100.`", " ", "k"}]}], ")"}]}], "+", 
+                RowBox[{"ese", " ", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"945.`", " ", "lastlpe"}], "-", 
+                   RowBox[{"945.`", " ", "len"}], "+", 
+                   RowBox[{"945.`", " ", "sse"}], "+", 
+                   RowBox[{
+                   "125.`", " ", "k", " ", "timeIncrement", " ", "vmax"}]}], 
+                  ")"}]}]}], ")"}], "2"]}], ")"}]}]}]}], ")"}]}]}], ",", 
+     RowBox[{"vce", "\[Rule]", 
+      RowBox[{
+       FractionBox["1", 
+        RowBox[{"ese", " ", "timeIncrement"}]], 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"-", "0.9`"}], " ", "alpha", " ", "f0"}], "-", 
+         RowBox[{"0.052910052910052914`", " ", "alpha", " ", "f0", " ", "k"}],
+          "-", 
+         RowBox[{"0.5`", " ", "ese", " ", "lastlpe"}], "+", 
+         RowBox[{"0.5`", " ", "ese", " ", "len"}], "-", 
+         RowBox[{"0.5`", " ", "ese", " ", "sse"}], "-", 
+         RowBox[{
+         "0.06613756613756615`", " ", "ese", " ", "k", " ", "timeIncrement", 
+          " ", "vmax"}], "+", 
+         RowBox[{"0.0005291005291005291`", " ", 
+          RowBox[{"\[Sqrt]", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"ese", " ", "k", " ", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{
+                 RowBox[{"-", "472500.`"}], " ", "alpha", " ", "f0"}], "+", 
+                RowBox[{"ese", " ", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{
+                    RowBox[{"-", "472500.`"}], " ", "lastlpe"}], "+", 
+                   RowBox[{"472500.`", " ", "len"}], "-", 
+                   RowBox[{"472500.`", " ", "sse"}]}], ")"}]}]}], ")"}], " ", 
+              "timeIncrement", " ", "vmax"}], "+", 
+             SuperscriptBox[
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"alpha", " ", "f0", " ", 
+                 RowBox[{"(", 
+                  RowBox[{"1701.`", "\[VeryThinSpace]", "+", 
+                   RowBox[{"100.`", " ", "k"}]}], ")"}]}], "+", 
+                RowBox[{"ese", " ", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"945.`", " ", "lastlpe"}], "-", 
+                   RowBox[{"945.`", " ", "len"}], "+", 
+                   RowBox[{"945.`", " ", "sse"}], "+", 
+                   RowBox[{
+                   "125.`", " ", "k", " ", "timeIncrement", " ", "vmax"}]}], 
+                  ")"}]}]}], ")"}], "2"]}], ")"}]}]}]}], ")"}]}]}]}], "}"}]}],
+   "}"}]], "Output",
+ CellChangeTimes->{3.50186407914537*^9, 3.501866167483824*^9, 
+  3.5113340629403467`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"CForm", "[", 
+  RowBox[{"FullSimplify", "[", 
+   RowBox[{"Solve", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"eq1", ",", "eq3", ",", "eq4", ",", "eq5"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"lpe", ",", "fce", ",", "lse", ",", "vce"}], "}"}]}], "]"}], 
+   "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.5018602095877*^9, 3.501860213379463*^9}, 
+   3.50186403990889*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"Solve", "::", "ratnz"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Solve was unable to solve the system with inexact \
+coefficients. The answer was obtained by solving a corresponding exact system \
+and numericizing the result. \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", \
+ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/Solve\\\", ButtonNote -> \
+\\\"Solve::ratnz\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.511334063049222*^9}],
+
+Cell["\<\
+List(List(Rule(lpe,(-0.9*alpha*f0 - 0.05291005291005291*alpha*f0*k + \
+0.5*ese*lastlpe + 0.5*ese*len - 0.5*ese*sse - 
+        0.06613756613756613*ese*k*timeIncrement*vmax - 0.0005291005291005291*
+         Sqrt(ese*k*(-472500.*alpha*f0 + ese*(-472500.*lastlpe + 472500.*len \
+- 472500.*sse))*timeIncrement*vmax + 
+           Power(alpha*f0*(1701. + 100.*k) + ese*(945.*lastlpe - 945.*len + \
+945.*sse + 125.*k*timeIncrement*vmax),2)))/ese),
+    Rule(fce,0.9*alpha*f0 + 0.05291005291005291*alpha*f0*k - 0.5*ese*lastlpe \
++ 0.5*ese*len - 0.5*ese*sse + 
+      0.06613756613756613*ese*k*timeIncrement*vmax + 0.0005291005291005291*
+       Sqrt(ese*k*(-472500.*alpha*f0 + ese*(-472500.*lastlpe + 472500.*len - \
+472500.*sse))*timeIncrement*vmax + 
+         Power(alpha*f0*(1701. + 100.*k) + ese*(945.*lastlpe - 945.*len + \
+945.*sse + 125.*k*timeIncrement*vmax),2))),
+    Rule(lse,(0.9*alpha*f0 + 0.05291005291005291*alpha*f0*k - 0.5*ese*lastlpe \
++ 0.5*ese*len + 0.5*ese*sse + 
+        0.06613756613756613*ese*k*timeIncrement*vmax + 0.0005291005291005291*
+         Sqrt(ese*k*(-472500.*alpha*f0 + ese*(-472500.*lastlpe + 472500.*len \
+- 472500.*sse))*timeIncrement*vmax + 
+           Power(alpha*f0*(1701. + 100.*k) + ese*(945.*lastlpe - 945.*len + \
+945.*sse + 125.*k*timeIncrement*vmax),2)))/ese),
+    Rule(vce,(-0.9*alpha*f0 - 0.052910052910052914*alpha*f0*k - \
+0.5*ese*lastlpe + 0.5*ese*len - 0.5*ese*sse - 
+        0.06613756613756615*ese*k*timeIncrement*vmax - 0.0005291005291005291*
+         Sqrt(ese*k*(-472500.*alpha*f0 + ese*(-472500.*lastlpe + 472500.*len \
+- 472500.*sse))*timeIncrement*vmax + 
+           Power(alpha*f0*(1701. + 100.*k) + ese*(945.*lastlpe - 945.*len + \
+945.*sse + 125.*k*timeIncrement*vmax),2)))/(ese*timeIncrement))),
+   List(Rule(lpe,(-0.9*alpha*f0 - 0.05291005291005291*alpha*f0*k + \
+0.5*ese*lastlpe + 0.5*ese*len - 0.5*ese*sse - 
+        0.06613756613756613*ese*k*timeIncrement*vmax + 0.0005291005291005291*
+         Sqrt(ese*k*(-472500.*alpha*f0 + ese*(-472500.*lastlpe + 472500.*len \
+- 472500.*sse))*timeIncrement*vmax + 
+           Power(alpha*f0*(1701. + 100.*k) + ese*(945.*lastlpe - 945.*len + \
+945.*sse + 125.*k*timeIncrement*vmax),2)))/ese),
+    Rule(fce,0.9*alpha*f0 + 0.05291005291005291*alpha*f0*k - 0.5*ese*lastlpe \
++ 0.5*ese*len - 0.5*ese*sse + 
+      0.06613756613756613*ese*k*timeIncrement*vmax - 0.0005291005291005291*
+       Sqrt(ese*k*(-472500.*alpha*f0 + ese*(-472500.*lastlpe + 472500.*len - \
+472500.*sse))*timeIncrement*vmax + 
+         Power(alpha*f0*(1701. + 100.*k) + ese*(945.*lastlpe - 945.*len + \
+945.*sse + 125.*k*timeIncrement*vmax),2))),
+    Rule(lse,(0.9*alpha*f0 + 0.05291005291005291*alpha*f0*k - 0.5*ese*lastlpe \
++ 0.5*ese*len + 0.5*ese*sse + 
+        0.06613756613756613*ese*k*timeIncrement*vmax - 0.0005291005291005291*
+         Sqrt(ese*k*(-472500.*alpha*f0 + ese*(-472500.*lastlpe + 472500.*len \
+- 472500.*sse))*timeIncrement*vmax + 
+           Power(alpha*f0*(1701. + 100.*k) + ese*(945.*lastlpe - 945.*len + \
+945.*sse + 125.*k*timeIncrement*vmax),2)))/ese),
+    Rule(vce,(-0.9*alpha*f0 - 0.052910052910052914*alpha*f0*k - \
+0.5*ese*lastlpe + 0.5*ese*len - 0.5*ese*sse - 
+        0.06613756613756615*ese*k*timeIncrement*vmax + 0.0005291005291005291*
+         Sqrt(ese*k*(-472500.*alpha*f0 + ese*(-472500.*lastlpe + 472500.*len \
+- 472500.*sse))*timeIncrement*vmax + 
+           Power(alpha*f0*(1701. + 100.*k) + ese*(945.*lastlpe - 945.*len + \
+945.*sse + 125.*k*timeIncrement*vmax),2)))/(ese*timeIncrement))))\
+\>", "Output",
+ CellChangeTimes->{3.5018640793926783`*^9, 3.501865390191571*^9, 
+  3.501866167660117*^9, 3.5113340630522423`*^9}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Fixup condition - using an assumed value for vce", "Subsubtitle",
+ CellChangeTimes->{{3.501865661904035*^9, 3.5018656739830513`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FullSimplify", "[", 
+  RowBox[{"Solve", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"eq1", ",", "eq3", ",", "eq4"}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"lpe", ",", "fce", ",", "lse"}], "}"}]}], "]"}], "]"}]], "Input",\
+
+ CellChangeTimes->{
+  3.501865737860104*^9, {3.501865873664049*^9, 3.501865873708905*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"lpe", "\[Rule]", 
+     RowBox[{
+      RowBox[{"1.`", " ", "len"}], "-", 
+      RowBox[{"1.`", " ", "sse"}], "+", 
+      FractionBox[
+       RowBox[{"alpha", " ", "f0", " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"-", "13.607999999999999`"}], "-", 
+             RowBox[{"0.8`", " ", "k"}]}], ")"}], " ", "vce"}], "-", 
+          RowBox[{"1.`", " ", "k", " ", "vmax"}]}], ")"}]}], 
+       RowBox[{"ese", " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"7.56`", " ", "vce"}], "+", 
+          RowBox[{"k", " ", "vmax"}]}], ")"}]}]]}]}], ",", 
+    RowBox[{"fce", "\[Rule]", 
+     RowBox[{"1.`", " ", "alpha", " ", "f0", " ", 
+      RowBox[{"(", 
+       RowBox[{"1.8`", "\[VeryThinSpace]", "+", 
+        FractionBox[
+         RowBox[{"0.8`", " ", "k", " ", 
+          RowBox[{"(", 
+           RowBox[{"vce", "-", 
+            RowBox[{"1.`", " ", "vmax"}]}], ")"}]}], 
+         RowBox[{
+          RowBox[{"7.56`", " ", "vce"}], "+", 
+          RowBox[{"k", " ", "vmax"}]}]]}], ")"}]}]}], ",", 
+    RowBox[{"lse", "\[Rule]", 
+     RowBox[{
+      RowBox[{"1.`", " ", "sse"}], "+", 
+      FractionBox[
+       RowBox[{"alpha", " ", "f0", " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"13.607999999999999`", "\[VeryThinSpace]", "+", 
+             RowBox[{"0.8`", " ", "k"}]}], ")"}], " ", "vce"}], "+", 
+          RowBox[{"1.`", " ", "k", " ", "vmax"}]}], ")"}]}], 
+       RowBox[{"ese", " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"7.56`", " ", "vce"}], "+", 
+          RowBox[{"k", " ", "vmax"}]}], ")"}]}]]}]}]}], "}"}], 
+  "}"}]], "Output",
+ CellChangeTimes->{3.501865739005571*^9, 3.501865874713571*^9, 
+  3.501866167783469*^9, 3.5113340631996317`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"CForm", "[", 
+  RowBox[{"FullSimplify", "[", 
+   RowBox[{"Solve", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"eq1", ",", "eq3", ",", "eq4"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"lpe", ",", "fce", ",", "lse"}], "}"}]}], "]"}], "]"}], 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.501865743735783*^9, 3.50186575181161*^9}, {
+  3.5018658776885223`*^9, 3.5018658777550783`*^9}}],
+
+Cell["\<\
+List(List(Rule(lpe,1.*len - 1.*sse + (alpha*f0*((-13.607999999999999 - \
+0.8*k)*vce - 1.*k*vmax))/(ese*(7.56*vce + k*vmax))),
+    Rule(fce,1.*alpha*f0*(1.8 + (0.8*k*(vce - 1.*vmax))/(7.56*vce + \
+k*vmax))),
+    Rule(lse,1.*sse + (alpha*f0*((13.607999999999999 + 0.8*k)*vce + \
+1.*k*vmax))/(ese*(7.56*vce + k*vmax)))))\
+\>", "Output",
+ CellChangeTimes->{3.5018657522803*^9, 3.501865879394245*^9, 
+  3.5018661678257027`*^9, 3.511334063230507*^9}]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Adding Damping", "Subtitle"],
+
+Cell["\<\
+All that is needed for damping is to rewrite eqation 3 to include a velocity \
+term and to add an extra condition\
+\>", "Text",
+ CellChangeTimes->{{3.51133359197707*^9, 3.511333612272785*^9}}],
+
+Cell["\<\
+vse velocity of the serial element (m/s)
+dse damping constant of serial element (Ns/m)
+vel velocity of the system\
+\>", "Text",
+ CellChangeTimes->{3.511333489148593*^9}],
+
+Cell[CellGroupData[{
+
+Cell["Equations", "Subsubtitle"],
+
+Cell[BoxData[
+ RowBox[{"eq6", ":=", 
+  RowBox[{"fce", "==", 
+   RowBox[{
+    RowBox[{"ese", 
+     RowBox[{"(", 
+      RowBox[{"lse", "-", "sse"}], ")"}]}], "+", 
+    RowBox[{"dse", " ", "vse"}]}]}]}]], "Input",
+ CellChangeTimes->{
+  3.4461065837176323`*^9, {3.511333475014723*^9, 3.511333475102228*^9}, {
+   3.5113335663607903`*^9, 3.511333566403521*^9}}],
+
+Cell[BoxData[
+ RowBox[{"eq7", ":=", 
+  RowBox[{"vel", "==", 
+   RowBox[{"vce", "+", "vse"}]}]}]], "Input",
+ CellChangeTimes->{{3.511333505336335*^9, 3.511333505398109*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Concentric", "Subsubtitle"],
+
+Cell["i.e. vce <= 0", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FullSimplify", "[", 
+  RowBox[{"Solve", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"eq2", ",", "eq6", ",", "eq4", ",", "eq5", ",", "eq7"}], "}"}], 
+    ",", 
+    RowBox[{"{", 
+     RowBox[{"lpe", ",", "fce", ",", "lse", ",", "vse", ",", "vce"}], "}"}]}],
+    "]"}], "]"}]], "Input",
+ CellChangeTimes->{
+  3.501859273363237*^9, {3.501859315126101*^9, 3.501859330749251*^9}, {
+   3.501859606775588*^9, 3.501859611434072*^9}, {3.5018596983468113`*^9, 
+   3.501859698880934*^9}, {3.5018597367958*^9, 3.501859745962488*^9}, {
+   3.501859817438918*^9, 3.501859822277587*^9}, {3.501859954141814*^9, 
+   3.501859954754161*^9}, {3.501859984780877*^9, 3.501860038269762*^9}, 
+   3.501863969697687*^9, {3.51133365826982*^9, 3.511333682877653*^9}, {
+   3.511334085454331*^9, 3.5113340871726427`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"lpe", "\[Rule]", 
+      RowBox[{
+       FractionBox["1", 
+        RowBox[{"2", " ", 
+         RowBox[{"(", 
+          RowBox[{"dse", "+", 
+           RowBox[{"ese", " ", "timeIncrement"}]}], ")"}]}]], 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"dse", " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"2", " ", "lastlpe"}], "+", 
+            RowBox[{"timeIncrement", " ", 
+             RowBox[{"(", 
+              RowBox[{"vel", "+", 
+               RowBox[{"k", " ", "vmax"}]}], ")"}]}]}], ")"}]}], "+", 
+         RowBox[{"timeIncrement", " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"alpha", " ", "f0", " ", "k"}], "+", 
+            RowBox[{"ese", " ", 
+             RowBox[{"(", 
+              RowBox[{"lastlpe", "+", "len", "-", "sse", "+", 
+               RowBox[{"k", " ", "timeIncrement", " ", "vmax"}]}], ")"}]}]}], 
+           ")"}]}], "-", 
+         RowBox[{"timeIncrement", " ", 
+          RowBox[{"\[Sqrt]", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"4", " ", "k", " ", 
+              RowBox[{"(", 
+               RowBox[{"dse", "+", 
+                RowBox[{"ese", " ", "timeIncrement"}]}], ")"}], " ", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"alpha", " ", "f0"}], "+", 
+                RowBox[{"ese", " ", 
+                 RowBox[{"(", 
+                  RowBox[{"lastlpe", "-", "len", "+", "sse"}], ")"}]}], "-", 
+                RowBox[{"dse", " ", "vel"}]}], ")"}], " ", "vmax"}], "+", 
+             SuperscriptBox[
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"alpha", " ", "f0", " ", "k"}], "+", 
+                RowBox[{"dse", " ", 
+                 RowBox[{"(", 
+                  RowBox[{"vel", "+", 
+                   RowBox[{"k", " ", "vmax"}]}], ")"}]}], "+", 
+                RowBox[{"ese", " ", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"-", "lastlpe"}], "+", "len", "-", "sse", "+", 
+                   RowBox[{"k", " ", "timeIncrement", " ", "vmax"}]}], 
+                  ")"}]}]}], ")"}], "2"]}], ")"}]}]}]}], ")"}]}]}], ",", 
+     RowBox[{"fce", "\[Rule]", 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"-", "alpha"}], " ", "f0", " ", "k"}], "-", 
+         RowBox[{"ese", " ", "lastlpe"}], "+", 
+         RowBox[{"ese", " ", "len"}], "-", 
+         RowBox[{"ese", " ", "sse"}], "+", 
+         RowBox[{"dse", " ", "vel"}], "-", 
+         RowBox[{"dse", " ", "k", " ", "vmax"}], "-", 
+         RowBox[{"ese", " ", "k", " ", "timeIncrement", " ", "vmax"}], "+", 
+         RowBox[{"\[Sqrt]", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"4", " ", "k", " ", 
+             RowBox[{"(", 
+              RowBox[{"dse", "+", 
+               RowBox[{"ese", " ", "timeIncrement"}]}], ")"}], " ", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"alpha", " ", "f0"}], "+", 
+               RowBox[{"ese", " ", 
+                RowBox[{"(", 
+                 RowBox[{"lastlpe", "-", "len", "+", "sse"}], ")"}]}], "-", 
+               RowBox[{"dse", " ", "vel"}]}], ")"}], " ", "vmax"}], "+", 
+            SuperscriptBox[
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"alpha", " ", "f0", " ", "k"}], "+", 
+               RowBox[{"dse", " ", 
+                RowBox[{"(", 
+                 RowBox[{"vel", "+", 
+                  RowBox[{"k", " ", "vmax"}]}], ")"}]}], "+", 
+               RowBox[{"ese", " ", 
+                RowBox[{"(", 
+                 RowBox[{
+                  RowBox[{"-", "lastlpe"}], "+", "len", "-", "sse", "+", 
+                  RowBox[{"k", " ", "timeIncrement", " ", "vmax"}]}], 
+                 ")"}]}]}], ")"}], "2"]}], ")"}]}]}], ")"}]}]}], ",", 
+     RowBox[{"lse", "\[Rule]", 
+      RowBox[{"-", 
+       RowBox[{
+        FractionBox["1", 
+         RowBox[{"2", " ", 
+          RowBox[{"(", 
+           RowBox[{"dse", "+", 
+            RowBox[{"ese", " ", "timeIncrement"}]}], ")"}]}]], 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"dse", " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"2", " ", "lastlpe"}], "-", 
+             RowBox[{"2", " ", "len"}], "+", 
+             RowBox[{"timeIncrement", " ", 
+              RowBox[{"(", 
+               RowBox[{"vel", "+", 
+                RowBox[{"k", " ", "vmax"}]}], ")"}]}]}], ")"}]}], "+", 
+          RowBox[{"timeIncrement", " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"alpha", " ", "f0", " ", "k"}], "+", 
+             RowBox[{"ese", " ", 
+              RowBox[{"(", 
+               RowBox[{"lastlpe", "-", "len", "-", "sse", "+", 
+                RowBox[{"k", " ", "timeIncrement", " ", "vmax"}]}], ")"}]}]}],
+             ")"}]}], "-", 
+          RowBox[{"timeIncrement", " ", 
+           RowBox[{"\[Sqrt]", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"4", " ", "k", " ", 
+               RowBox[{"(", 
+                RowBox[{"dse", "+", 
+                 RowBox[{"ese", " ", "timeIncrement"}]}], ")"}], " ", 
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"alpha", " ", "f0"}], "+", 
+                 RowBox[{"ese", " ", 
+                  RowBox[{"(", 
+                   RowBox[{"lastlpe", "-", "len", "+", "sse"}], ")"}]}], "-", 
+                 
+                 RowBox[{"dse", " ", "vel"}]}], ")"}], " ", "vmax"}], "+", 
+              SuperscriptBox[
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"alpha", " ", "f0", " ", "k"}], "+", 
+                 RowBox[{"dse", " ", 
+                  RowBox[{"(", 
+                   RowBox[{"vel", "+", 
+                    RowBox[{"k", " ", "vmax"}]}], ")"}]}], "+", 
+                 RowBox[{"ese", " ", 
+                  RowBox[{"(", 
+                   RowBox[{
+                    RowBox[{"-", "lastlpe"}], "+", "len", "-", "sse", "+", 
+                    RowBox[{"k", " ", "timeIncrement", " ", "vmax"}]}], 
+                   ")"}]}]}], ")"}], "2"]}], ")"}]}]}]}], ")"}]}]}]}], ",", 
+     RowBox[{"vse", "\[Rule]", 
+      RowBox[{
+       FractionBox["1", 
+        RowBox[{"2", " ", 
+         RowBox[{"(", 
+          RowBox[{"dse", "+", 
+           RowBox[{"ese", " ", "timeIncrement"}]}], ")"}]}]], 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"-", "alpha"}], " ", "f0", " ", "k"}], "+", 
+         RowBox[{"ese", " ", "lastlpe"}], "-", 
+         RowBox[{"ese", " ", "len"}], "+", 
+         RowBox[{"ese", " ", "sse"}], "+", 
+         RowBox[{"dse", " ", "vel"}], "+", 
+         RowBox[{"2", " ", "ese", " ", "timeIncrement", " ", "vel"}], "-", 
+         RowBox[{"dse", " ", "k", " ", "vmax"}], "-", 
+         RowBox[{"ese", " ", "k", " ", "timeIncrement", " ", "vmax"}], "+", 
+         RowBox[{"\[Sqrt]", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"4", " ", "k", " ", 
+             RowBox[{"(", 
+              RowBox[{"dse", "+", 
+               RowBox[{"ese", " ", "timeIncrement"}]}], ")"}], " ", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"alpha", " ", "f0"}], "+", 
+               RowBox[{"ese", " ", 
+                RowBox[{"(", 
+                 RowBox[{"lastlpe", "-", "len", "+", "sse"}], ")"}]}], "-", 
+               RowBox[{"dse", " ", "vel"}]}], ")"}], " ", "vmax"}], "+", 
+            SuperscriptBox[
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"alpha", " ", "f0", " ", "k"}], "+", 
+               RowBox[{"dse", " ", 
+                RowBox[{"(", 
+                 RowBox[{"vel", "+", 
+                  RowBox[{"k", " ", "vmax"}]}], ")"}]}], "+", 
+               RowBox[{"ese", " ", 
+                RowBox[{"(", 
+                 RowBox[{
+                  RowBox[{"-", "lastlpe"}], "+", "len", "-", "sse", "+", 
+                  RowBox[{"k", " ", "timeIncrement", " ", "vmax"}]}], 
+                 ")"}]}]}], ")"}], "2"]}], ")"}]}]}], ")"}]}]}], ",", 
+     RowBox[{"vce", "\[Rule]", 
+      RowBox[{
+       FractionBox["1", 
+        RowBox[{"2", " ", 
+         RowBox[{"(", 
+          RowBox[{"dse", "+", 
+           RowBox[{"ese", " ", "timeIncrement"}]}], ")"}]}]], 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"alpha", " ", "f0", " ", "k"}], "-", 
+         RowBox[{"ese", " ", "lastlpe"}], "+", 
+         RowBox[{"ese", " ", "len"}], "-", 
+         RowBox[{"ese", " ", "sse"}], "+", 
+         RowBox[{"dse", " ", "vel"}], "+", 
+         RowBox[{"dse", " ", "k", " ", "vmax"}], "+", 
+         RowBox[{"ese", " ", "k", " ", "timeIncrement", " ", "vmax"}], "-", 
+         RowBox[{"\[Sqrt]", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"4", " ", "k", " ", 
+             RowBox[{"(", 
+              RowBox[{"dse", "+", 
+               RowBox[{"ese", " ", "timeIncrement"}]}], ")"}], " ", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"alpha", " ", "f0"}], "+", 
+               RowBox[{"ese", " ", 
+                RowBox[{"(", 
+                 RowBox[{"lastlpe", "-", "len", "+", "sse"}], ")"}]}], "-", 
+               RowBox[{"dse", " ", "vel"}]}], ")"}], " ", "vmax"}], "+", 
+            SuperscriptBox[
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"alpha", " ", "f0", " ", "k"}], "+", 
+               RowBox[{"dse", " ", 
+                RowBox[{"(", 
+                 RowBox[{"vel", "+", 
+                  RowBox[{"k", " ", "vmax"}]}], ")"}]}], "+", 
+               RowBox[{"ese", " ", 
+                RowBox[{"(", 
+                 RowBox[{
+                  RowBox[{"-", "lastlpe"}], "+", "len", "-", "sse", "+", 
+                  RowBox[{"k", " ", "timeIncrement", " ", "vmax"}]}], 
+                 ")"}]}]}], ")"}], "2"]}], ")"}]}]}], ")"}]}]}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"lpe", "\[Rule]", 
+      RowBox[{
+       FractionBox["1", 
+        RowBox[{"2", " ", 
+         RowBox[{"(", 
+          RowBox[{"dse", "+", 
+           RowBox[{"ese", " ", "timeIncrement"}]}], ")"}]}]], 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"dse", " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"2", " ", "lastlpe"}], "+", 
+            RowBox[{"timeIncrement", " ", 
+             RowBox[{"(", 
+              RowBox[{"vel", "+", 
+               RowBox[{"k", " ", "vmax"}]}], ")"}]}]}], ")"}]}], "+", 
+         RowBox[{"timeIncrement", " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"alpha", " ", "f0", " ", "k"}], "+", 
+            RowBox[{"ese", " ", 
+             RowBox[{"(", 
+              RowBox[{"lastlpe", "+", "len", "-", "sse", "+", 
+               RowBox[{"k", " ", "timeIncrement", " ", "vmax"}]}], ")"}]}]}], 
+           ")"}]}], "+", 
+         RowBox[{"timeIncrement", " ", 
+          RowBox[{"\[Sqrt]", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"4", " ", "k", " ", 
+              RowBox[{"(", 
+               RowBox[{"dse", "+", 
+                RowBox[{"ese", " ", "timeIncrement"}]}], ")"}], " ", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"alpha", " ", "f0"}], "+", 
+                RowBox[{"ese", " ", 
+                 RowBox[{"(", 
+                  RowBox[{"lastlpe", "-", "len", "+", "sse"}], ")"}]}], "-", 
+                RowBox[{"dse", " ", "vel"}]}], ")"}], " ", "vmax"}], "+", 
+             SuperscriptBox[
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"alpha", " ", "f0", " ", "k"}], "+", 
+                RowBox[{"dse", " ", 
+                 RowBox[{"(", 
+                  RowBox[{"vel", "+", 
+                   RowBox[{"k", " ", "vmax"}]}], ")"}]}], "+", 
+                RowBox[{"ese", " ", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"-", "lastlpe"}], "+", "len", "-", "sse", "+", 
+                   RowBox[{"k", " ", "timeIncrement", " ", "vmax"}]}], 
+                  ")"}]}]}], ")"}], "2"]}], ")"}]}]}]}], ")"}]}]}], ",", 
+     RowBox[{"fce", "\[Rule]", 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"-", "alpha"}], " ", "f0", " ", "k"}], "-", 
+         RowBox[{"ese", " ", "lastlpe"}], "+", 
+         RowBox[{"ese", " ", "len"}], "-", 
+         RowBox[{"ese", " ", "sse"}], "+", 
+         RowBox[{"dse", " ", "vel"}], "-", 
+         RowBox[{"dse", " ", "k", " ", "vmax"}], "-", 
+         RowBox[{"ese", " ", "k", " ", "timeIncrement", " ", "vmax"}], "-", 
+         RowBox[{"\[Sqrt]", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"4", " ", "k", " ", 
+             RowBox[{"(", 
+              RowBox[{"dse", "+", 
+               RowBox[{"ese", " ", "timeIncrement"}]}], ")"}], " ", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"alpha", " ", "f0"}], "+", 
+               RowBox[{"ese", " ", 
+                RowBox[{"(", 
+                 RowBox[{"lastlpe", "-", "len", "+", "sse"}], ")"}]}], "-", 
+               RowBox[{"dse", " ", "vel"}]}], ")"}], " ", "vmax"}], "+", 
+            SuperscriptBox[
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"alpha", " ", "f0", " ", "k"}], "+", 
+               RowBox[{"dse", " ", 
+                RowBox[{"(", 
+                 RowBox[{"vel", "+", 
+                  RowBox[{"k", " ", "vmax"}]}], ")"}]}], "+", 
+               RowBox[{"ese", " ", 
+                RowBox[{"(", 
+                 RowBox[{
+                  RowBox[{"-", "lastlpe"}], "+", "len", "-", "sse", "+", 
+                  RowBox[{"k", " ", "timeIncrement", " ", "vmax"}]}], 
+                 ")"}]}]}], ")"}], "2"]}], ")"}]}]}], ")"}]}]}], ",", 
+     RowBox[{"lse", "\[Rule]", 
+      RowBox[{"-", 
+       RowBox[{
+        FractionBox["1", 
+         RowBox[{"2", " ", 
+          RowBox[{"(", 
+           RowBox[{"dse", "+", 
+            RowBox[{"ese", " ", "timeIncrement"}]}], ")"}]}]], 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"dse", " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"2", " ", "lastlpe"}], "-", 
+             RowBox[{"2", " ", "len"}], "+", 
+             RowBox[{"timeIncrement", " ", 
+              RowBox[{"(", 
+               RowBox[{"vel", "+", 
+                RowBox[{"k", " ", "vmax"}]}], ")"}]}]}], ")"}]}], "+", 
+          RowBox[{"timeIncrement", " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"alpha", " ", "f0", " ", "k"}], "+", 
+             RowBox[{"ese", " ", 
+              RowBox[{"(", 
+               RowBox[{"lastlpe", "-", "len", "-", "sse", "+", 
+                RowBox[{"k", " ", "timeIncrement", " ", "vmax"}]}], ")"}]}]}],
+             ")"}]}], "+", 
+          RowBox[{"timeIncrement", " ", 
+           RowBox[{"\[Sqrt]", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"4", " ", "k", " ", 
+               RowBox[{"(", 
+                RowBox[{"dse", "+", 
+                 RowBox[{"ese", " ", "timeIncrement"}]}], ")"}], " ", 
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"alpha", " ", "f0"}], "+", 
+                 RowBox[{"ese", " ", 
+                  RowBox[{"(", 
+                   RowBox[{"lastlpe", "-", "len", "+", "sse"}], ")"}]}], "-", 
+                 
+                 RowBox[{"dse", " ", "vel"}]}], ")"}], " ", "vmax"}], "+", 
+              SuperscriptBox[
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"alpha", " ", "f0", " ", "k"}], "+", 
+                 RowBox[{"dse", " ", 
+                  RowBox[{"(", 
+                   RowBox[{"vel", "+", 
+                    RowBox[{"k", " ", "vmax"}]}], ")"}]}], "+", 
+                 RowBox[{"ese", " ", 
+                  RowBox[{"(", 
+                   RowBox[{
+                    RowBox[{"-", "lastlpe"}], "+", "len", "-", "sse", "+", 
+                    RowBox[{"k", " ", "timeIncrement", " ", "vmax"}]}], 
+                   ")"}]}]}], ")"}], "2"]}], ")"}]}]}]}], ")"}]}]}]}], ",", 
+     RowBox[{"vse", "\[Rule]", 
+      RowBox[{"-", 
+       RowBox[{
+        FractionBox["1", 
+         RowBox[{"2", " ", 
+          RowBox[{"(", 
+           RowBox[{"dse", "+", 
+            RowBox[{"ese", " ", "timeIncrement"}]}], ")"}]}]], 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"alpha", " ", "f0", " ", "k"}], "-", 
+          RowBox[{"ese", " ", "lastlpe"}], "+", 
+          RowBox[{"ese", " ", "len"}], "-", 
+          RowBox[{"ese", " ", "sse"}], "-", 
+          RowBox[{"dse", " ", "vel"}], "-", 
+          RowBox[{"2", " ", "ese", " ", "timeIncrement", " ", "vel"}], "+", 
+          RowBox[{"dse", " ", "k", " ", "vmax"}], "+", 
+          RowBox[{"ese", " ", "k", " ", "timeIncrement", " ", "vmax"}], "+", 
+          RowBox[{"\[Sqrt]", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"4", " ", "k", " ", 
+              RowBox[{"(", 
+               RowBox[{"dse", "+", 
+                RowBox[{"ese", " ", "timeIncrement"}]}], ")"}], " ", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"alpha", " ", "f0"}], "+", 
+                RowBox[{"ese", " ", 
+                 RowBox[{"(", 
+                  RowBox[{"lastlpe", "-", "len", "+", "sse"}], ")"}]}], "-", 
+                RowBox[{"dse", " ", "vel"}]}], ")"}], " ", "vmax"}], "+", 
+             SuperscriptBox[
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"alpha", " ", "f0", " ", "k"}], "+", 
+                RowBox[{"dse", " ", 
+                 RowBox[{"(", 
+                  RowBox[{"vel", "+", 
+                   RowBox[{"k", " ", "vmax"}]}], ")"}]}], "+", 
+                RowBox[{"ese", " ", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"-", "lastlpe"}], "+", "len", "-", "sse", "+", 
+                   RowBox[{"k", " ", "timeIncrement", " ", "vmax"}]}], 
+                  ")"}]}]}], ")"}], "2"]}], ")"}]}]}], ")"}]}]}]}], ",", 
+     RowBox[{"vce", "\[Rule]", 
+      RowBox[{
+       FractionBox["1", 
+        RowBox[{"2", " ", 
+         RowBox[{"(", 
+          RowBox[{"dse", "+", 
+           RowBox[{"ese", " ", "timeIncrement"}]}], ")"}]}]], 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"alpha", " ", "f0", " ", "k"}], "-", 
+         RowBox[{"ese", " ", "lastlpe"}], "+", 
+         RowBox[{"ese", " ", "len"}], "-", 
+         RowBox[{"ese", " ", "sse"}], "+", 
+         RowBox[{"dse", " ", "vel"}], "+", 
+         RowBox[{"dse", " ", "k", " ", "vmax"}], "+", 
+         RowBox[{"ese", " ", "k", " ", "timeIncrement", " ", "vmax"}], "+", 
+         RowBox[{"\[Sqrt]", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"4", " ", "k", " ", 
+             RowBox[{"(", 
+              RowBox[{"dse", "+", 
+               RowBox[{"ese", " ", "timeIncrement"}]}], ")"}], " ", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"alpha", " ", "f0"}], "+", 
+               RowBox[{"ese", " ", 
+                RowBox[{"(", 
+                 RowBox[{"lastlpe", "-", "len", "+", "sse"}], ")"}]}], "-", 
+               RowBox[{"dse", " ", "vel"}]}], ")"}], " ", "vmax"}], "+", 
+            SuperscriptBox[
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"alpha", " ", "f0", " ", "k"}], "+", 
+               RowBox[{"dse", " ", 
+                RowBox[{"(", 
+                 RowBox[{"vel", "+", 
+                  RowBox[{"k", " ", "vmax"}]}], ")"}]}], "+", 
+               RowBox[{"ese", " ", 
+                RowBox[{"(", 
+                 RowBox[{
+                  RowBox[{"-", "lastlpe"}], "+", "len", "-", "sse", "+", 
+                  RowBox[{"k", " ", "timeIncrement", " ", "vmax"}]}], 
+                 ")"}]}]}], ")"}], "2"]}], ")"}]}]}], ")"}]}]}]}], "}"}]}], 
+  "}"}]], "Output",
+ CellChangeTimes->{3.511334063450598*^9, 3.5113341065003147`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"CForm", "[", 
+  RowBox[{"FullSimplify", "[", 
+   RowBox[{"Solve", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"eq2", ",", "eq6", ",", "eq4", ",", "eq5", ",", "eq7"}], "}"}], 
+     ",", 
+     RowBox[{"{", 
+      RowBox[{"lpe", ",", "fce", ",", "lse", ",", "vse", ",", "vce"}], 
+      "}"}]}], "]"}], "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.51133420467526*^9, 3.5113342090823402`*^9}}],
+
+Cell["\<\
+List(List(Rule(lpe,(dse*(2*lastlpe + timeIncrement*(vel + k*vmax)) + \
+timeIncrement*(alpha*f0*k + ese*(lastlpe + len - sse + k*timeIncrement*vmax)) \
+- 
+        timeIncrement*Sqrt(4*k*(dse + ese*timeIncrement)*(alpha*f0 + \
+ese*(lastlpe - len + sse) - dse*vel)*vmax + 
+           Power(alpha*f0*k + dse*(vel + k*vmax) + ese*(-lastlpe + len - sse \
++ k*timeIncrement*vmax),2)))/(2.*(dse + ese*timeIncrement))),
+    Rule(fce,(-(alpha*f0*k) - ese*lastlpe + ese*len - ese*sse + dse*vel - \
+dse*k*vmax - ese*k*timeIncrement*vmax + 
+        Sqrt(4*k*(dse + ese*timeIncrement)*(alpha*f0 + ese*(lastlpe - len + \
+sse) - dse*vel)*vmax + 
+          Power(alpha*f0*k + dse*(vel + k*vmax) + ese*(-lastlpe + len - sse + \
+k*timeIncrement*vmax),2)))/2.),
+    Rule(lse,-(dse*(2*lastlpe - 2*len + timeIncrement*(vel + k*vmax)) + 
+         timeIncrement*(alpha*f0*k + ese*(lastlpe - len - sse + \
+k*timeIncrement*vmax)) - 
+         timeIncrement*Sqrt(4*k*(dse + ese*timeIncrement)*(alpha*f0 + \
+ese*(lastlpe - len + sse) - dse*vel)*vmax + 
+            Power(alpha*f0*k + dse*(vel + k*vmax) + ese*(-lastlpe + len - sse \
++ k*timeIncrement*vmax),2)))/(2.*(dse + ese*timeIncrement))),
+    Rule(vse,(-(alpha*f0*k) + ese*lastlpe - ese*len + ese*sse + dse*vel + \
+2*ese*timeIncrement*vel - dse*k*vmax - ese*k*timeIncrement*vmax + 
+        Sqrt(4*k*(dse + ese*timeIncrement)*(alpha*f0 + ese*(lastlpe - len + \
+sse) - dse*vel)*vmax + 
+          Power(alpha*f0*k + dse*(vel + k*vmax) + ese*(-lastlpe + len - sse + \
+k*timeIncrement*vmax),2)))/(2.*(dse + ese*timeIncrement))),
+    Rule(vce,(alpha*f0*k - ese*lastlpe + ese*len - ese*sse + dse*vel + \
+dse*k*vmax + ese*k*timeIncrement*vmax - 
+        Sqrt(4*k*(dse + ese*timeIncrement)*(alpha*f0 + ese*(lastlpe - len + \
+sse) - dse*vel)*vmax + 
+          Power(alpha*f0*k + dse*(vel + k*vmax) + ese*(-lastlpe + len - sse + \
+k*timeIncrement*vmax),2)))/(2.*(dse + ese*timeIncrement)))),
+   List(Rule(lpe,(dse*(2*lastlpe + timeIncrement*(vel + k*vmax)) + \
+timeIncrement*(alpha*f0*k + ese*(lastlpe + len - sse + k*timeIncrement*vmax)) \
++ 
+        timeIncrement*Sqrt(4*k*(dse + ese*timeIncrement)*(alpha*f0 + \
+ese*(lastlpe - len + sse) - dse*vel)*vmax + 
+           Power(alpha*f0*k + dse*(vel + k*vmax) + ese*(-lastlpe + len - sse \
++ k*timeIncrement*vmax),2)))/(2.*(dse + ese*timeIncrement))),
+    Rule(fce,(-(alpha*f0*k) - ese*lastlpe + ese*len - ese*sse + dse*vel - \
+dse*k*vmax - ese*k*timeIncrement*vmax - 
+        Sqrt(4*k*(dse + ese*timeIncrement)*(alpha*f0 + ese*(lastlpe - len + \
+sse) - dse*vel)*vmax + 
+          Power(alpha*f0*k + dse*(vel + k*vmax) + ese*(-lastlpe + len - sse + \
+k*timeIncrement*vmax),2)))/2.),
+    Rule(lse,-(dse*(2*lastlpe - 2*len + timeIncrement*(vel + k*vmax)) + 
+         timeIncrement*(alpha*f0*k + ese*(lastlpe - len - sse + \
+k*timeIncrement*vmax)) + 
+         timeIncrement*Sqrt(4*k*(dse + ese*timeIncrement)*(alpha*f0 + \
+ese*(lastlpe - len + sse) - dse*vel)*vmax + 
+            Power(alpha*f0*k + dse*(vel + k*vmax) + ese*(-lastlpe + len - sse \
++ k*timeIncrement*vmax),2)))/(2.*(dse + ese*timeIncrement))),
+    Rule(vse,-(alpha*f0*k - ese*lastlpe + ese*len - ese*sse - dse*vel - \
+2*ese*timeIncrement*vel + dse*k*vmax + ese*k*timeIncrement*vmax + 
+         Sqrt(4*k*(dse + ese*timeIncrement)*(alpha*f0 + ese*(lastlpe - len + \
+sse) - dse*vel)*vmax + 
+           Power(alpha*f0*k + dse*(vel + k*vmax) + ese*(-lastlpe + len - sse \
++ k*timeIncrement*vmax),2)))/(2.*(dse + ese*timeIncrement))),
+    Rule(vce,(alpha*f0*k - ese*lastlpe + ese*len - ese*sse + dse*vel + \
+dse*k*vmax + ese*k*timeIncrement*vmax + 
+        Sqrt(4*k*(dse + ese*timeIncrement)*(alpha*f0 + ese*(lastlpe - len + \
+sse) - dse*vel)*vmax + 
+          Power(alpha*f0*k + dse*(vel + k*vmax) + ese*(-lastlpe + len - sse + \
+k*timeIncrement*vmax),2)))/(2.*(dse + ese*timeIncrement)))))\
+\>", "Output",
+ CellChangeTimes->{3.511334209667081*^9}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Eccentric", "Subsubtitle"],
+
+Cell["i.e. vce > 0", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FullSimplify", "[", 
+  RowBox[{"Solve", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"eq1", ",", "eq6", ",", "eq4", ",", "eq5", ",", "eq7"}], "}"}], 
+    ",", 
+    RowBox[{"{", 
+     RowBox[{"lpe", ",", "fce", ",", "lse", ",", "vse", ",", "vce"}], "}"}]}],
+    "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.511333797243034*^9, 3.511333802329864*^9}, {
+  3.5113341210939703`*^9, 3.511334122133891*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"Solve", "::", "ratnz"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Solve was unable to solve the system with inexact \
+coefficients. The answer was obtained by solving a corresponding exact system \
+and numericizing the result. \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", \
+ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/Solve\\\", ButtonNote -> \
+\\\"Solve::ratnz\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.511334063494226*^9, 3.51133412410395*^9}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"lpe", "\[Rule]", 
+      RowBox[{
+       FractionBox["1", 
+        RowBox[{
+         RowBox[{"945.`", " ", "dse"}], "+", 
+         RowBox[{"945.`", " ", "ese", " ", "timeIncrement"}]}]], 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"945.`", " ", "dse", " ", "lastlpe"}], "-", 
+         RowBox[{"850.5`", " ", "alpha", " ", "f0", " ", "timeIncrement"}], 
+         "-", 
+         RowBox[{
+         "50.`", " ", "alpha", " ", "f0", " ", "k", " ", "timeIncrement"}], 
+         "+", 
+         RowBox[{"472.5`", " ", "ese", " ", "lastlpe", " ", "timeIncrement"}],
+          "+", 
+         RowBox[{"472.5`", " ", "ese", " ", "len", " ", "timeIncrement"}], 
+         "-", 
+         RowBox[{"472.5`", " ", "ese", " ", "sse", " ", "timeIncrement"}], 
+         "+", 
+         RowBox[{"472.5`", " ", "dse", " ", "timeIncrement", " ", "vel"}], 
+         "-", 
+         RowBox[{
+         "62.5`", " ", "dse", " ", "k", " ", "timeIncrement", " ", "vmax"}], 
+         "-", 
+         RowBox[{"62.5`", " ", "ese", " ", "k", " ", 
+          SuperscriptBox["timeIncrement", "2"], " ", "vmax"}], "-", 
+         RowBox[{"0.5`", " ", "timeIncrement", " ", 
+          RowBox[{"\[Sqrt]", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"-", "4.`"}], " ", "k", " ", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"945.`", " ", "dse"}], "+", 
+                RowBox[{"945.`", " ", "ese", " ", "timeIncrement"}]}], ")"}], 
+              " ", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"125.`", " ", "alpha", " ", "f0"}], "+", 
+                RowBox[{"ese", " ", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"125.`", " ", "lastlpe"}], "-", 
+                   RowBox[{"125.`", " ", "len"}], "+", 
+                   RowBox[{"125.`", " ", "sse"}]}], ")"}]}], "-", 
+                RowBox[{"125.`", " ", "dse", " ", "vel"}]}], ")"}], " ", 
+              "vmax"}], "+", 
+             SuperscriptBox[
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"alpha", " ", "f0", " ", 
+                 RowBox[{"(", 
+                  RowBox[{"1701.`", "\[VeryThinSpace]", "+", 
+                   RowBox[{"100.`", " ", "k"}]}], ")"}]}], "+", 
+                RowBox[{"dse", " ", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{
+                    RowBox[{"-", "945.`"}], " ", "vel"}], "+", 
+                   RowBox[{"125.`", " ", "k", " ", "vmax"}]}], ")"}]}], "+", 
+                RowBox[{"ese", " ", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"945.`", " ", "lastlpe"}], "-", 
+                   RowBox[{"945.`", " ", "len"}], "+", 
+                   RowBox[{"945.`", " ", "sse"}], "+", 
+                   RowBox[{
+                   "125.`", " ", "k", " ", "timeIncrement", " ", "vmax"}]}], 
+                  ")"}]}]}], ")"}], "2"]}], ")"}]}]}]}], ")"}]}]}], ",", 
+     RowBox[{"fce", "\[Rule]", 
+      RowBox[{"0.`", "\[VeryThinSpace]", "+", 
+       RowBox[{"0.9`", " ", "alpha", " ", "f0"}], "+", 
+       RowBox[{"0.052910052910052914`", " ", "alpha", " ", "f0", " ", "k"}], 
+       "-", 
+       RowBox[{"0.5`", " ", "ese", " ", "lastlpe"}], "+", 
+       RowBox[{"0.5`", " ", "ese", " ", "len"}], "-", 
+       RowBox[{"0.5`", " ", "ese", " ", "sse"}], "-", 
+       FractionBox[
+        RowBox[{
+        "7.105427357601002`*^-15", " ", "alpha", " ", "ese", " ", "f0", " ", 
+         "k", " ", "timeIncrement"}], 
+        RowBox[{
+         RowBox[{"945.`", " ", "dse"}], "+", 
+         RowBox[{"945.`", " ", "ese", " ", "timeIncrement"}]}]], "+", 
+       RowBox[{
+       "0.06613756613756613`", " ", "ese", " ", "k", " ", "timeIncrement", 
+        " ", "vmax"}], "+", 
+       RowBox[{"dse", " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"0.5`", " ", "vel"}], "+", 
+          RowBox[{"0.06613756613756615`", " ", "k", " ", "vmax"}]}], ")"}]}], 
+       "+", 
+       RowBox[{"0.0005291005291005291`", " ", 
+        RowBox[{"\[Sqrt]", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"-", "4.`"}], " ", "k", " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"945.`", " ", "dse"}], "+", 
+              RowBox[{"945.`", " ", "ese", " ", "timeIncrement"}]}], ")"}], 
+            " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"125.`", " ", "alpha", " ", "f0"}], "+", 
+              RowBox[{"ese", " ", 
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"125.`", " ", "lastlpe"}], "-", 
+                 RowBox[{"125.`", " ", "len"}], "+", 
+                 RowBox[{"125.`", " ", "sse"}]}], ")"}]}], "-", 
+              RowBox[{"125.`", " ", "dse", " ", "vel"}]}], ")"}], " ", 
+            "vmax"}], "+", 
+           SuperscriptBox[
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"alpha", " ", "f0", " ", 
+               RowBox[{"(", 
+                RowBox[{"1701.`", "\[VeryThinSpace]", "+", 
+                 RowBox[{"100.`", " ", "k"}]}], ")"}]}], "+", 
+              RowBox[{"dse", " ", 
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"-", "945.`"}], " ", "vel"}], "+", 
+                 RowBox[{"125.`", " ", "k", " ", "vmax"}]}], ")"}]}], "+", 
+              RowBox[{"ese", " ", 
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"945.`", " ", "lastlpe"}], "-", 
+                 RowBox[{"945.`", " ", "len"}], "+", 
+                 RowBox[{"945.`", " ", "sse"}], "+", 
+                 RowBox[{
+                 "125.`", " ", "k", " ", "timeIncrement", " ", "vmax"}]}], 
+                ")"}]}]}], ")"}], "2"]}], ")"}]}]}]}]}], ",", 
+     RowBox[{"lse", "\[Rule]", 
+      RowBox[{
+       FractionBox["1", 
+        RowBox[{
+         RowBox[{"945.`", " ", "dse"}], "+", 
+         RowBox[{"945.`", " ", "ese", " ", "timeIncrement"}]}]], 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"850.5`", " ", "alpha", " ", "f0", " ", "timeIncrement"}], 
+         "+", 
+         RowBox[{
+         "50.`", " ", "alpha", " ", "f0", " ", "k", " ", "timeIncrement"}], 
+         "-", 
+         RowBox[{"472.5`", " ", "ese", " ", "lastlpe", " ", "timeIncrement"}],
+          "+", 
+         RowBox[{"472.5`", " ", "ese", " ", "len", " ", "timeIncrement"}], 
+         "+", 
+         RowBox[{"472.5`", " ", "ese", " ", "sse", " ", "timeIncrement"}], 
+         "+", 
+         RowBox[{"62.5`", " ", "ese", " ", "k", " ", 
+          SuperscriptBox["timeIncrement", "2"], " ", "vmax"}], "+", 
+         RowBox[{"dse", " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"-", "945.`"}], " ", "lastlpe"}], "+", 
+            RowBox[{"945.`", " ", "len"}], "-", 
+            RowBox[{"472.5`", " ", "timeIncrement", " ", "vel"}], "+", 
+            RowBox[{"62.5`", " ", "k", " ", "timeIncrement", " ", "vmax"}]}], 
+           ")"}]}], "+", 
+         RowBox[{"0.5`", " ", "timeIncrement", " ", 
+          RowBox[{"\[Sqrt]", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"-", "4.`"}], " ", "k", " ", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"945.`", " ", "dse"}], "+", 
+                RowBox[{"945.`", " ", "ese", " ", "timeIncrement"}]}], ")"}], 
+              " ", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"125.`", " ", "alpha", " ", "f0"}], "+", 
+                RowBox[{"ese", " ", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"125.`", " ", "lastlpe"}], "-", 
+                   RowBox[{"125.`", " ", "len"}], "+", 
+                   RowBox[{"125.`", " ", "sse"}]}], ")"}]}], "-", 
+                RowBox[{"125.`", " ", "dse", " ", "vel"}]}], ")"}], " ", 
+              "vmax"}], "+", 
+             SuperscriptBox[
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"alpha", " ", "f0", " ", 
+                 RowBox[{"(", 
+                  RowBox[{"1701.`", "\[VeryThinSpace]", "+", 
+                   RowBox[{"100.`", " ", "k"}]}], ")"}]}], "+", 
+                RowBox[{"dse", " ", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{
+                    RowBox[{"-", "945.`"}], " ", "vel"}], "+", 
+                   RowBox[{"125.`", " ", "k", " ", "vmax"}]}], ")"}]}], "+", 
+                RowBox[{"ese", " ", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"945.`", " ", "lastlpe"}], "-", 
+                   RowBox[{"945.`", " ", "len"}], "+", 
+                   RowBox[{"945.`", " ", "sse"}], "+", 
+                   RowBox[{
+                   "125.`", " ", "k", " ", "timeIncrement", " ", "vmax"}]}], 
+                  ")"}]}]}], ")"}], "2"]}], ")"}]}]}]}], ")"}]}]}], ",", 
+     RowBox[{"vse", "\[Rule]", 
+      RowBox[{
+       FractionBox["1", 
+        RowBox[{
+         RowBox[{"945.`", " ", "dse"}], "+", 
+         RowBox[{"945.`", " ", "ese", " ", "timeIncrement"}]}]], 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"850.5`", " ", "alpha", " ", "f0"}], "+", 
+         RowBox[{"50.`", " ", "alpha", " ", "f0", " ", "k"}], "+", 
+         RowBox[{"472.5`", " ", "ese", " ", "lastlpe"}], "-", 
+         RowBox[{"472.5`", " ", "ese", " ", "len"}], "+", 
+         RowBox[{"472.5`", " ", "ese", " ", "sse"}], "+", 
+         RowBox[{"472.5`", " ", "dse", " ", "vel"}], "+", 
+         RowBox[{"945.`", " ", "ese", " ", "timeIncrement", " ", "vel"}], "+", 
+         RowBox[{"62.5`", " ", "dse", " ", "k", " ", "vmax"}], "+", 
+         RowBox[{
+         "62.5`", " ", "ese", " ", "k", " ", "timeIncrement", " ", "vmax"}], 
+         "+", 
+         RowBox[{"0.5`", " ", 
+          RowBox[{"\[Sqrt]", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"-", "4.`"}], " ", "k", " ", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"945.`", " ", "dse"}], "+", 
+                RowBox[{"945.`", " ", "ese", " ", "timeIncrement"}]}], ")"}], 
+              " ", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"125.`", " ", "alpha", " ", "f0"}], "+", 
+                RowBox[{"ese", " ", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"125.`", " ", "lastlpe"}], "-", 
+                   RowBox[{"125.`", " ", "len"}], "+", 
+                   RowBox[{"125.`", " ", "sse"}]}], ")"}]}], "-", 
+                RowBox[{"125.`", " ", "dse", " ", "vel"}]}], ")"}], " ", 
+              "vmax"}], "+", 
+             SuperscriptBox[
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"alpha", " ", "f0", " ", 
+                 RowBox[{"(", 
+                  RowBox[{"1701.`", "\[VeryThinSpace]", "+", 
+                   RowBox[{"100.`", " ", "k"}]}], ")"}]}], "+", 
+                RowBox[{"dse", " ", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{
+                    RowBox[{"-", "945.`"}], " ", "vel"}], "+", 
+                   RowBox[{"125.`", " ", "k", " ", "vmax"}]}], ")"}]}], "+", 
+                RowBox[{"ese", " ", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"945.`", " ", "lastlpe"}], "-", 
+                   RowBox[{"945.`", " ", "len"}], "+", 
+                   RowBox[{"945.`", " ", "sse"}], "+", 
+                   RowBox[{
+                   "125.`", " ", "k", " ", "timeIncrement", " ", "vmax"}]}], 
+                  ")"}]}]}], ")"}], "2"]}], ")"}]}]}]}], ")"}]}]}], ",", 
+     RowBox[{"vce", "\[Rule]", 
+      RowBox[{
+       FractionBox["1", 
+        RowBox[{
+         RowBox[{"945.`", " ", "dse"}], "+", 
+         RowBox[{"945.`", " ", "ese", " ", "timeIncrement"}]}]], 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"-", "850.5`"}], " ", "alpha", " ", "f0"}], "-", 
+         RowBox[{"50.`", " ", "alpha", " ", "f0", " ", "k"}], "-", 
+         RowBox[{"472.5`", " ", "ese", " ", "lastlpe"}], "+", 
+         RowBox[{"472.5`", " ", "ese", " ", "len"}], "-", 
+         RowBox[{"472.5`", " ", "ese", " ", "sse"}], "+", 
+         RowBox[{"472.5`", " ", "dse", " ", "vel"}], "-", 
+         RowBox[{"62.5`", " ", "dse", " ", "k", " ", "vmax"}], "-", 
+         RowBox[{
+         "62.5`", " ", "ese", " ", "k", " ", "timeIncrement", " ", "vmax"}], 
+         "-", 
+         RowBox[{"0.5`", " ", 
+          RowBox[{"\[Sqrt]", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"-", "4.`"}], " ", "k", " ", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"945.`", " ", "dse"}], "+", 
+                RowBox[{"945.`", " ", "ese", " ", "timeIncrement"}]}], ")"}], 
+              " ", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"125.`", " ", "alpha", " ", "f0"}], "+", 
+                RowBox[{"ese", " ", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"125.`", " ", "lastlpe"}], "-", 
+                   RowBox[{"125.`", " ", "len"}], "+", 
+                   RowBox[{"125.`", " ", "sse"}]}], ")"}]}], "-", 
+                RowBox[{"125.`", " ", "dse", " ", "vel"}]}], ")"}], " ", 
+              "vmax"}], "+", 
+             SuperscriptBox[
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"alpha", " ", "f0", " ", 
+                 RowBox[{"(", 
+                  RowBox[{"1701.`", "\[VeryThinSpace]", "+", 
+                   RowBox[{"100.`", " ", "k"}]}], ")"}]}], "+", 
+                RowBox[{"dse", " ", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{
+                    RowBox[{"-", "945.`"}], " ", "vel"}], "+", 
+                   RowBox[{"125.`", " ", "k", " ", "vmax"}]}], ")"}]}], "+", 
+                RowBox[{"ese", " ", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"945.`", " ", "lastlpe"}], "-", 
+                   RowBox[{"945.`", " ", "len"}], "+", 
+                   RowBox[{"945.`", " ", "sse"}], "+", 
+                   RowBox[{
+                   "125.`", " ", "k", " ", "timeIncrement", " ", "vmax"}]}], 
+                  ")"}]}]}], ")"}], "2"]}], ")"}]}]}]}], ")"}]}]}]}], "}"}], 
+   ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"lpe", "\[Rule]", 
+      RowBox[{
+       FractionBox["1", 
+        RowBox[{
+         RowBox[{"945.`", " ", "dse"}], "+", 
+         RowBox[{"945.`", " ", "ese", " ", "timeIncrement"}]}]], 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"945.`", " ", "dse", " ", "lastlpe"}], "-", 
+         RowBox[{"850.5`", " ", "alpha", " ", "f0", " ", "timeIncrement"}], 
+         "-", 
+         RowBox[{
+         "50.`", " ", "alpha", " ", "f0", " ", "k", " ", "timeIncrement"}], 
+         "+", 
+         RowBox[{"472.5`", " ", "ese", " ", "lastlpe", " ", "timeIncrement"}],
+          "+", 
+         RowBox[{"472.5`", " ", "ese", " ", "len", " ", "timeIncrement"}], 
+         "-", 
+         RowBox[{"472.5`", " ", "ese", " ", "sse", " ", "timeIncrement"}], 
+         "+", 
+         RowBox[{"472.5`", " ", "dse", " ", "timeIncrement", " ", "vel"}], 
+         "-", 
+         RowBox[{
+         "62.5`", " ", "dse", " ", "k", " ", "timeIncrement", " ", "vmax"}], 
+         "-", 
+         RowBox[{"62.5`", " ", "ese", " ", "k", " ", 
+          SuperscriptBox["timeIncrement", "2"], " ", "vmax"}], "+", 
+         RowBox[{"0.5`", " ", "timeIncrement", " ", 
+          RowBox[{"\[Sqrt]", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"-", "4.`"}], " ", "k", " ", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"945.`", " ", "dse"}], "+", 
+                RowBox[{"945.`", " ", "ese", " ", "timeIncrement"}]}], ")"}], 
+              " ", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"125.`", " ", "alpha", " ", "f0"}], "+", 
+                RowBox[{"ese", " ", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"125.`", " ", "lastlpe"}], "-", 
+                   RowBox[{"125.`", " ", "len"}], "+", 
+                   RowBox[{"125.`", " ", "sse"}]}], ")"}]}], "-", 
+                RowBox[{"125.`", " ", "dse", " ", "vel"}]}], ")"}], " ", 
+              "vmax"}], "+", 
+             SuperscriptBox[
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"alpha", " ", "f0", " ", 
+                 RowBox[{"(", 
+                  RowBox[{"1701.`", "\[VeryThinSpace]", "+", 
+                   RowBox[{"100.`", " ", "k"}]}], ")"}]}], "+", 
+                RowBox[{"dse", " ", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{
+                    RowBox[{"-", "945.`"}], " ", "vel"}], "+", 
+                   RowBox[{"125.`", " ", "k", " ", "vmax"}]}], ")"}]}], "+", 
+                RowBox[{"ese", " ", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"945.`", " ", "lastlpe"}], "-", 
+                   RowBox[{"945.`", " ", "len"}], "+", 
+                   RowBox[{"945.`", " ", "sse"}], "+", 
+                   RowBox[{
+                   "125.`", " ", "k", " ", "timeIncrement", " ", "vmax"}]}], 
+                  ")"}]}]}], ")"}], "2"]}], ")"}]}]}]}], ")"}]}]}], ",", 
+     RowBox[{"fce", "\[Rule]", 
+      RowBox[{"0.`", "\[VeryThinSpace]", "+", 
+       RowBox[{"0.9`", " ", "alpha", " ", "f0"}], "+", 
+       RowBox[{"0.052910052910052914`", " ", "alpha", " ", "f0", " ", "k"}], 
+       "-", 
+       RowBox[{"0.5`", " ", "ese", " ", "lastlpe"}], "+", 
+       RowBox[{"0.5`", " ", "ese", " ", "len"}], "-", 
+       RowBox[{"0.5`", " ", "ese", " ", "sse"}], "-", 
+       FractionBox[
+        RowBox[{
+        "7.105427357601002`*^-15", " ", "alpha", " ", "ese", " ", "f0", " ", 
+         "k", " ", "timeIncrement"}], 
+        RowBox[{
+         RowBox[{"945.`", " ", "dse"}], "+", 
+         RowBox[{"945.`", " ", "ese", " ", "timeIncrement"}]}]], "+", 
+       RowBox[{
+       "0.06613756613756613`", " ", "ese", " ", "k", " ", "timeIncrement", 
+        " ", "vmax"}], "+", 
+       RowBox[{"dse", " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"0.5`", " ", "vel"}], "+", 
+          RowBox[{"0.06613756613756615`", " ", "k", " ", "vmax"}]}], ")"}]}], 
+       "-", 
+       RowBox[{"0.0005291005291005291`", " ", 
+        RowBox[{"\[Sqrt]", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"-", "4.`"}], " ", "k", " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"945.`", " ", "dse"}], "+", 
+              RowBox[{"945.`", " ", "ese", " ", "timeIncrement"}]}], ")"}], 
+            " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"125.`", " ", "alpha", " ", "f0"}], "+", 
+              RowBox[{"ese", " ", 
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"125.`", " ", "lastlpe"}], "-", 
+                 RowBox[{"125.`", " ", "len"}], "+", 
+                 RowBox[{"125.`", " ", "sse"}]}], ")"}]}], "-", 
+              RowBox[{"125.`", " ", "dse", " ", "vel"}]}], ")"}], " ", 
+            "vmax"}], "+", 
+           SuperscriptBox[
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"alpha", " ", "f0", " ", 
+               RowBox[{"(", 
+                RowBox[{"1701.`", "\[VeryThinSpace]", "+", 
+                 RowBox[{"100.`", " ", "k"}]}], ")"}]}], "+", 
+              RowBox[{"dse", " ", 
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"-", "945.`"}], " ", "vel"}], "+", 
+                 RowBox[{"125.`", " ", "k", " ", "vmax"}]}], ")"}]}], "+", 
+              RowBox[{"ese", " ", 
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"945.`", " ", "lastlpe"}], "-", 
+                 RowBox[{"945.`", " ", "len"}], "+", 
+                 RowBox[{"945.`", " ", "sse"}], "+", 
+                 RowBox[{
+                 "125.`", " ", "k", " ", "timeIncrement", " ", "vmax"}]}], 
+                ")"}]}]}], ")"}], "2"]}], ")"}]}]}]}]}], ",", 
+     RowBox[{"lse", "\[Rule]", 
+      RowBox[{
+       FractionBox["1", 
+        RowBox[{
+         RowBox[{"945.`", " ", "dse"}], "+", 
+         RowBox[{"945.`", " ", "ese", " ", "timeIncrement"}]}]], 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"850.5`", " ", "alpha", " ", "f0", " ", "timeIncrement"}], 
+         "+", 
+         RowBox[{
+         "50.`", " ", "alpha", " ", "f0", " ", "k", " ", "timeIncrement"}], 
+         "-", 
+         RowBox[{"472.5`", " ", "ese", " ", "lastlpe", " ", "timeIncrement"}],
+          "+", 
+         RowBox[{"472.5`", " ", "ese", " ", "len", " ", "timeIncrement"}], 
+         "+", 
+         RowBox[{"472.5`", " ", "ese", " ", "sse", " ", "timeIncrement"}], 
+         "+", 
+         RowBox[{"62.5`", " ", "ese", " ", "k", " ", 
+          SuperscriptBox["timeIncrement", "2"], " ", "vmax"}], "+", 
+         RowBox[{"dse", " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"-", "945.`"}], " ", "lastlpe"}], "+", 
+            RowBox[{"945.`", " ", "len"}], "-", 
+            RowBox[{"472.5`", " ", "timeIncrement", " ", "vel"}], "+", 
+            RowBox[{"62.5`", " ", "k", " ", "timeIncrement", " ", "vmax"}]}], 
+           ")"}]}], "-", 
+         RowBox[{"0.5`", " ", "timeIncrement", " ", 
+          RowBox[{"\[Sqrt]", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"-", "4.`"}], " ", "k", " ", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"945.`", " ", "dse"}], "+", 
+                RowBox[{"945.`", " ", "ese", " ", "timeIncrement"}]}], ")"}], 
+              " ", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"125.`", " ", "alpha", " ", "f0"}], "+", 
+                RowBox[{"ese", " ", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"125.`", " ", "lastlpe"}], "-", 
+                   RowBox[{"125.`", " ", "len"}], "+", 
+                   RowBox[{"125.`", " ", "sse"}]}], ")"}]}], "-", 
+                RowBox[{"125.`", " ", "dse", " ", "vel"}]}], ")"}], " ", 
+              "vmax"}], "+", 
+             SuperscriptBox[
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"alpha", " ", "f0", " ", 
+                 RowBox[{"(", 
+                  RowBox[{"1701.`", "\[VeryThinSpace]", "+", 
+                   RowBox[{"100.`", " ", "k"}]}], ")"}]}], "+", 
+                RowBox[{"dse", " ", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{
+                    RowBox[{"-", "945.`"}], " ", "vel"}], "+", 
+                   RowBox[{"125.`", " ", "k", " ", "vmax"}]}], ")"}]}], "+", 
+                RowBox[{"ese", " ", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"945.`", " ", "lastlpe"}], "-", 
+                   RowBox[{"945.`", " ", "len"}], "+", 
+                   RowBox[{"945.`", " ", "sse"}], "+", 
+                   RowBox[{
+                   "125.`", " ", "k", " ", "timeIncrement", " ", "vmax"}]}], 
+                  ")"}]}]}], ")"}], "2"]}], ")"}]}]}]}], ")"}]}]}], ",", 
+     RowBox[{"vse", "\[Rule]", 
+      RowBox[{
+       FractionBox["1", 
+        RowBox[{
+         RowBox[{"945.`", " ", "dse"}], "+", 
+         RowBox[{"945.`", " ", "ese", " ", "timeIncrement"}]}]], 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"850.5`", " ", "alpha", " ", "f0"}], "+", 
+         RowBox[{"50.`", " ", "alpha", " ", "f0", " ", "k"}], "+", 
+         RowBox[{"472.5`", " ", "ese", " ", "lastlpe"}], "-", 
+         RowBox[{"472.5`", " ", "ese", " ", "len"}], "+", 
+         RowBox[{"472.5`", " ", "ese", " ", "sse"}], "+", 
+         RowBox[{"472.5`", " ", "dse", " ", "vel"}], "+", 
+         RowBox[{"945.`", " ", "ese", " ", "timeIncrement", " ", "vel"}], "+", 
+         RowBox[{"62.5`", " ", "dse", " ", "k", " ", "vmax"}], "+", 
+         RowBox[{
+         "62.5`", " ", "ese", " ", "k", " ", "timeIncrement", " ", "vmax"}], 
+         "-", 
+         RowBox[{"0.5`", " ", 
+          RowBox[{"\[Sqrt]", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"-", "4.`"}], " ", "k", " ", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"945.`", " ", "dse"}], "+", 
+                RowBox[{"945.`", " ", "ese", " ", "timeIncrement"}]}], ")"}], 
+              " ", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"125.`", " ", "alpha", " ", "f0"}], "+", 
+                RowBox[{"ese", " ", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"125.`", " ", "lastlpe"}], "-", 
+                   RowBox[{"125.`", " ", "len"}], "+", 
+                   RowBox[{"125.`", " ", "sse"}]}], ")"}]}], "-", 
+                RowBox[{"125.`", " ", "dse", " ", "vel"}]}], ")"}], " ", 
+              "vmax"}], "+", 
+             SuperscriptBox[
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"alpha", " ", "f0", " ", 
+                 RowBox[{"(", 
+                  RowBox[{"1701.`", "\[VeryThinSpace]", "+", 
+                   RowBox[{"100.`", " ", "k"}]}], ")"}]}], "+", 
+                RowBox[{"dse", " ", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{
+                    RowBox[{"-", "945.`"}], " ", "vel"}], "+", 
+                   RowBox[{"125.`", " ", "k", " ", "vmax"}]}], ")"}]}], "+", 
+                RowBox[{"ese", " ", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"945.`", " ", "lastlpe"}], "-", 
+                   RowBox[{"945.`", " ", "len"}], "+", 
+                   RowBox[{"945.`", " ", "sse"}], "+", 
+                   RowBox[{
+                   "125.`", " ", "k", " ", "timeIncrement", " ", "vmax"}]}], 
+                  ")"}]}]}], ")"}], "2"]}], ")"}]}]}]}], ")"}]}]}], ",", 
+     RowBox[{"vce", "\[Rule]", 
+      RowBox[{
+       FractionBox["1", 
+        RowBox[{
+         RowBox[{"945.`", " ", "dse"}], "+", 
+         RowBox[{"945.`", " ", "ese", " ", "timeIncrement"}]}]], 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"-", "850.5`"}], " ", "alpha", " ", "f0"}], "-", 
+         RowBox[{"50.`", " ", "alpha", " ", "f0", " ", "k"}], "-", 
+         RowBox[{"472.5`", " ", "ese", " ", "lastlpe"}], "+", 
+         RowBox[{"472.5`", " ", "ese", " ", "len"}], "-", 
+         RowBox[{"472.5`", " ", "ese", " ", "sse"}], "+", 
+         RowBox[{"472.5`", " ", "dse", " ", "vel"}], "-", 
+         RowBox[{"62.5`", " ", "dse", " ", "k", " ", "vmax"}], "-", 
+         RowBox[{
+         "62.5`", " ", "ese", " ", "k", " ", "timeIncrement", " ", "vmax"}], 
+         "+", 
+         RowBox[{"0.5`", " ", 
+          RowBox[{"\[Sqrt]", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"-", "4.`"}], " ", "k", " ", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"945.`", " ", "dse"}], "+", 
+                RowBox[{"945.`", " ", "ese", " ", "timeIncrement"}]}], ")"}], 
+              " ", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"125.`", " ", "alpha", " ", "f0"}], "+", 
+                RowBox[{"ese", " ", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"125.`", " ", "lastlpe"}], "-", 
+                   RowBox[{"125.`", " ", "len"}], "+", 
+                   RowBox[{"125.`", " ", "sse"}]}], ")"}]}], "-", 
+                RowBox[{"125.`", " ", "dse", " ", "vel"}]}], ")"}], " ", 
+              "vmax"}], "+", 
+             SuperscriptBox[
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"alpha", " ", "f0", " ", 
+                 RowBox[{"(", 
+                  RowBox[{"1701.`", "\[VeryThinSpace]", "+", 
+                   RowBox[{"100.`", " ", "k"}]}], ")"}]}], "+", 
+                RowBox[{"dse", " ", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{
+                    RowBox[{"-", "945.`"}], " ", "vel"}], "+", 
+                   RowBox[{"125.`", " ", "k", " ", "vmax"}]}], ")"}]}], "+", 
+                RowBox[{"ese", " ", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"945.`", " ", "lastlpe"}], "-", 
+                   RowBox[{"945.`", " ", "len"}], "+", 
+                   RowBox[{"945.`", " ", "sse"}], "+", 
+                   RowBox[{
+                   "125.`", " ", "k", " ", "timeIncrement", " ", "vmax"}]}], 
+                  ")"}]}]}], ")"}], "2"]}], ")"}]}]}]}], ")"}]}]}]}], "}"}]}],
+   "}"}]], "Output",
+ CellChangeTimes->{3.511334063778689*^9, 3.511334129127554*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"CForm", "[", 
+  RowBox[{"FullSimplify", "[", 
+   RowBox[{"Solve", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"eq1", ",", "eq6", ",", "eq4", ",", "eq5", ",", "eq7"}], "}"}], 
+     ",", 
+     RowBox[{"{", 
+      RowBox[{"lpe", ",", "fce", ",", "lse", ",", "vse", ",", "vce"}], 
+      "}"}]}], "]"}], "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.511334221445417*^9, 3.511334224914467*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"Solve", "::", "ratnz"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Solve was unable to solve the system with inexact \
+coefficients. The answer was obtained by solving a corresponding exact system \
+and numericizing the result. \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", \
+ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/Solve\\\", ButtonNote -> \
+\\\"Solve::ratnz\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.511334225830266*^9}],
+
+Cell["\<\
+List(List(Rule(lpe,(945.*dse*lastlpe - 850.5*alpha*f0*timeIncrement - \
+50.*alpha*f0*k*timeIncrement + 472.5*ese*lastlpe*timeIncrement + 
+        472.5*ese*len*timeIncrement - 472.5*ese*sse*timeIncrement + \
+472.5*dse*timeIncrement*vel - 62.5*dse*k*timeIncrement*vmax - 
+        62.5*ese*k*Power(timeIncrement,2)*vmax - 0.5*timeIncrement*
+         Sqrt(-4.*k*(945.*dse + 945.*ese*timeIncrement)*(125.*alpha*f0 + \
+ese*(125.*lastlpe - 125.*len + 125.*sse) - 125.*dse*vel)*vmax + 
+           Power(alpha*f0*(1701. + 100.*k) + dse*(-945.*vel + 125.*k*vmax) + \
+ese*(945.*lastlpe - 945.*len + 945.*sse + 125.*k*timeIncrement*vmax),2)))/
+      (945.*dse + 945.*ese*timeIncrement)),Rule(fce,0. + 0.9*alpha*f0 + \
+0.052910052910052914*alpha*f0*k - 0.5*ese*lastlpe + 0.5*ese*len - 
+      0.5*ese*sse - \
+(7.105427357601002e-15*alpha*ese*f0*k*timeIncrement)/(945.*dse + \
+945.*ese*timeIncrement) + 
+      0.06613756613756613*ese*k*timeIncrement*vmax + dse*(0.5*vel + \
+0.06613756613756615*k*vmax) + 
+      0.0005291005291005291*Sqrt(-4.*k*(945.*dse + \
+945.*ese*timeIncrement)*(125.*alpha*f0 + ese*(125.*lastlpe - 125.*len + \
+125.*sse) - 125.*dse*vel)*
+          vmax + Power(alpha*f0*(1701. + 100.*k) + dse*(-945.*vel + \
+125.*k*vmax) + 
+           ese*(945.*lastlpe - 945.*len + 945.*sse + \
+125.*k*timeIncrement*vmax),2))),
+    Rule(lse,(850.5*alpha*f0*timeIncrement + 50.*alpha*f0*k*timeIncrement - \
+472.5*ese*lastlpe*timeIncrement + 472.5*ese*len*timeIncrement + 
+        472.5*ese*sse*timeIncrement + 62.5*ese*k*Power(timeIncrement,2)*vmax + 
+        dse*(-945.*lastlpe + 945.*len - 472.5*timeIncrement*vel + \
+62.5*k*timeIncrement*vmax) + 
+        0.5*timeIncrement*Sqrt(-4.*k*(945.*dse + \
+945.*ese*timeIncrement)*(125.*alpha*f0 + ese*(125.*lastlpe - 125.*len + \
+125.*sse) - 125.*dse*vel)*
+            vmax + Power(alpha*f0*(1701. + 100.*k) + dse*(-945.*vel + \
+125.*k*vmax) + 
+             ese*(945.*lastlpe - 945.*len + 945.*sse + \
+125.*k*timeIncrement*vmax),2)))/(945.*dse + 945.*ese*timeIncrement)),
+    Rule(vse,(850.5*alpha*f0 + 50.*alpha*f0*k + 472.5*ese*lastlpe - \
+472.5*ese*len + 472.5*ese*sse + 472.5*dse*vel + 945.*ese*timeIncrement*vel + 
+        62.5*dse*k*vmax + 62.5*ese*k*timeIncrement*vmax + 0.5*
+         Sqrt(-4.*k*(945.*dse + 945.*ese*timeIncrement)*(125.*alpha*f0 + \
+ese*(125.*lastlpe - 125.*len + 125.*sse) - 125.*dse*vel)*vmax + 
+           Power(alpha*f0*(1701. + 100.*k) + dse*(-945.*vel + 125.*k*vmax) + \
+ese*(945.*lastlpe - 945.*len + 945.*sse + 125.*k*timeIncrement*vmax),2)))/
+      (945.*dse + 945.*ese*timeIncrement)),Rule(vce,(-850.5*alpha*f0 - \
+50.*alpha*f0*k - 472.5*ese*lastlpe + 472.5*ese*len - 472.5*ese*sse + 
+        472.5*dse*vel - 62.5*dse*k*vmax - 62.5*ese*k*timeIncrement*vmax - 
+        0.5*Sqrt(-4.*k*(945.*dse + 945.*ese*timeIncrement)*(125.*alpha*f0 + \
+ese*(125.*lastlpe - 125.*len + 125.*sse) - 125.*dse*vel)*vmax + 
+           Power(alpha*f0*(1701. + 100.*k) + dse*(-945.*vel + 125.*k*vmax) + \
+ese*(945.*lastlpe - 945.*len + 945.*sse + 125.*k*timeIncrement*vmax),2)))/
+      (945.*dse + 945.*ese*timeIncrement))),List(Rule(lpe,(945.*dse*lastlpe - \
+850.5*alpha*f0*timeIncrement - 50.*alpha*f0*k*timeIncrement + 
+        472.5*ese*lastlpe*timeIncrement + 472.5*ese*len*timeIncrement - \
+472.5*ese*sse*timeIncrement + 472.5*dse*timeIncrement*vel - 
+        62.5*dse*k*timeIncrement*vmax - \
+62.5*ese*k*Power(timeIncrement,2)*vmax + 
+        0.5*timeIncrement*Sqrt(-4.*k*(945.*dse + \
+945.*ese*timeIncrement)*(125.*alpha*f0 + ese*(125.*lastlpe - 125.*len + \
+125.*sse) - 125.*dse*vel)*
+            vmax + Power(alpha*f0*(1701. + 100.*k) + dse*(-945.*vel + \
+125.*k*vmax) + 
+             ese*(945.*lastlpe - 945.*len + 945.*sse + \
+125.*k*timeIncrement*vmax),2)))/(945.*dse + 945.*ese*timeIncrement)),
+    Rule(fce,0. + 0.9*alpha*f0 + 0.052910052910052914*alpha*f0*k - \
+0.5*ese*lastlpe + 0.5*ese*len - 0.5*ese*sse - 
+      (7.105427357601002e-15*alpha*ese*f0*k*timeIncrement)/(945.*dse + \
+945.*ese*timeIncrement) + 0.06613756613756613*ese*k*timeIncrement*vmax + 
+      dse*(0.5*vel + 0.06613756613756615*k*vmax) - 0.0005291005291005291*
+       Sqrt(-4.*k*(945.*dse + 945.*ese*timeIncrement)*(125.*alpha*f0 + \
+ese*(125.*lastlpe - 125.*len + 125.*sse) - 125.*dse*vel)*vmax + 
+         Power(alpha*f0*(1701. + 100.*k) + dse*(-945.*vel + 125.*k*vmax) + \
+ese*(945.*lastlpe - 945.*len + 945.*sse + 125.*k*timeIncrement*vmax),2))),
+    Rule(lse,(850.5*alpha*f0*timeIncrement + 50.*alpha*f0*k*timeIncrement - \
+472.5*ese*lastlpe*timeIncrement + 472.5*ese*len*timeIncrement + 
+        472.5*ese*sse*timeIncrement + 62.5*ese*k*Power(timeIncrement,2)*vmax + 
+        dse*(-945.*lastlpe + 945.*len - 472.5*timeIncrement*vel + \
+62.5*k*timeIncrement*vmax) - 
+        0.5*timeIncrement*Sqrt(-4.*k*(945.*dse + \
+945.*ese*timeIncrement)*(125.*alpha*f0 + ese*(125.*lastlpe - 125.*len + \
+125.*sse) - 125.*dse*vel)*
+            vmax + Power(alpha*f0*(1701. + 100.*k) + dse*(-945.*vel + \
+125.*k*vmax) + 
+             ese*(945.*lastlpe - 945.*len + 945.*sse + \
+125.*k*timeIncrement*vmax),2)))/(945.*dse + 945.*ese*timeIncrement)),
+    Rule(vse,(850.5*alpha*f0 + 50.*alpha*f0*k + 472.5*ese*lastlpe - \
+472.5*ese*len + 472.5*ese*sse + 472.5*dse*vel + 945.*ese*timeIncrement*vel + 
+        62.5*dse*k*vmax + 62.5*ese*k*timeIncrement*vmax - 0.5*
+         Sqrt(-4.*k*(945.*dse + 945.*ese*timeIncrement)*(125.*alpha*f0 + \
+ese*(125.*lastlpe - 125.*len + 125.*sse) - 125.*dse*vel)*vmax + 
+           Power(alpha*f0*(1701. + 100.*k) + dse*(-945.*vel + 125.*k*vmax) + \
+ese*(945.*lastlpe - 945.*len + 945.*sse + 125.*k*timeIncrement*vmax),2)))/
+      (945.*dse + 945.*ese*timeIncrement)),Rule(vce,(-850.5*alpha*f0 - \
+50.*alpha*f0*k - 472.5*ese*lastlpe + 472.5*ese*len - 472.5*ese*sse + 
+        472.5*dse*vel - 62.5*dse*k*vmax - 62.5*ese*k*timeIncrement*vmax + 
+        0.5*Sqrt(-4.*k*(945.*dse + 945.*ese*timeIncrement)*(125.*alpha*f0 + \
+ese*(125.*lastlpe - 125.*len + 125.*sse) - 125.*dse*vel)*vmax + 
+           Power(alpha*f0*(1701. + 100.*k) + dse*(-945.*vel + 125.*k*vmax) + \
+ese*(945.*lastlpe - 945.*len + 945.*sse + 125.*k*timeIncrement*vmax),2)))/
+      (945.*dse + 945.*ese*timeIncrement))))\
+\>", "Output",
+ CellChangeTimes->{3.511334225870029*^9}]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{1227, 1138},
+WindowMargins->{{237, Automatic}, {Automatic, 0}},
+FrontEndVersion->"8.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (February 23, \
+2011)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[567, 22, 58, 0, 76, "Title"],
+Cell[CellGroupData[{
+Cell[650, 26, 33, 0, 67, "Section"],
+Cell[686, 28, 91, 2, 27, "Input"],
+Cell[CellGroupData[{
+Cell[802, 34, 74, 1, 27, "Input"],
+Cell[879, 37, 513, 11, 70, "Message"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[1441, 54, 47, 0, 46, "Subtitle"],
+Cell[1491, 56, 32, 0, 26, "Text"],
+Cell[1526, 58, 244, 13, 180, "Program"],
+Cell[1773, 73, 115, 3, 26, "Text"],
+Cell[1891, 78, 26, 0, 26, "Text"],
+Cell[CellGroupData[{
+Cell[1942, 82, 701, 22, 27, "Input"],
+Cell[2646, 106, 507, 14, 47, "Output"]
+}, Open  ]],
+Cell[3168, 123, 456, 13, 47, "Input"],
+Cell[3627, 138, 27, 0, 26, "Text"],
+Cell[CellGroupData[{
+Cell[3679, 142, 502, 17, 27, "Input"],
+Cell[4184, 161, 348, 10, 47, "Output"]
+}, Open  ]],
+Cell[4547, 174, 291, 9, 46, "Input"],
+Cell[4841, 185, 220, 8, 116, "Text"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[5098, 198, 27, 0, 46, "Subtitle"],
+Cell[5128, 200, 420, 10, 101, "Text"],
+Cell[CellGroupData[{
+Cell[5573, 214, 32, 0, 26, "Subsubtitle"],
+Cell[5608, 216, 275, 7, 27, "Input"],
+Cell[5886, 225, 300, 6, 27, "Input"],
+Cell[6189, 233, 232, 6, 56, "Text"],
+Cell[6424, 241, 293, 8, 27, "Input"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[6766, 255, 36, 0, 46, "Subtitle"],
+Cell[6805, 257, 33, 0, 26, "Subsubtitle"],
+Cell[6841, 259, 120, 1, 26, "Text"],
+Cell[6964, 262, 62, 0, 26, "Text"],
+Cell[7029, 264, 158, 2, 26, "Text"],
+Cell[CellGroupData[{
+Cell[7212, 270, 33, 0, 26, "Subsubtitle"],
+Cell[7248, 272, 29, 0, 26, "Text"],
+Cell[CellGroupData[{
+Cell[7302, 276, 691, 15, 27, "Input"],
+Cell[7996, 293, 10162, 267, 555, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[18195, 565, 414, 11, 27, "Input"],
+Cell[18612, 578, 2278, 48, 338, "Output"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[20939, 632, 169, 3, 26, "Subsubtitle"],
+Cell[CellGroupData[{
+Cell[21133, 639, 413, 11, 27, "Input"],
+Cell[21549, 652, 546, 18, 46, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[22132, 675, 451, 12, 27, "Input"],
+Cell[22586, 689, 221, 5, 39, "Output"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[22856, 700, 139, 1, 26, "Subsubtitle"],
+Cell[CellGroupData[{
+Cell[23020, 705, 299, 9, 27, "Input"],
+Cell[23322, 716, 1147, 35, 48, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[24506, 756, 361, 10, 27, "Input"],
+Cell[24870, 768, 316, 6, 52, "Output"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[25235, 780, 32, 0, 26, "Subsubtitle"],
+Cell[25270, 782, 28, 0, 26, "Text"],
+Cell[CellGroupData[{
+Cell[25323, 786, 374, 10, 27, "Input"],
+Cell[25700, 798, 523, 11, 23, "Message"],
+Cell[26226, 811, 16208, 386, 584, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[42471, 1202, 410, 11, 27, "Input"],
+Cell[42884, 1215, 523, 11, 23, "Message"],
+Cell[43410, 1228, 3630, 59, 442, "Output"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[47089, 1293, 139, 1, 26, "Subsubtitle"],
+Cell[CellGroupData[{
+Cell[47253, 1298, 348, 10, 27, "Input"],
+Cell[47604, 1310, 1903, 54, 86, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[49544, 1369, 414, 11, 27, "Input"],
+Cell[49961, 1382, 454, 9, 65, "Output"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[50476, 1398, 34, 0, 46, "Subtitle"],
+Cell[50513, 1400, 202, 4, 26, "Text"],
+Cell[50718, 1406, 179, 5, 56, "Text"],
+Cell[CellGroupData[{
+Cell[50922, 1415, 32, 0, 26, "Subsubtitle"],
+Cell[50957, 1417, 355, 10, 27, "Input"],
+Cell[51315, 1429, 172, 4, 27, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[51524, 1438, 33, 0, 26, "Subsubtitle"],
+Cell[51560, 1440, 29, 0, 26, "Text"],
+Cell[CellGroupData[{
+Cell[51614, 1444, 818, 17, 27, "Input"],
+Cell[52435, 1463, 19978, 496, 757, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[72450, 1964, 421, 11, 27, "Input"],
+Cell[72874, 1977, 3881, 66, 442, "Output"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[76804, 2049, 32, 0, 26, "Subsubtitle"],
+Cell[76839, 2051, 28, 0, 26, "Text"],
+Cell[CellGroupData[{
+Cell[76892, 2055, 429, 11, 27, "Input"],
+Cell[77324, 2068, 544, 11, 23, "Message"],
+Cell[77871, 2081, 29028, 687, 921, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[106936, 2773, 420, 11, 27, "Input"],
+Cell[107359, 2786, 523, 11, 23, "Message"],
+Cell[107885, 2799, 6203, 100, 689, "Output"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)

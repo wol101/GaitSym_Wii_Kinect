@@ -1,0 +1,598 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE GAITSYMODE SYSTEM "gaitsymode.dtd">
+
+<GAITSYMODE>
+
+<!--
+This is based on Gemma's subject number 1
+-->
+
+<GLOBAL 
+    IntegrationStepSize="1e-4"
+    GravityVector="0.0 0.0 -9.81"
+    ERP="0.2"
+    CFM="1e-10"
+    ContactMaxCorrectingVel="10"
+    ContactSurfaceLayer="0.001"
+    AllowInternalCollisions="true"
+    BMR="0" 
+    TimeLimit="100"
+    MetabolicEnergyLimit="3000"
+    MechanicalEnergyLimit="0"
+    FitnessType="DistanceTravelled"
+    DistanceTravelledBodyID="Torso" 
+/>    
+
+<INTERFACE
+    EnvironmentAxisSize="1 1 1"
+    EnvironmentColour="0.5 0.5 1.0 1.0"
+    BodyAxisSize="0.1 0.1 0.1"
+    BodyColour="0.91 0.85 0.79 1.0"
+    JointAxisSize="0.1 0.1 0.1"
+    JointColour="0 1 0 1"
+    GeomColour="0 0 1 0.5"
+    StrapColour="1 0 0 1"
+    StrapForceColour="1 0 0 0.5"
+    StrapForceRadius="0.015"
+    StrapForceScale="0.0001"
+    StrapCylinderColour="0 1 1 0.5"
+    StrapCylinderLength="0.1"
+/>
+
+<ENVIRONMENT
+    Plane="0 0 1 0"
+/>
+
+<!-- 
+Bodies
+-->
+
+<!--
+Local coordinates are with the distal/caudal axis as the x axis, ventral is z, and y is left
+Global coordinates are x forward; y left; z up
+For a human in the anatomical position converting from local to global is a 90 degree rotation about the y axis
+
+Quaternions are (qs,qx,qy,qz)
+-->
+
+<BODY
+    ID="Torso"
+    GraphicFile="pelvis.obj"
+    Scale="0.549"
+    Mass="50.7144"
+    MOI="0.37438 3.7438 3.7438 0 0 0"
+    Position="0.0597    0.0000    1.3385"
+    Quaternion="0.6428    0.0000    0.7660    0.0000"
+    LinearVelocity="1.7102    0.0000    0.1909"
+    AngularVelocity="0.0000    -1.5231    0.0000"
+/>
+
+<BODY
+    ID="RightThigh"
+    GraphicFile="right_femur.obj"
+    Scale="0.455"
+    Mass="7.48"
+    MOI="0.01612 0.1612 0.1612 0 0 0"
+    Position="0.0131    -0.082    0.8034"
+    Quaternion="0.7303    0.0000    0.6832    0.0000"
+    LinearVelocity="0.9740    0.0000    0.1147"
+    AngularVelocity="0.0000    1.1225    0.0000"
+/>
+
+<BODY
+    ID="RightLeg"
+    GraphicFile="right_tib_fib.obj"
+    Scale="0.452"
+    Mass="3.4782"
+    MOI="0.00649 0.0649 0.0649 0 0 0"
+    Position="0.0526    -0.082    0.3516"
+    Quaternion="0.7463    0.0000    0.6656    0.0000"
+    LinearVelocity="0.4160    0.0000    0.1314"
+    AngularVelocity="0.0000    1.4092    0.0000"
+/>
+
+<BODY
+    ID="RightFoot"
+    GraphicFile="right_foot.obj"
+    Scale="0.169"
+    Mass="1.0846"
+    MOI="0.00070 0.0070 0.0070 0 0 0"
+    Position="0.1661    -0.082    0.1020"
+    Quaternion="0.9995    0.0000    -0.0301    0.0000"
+    LinearVelocity="0.0705    0.0000    0.0476"
+    AngularVelocity="0.0000    0.0902    0.0000"
+/>
+
+<BODY
+    ID="LeftThigh"
+    GraphicFile="left_femur.obj"
+    Scale="0.455"
+    Mass="7.48"
+    MOI="0.01612 0.1612 0.1612 0 0 0"
+    Position="-0.0684    0.082    0.8153"
+    Quaternion="0.5713    0.0000    0.8208    0.0000"
+    LinearVelocity="1.5099    0.0000    0.2168"
+    AngularVelocity="0.0000    -1.7062    0.0000"
+/>
+
+<BODY
+    ID="LeftLeg"
+    GraphicFile="left_tib_fib.obj"
+    Scale="0.452"
+    Mass="3.4782"
+    MOI="0.00649 0.0649 0.0649 0 0 0"
+    Position="-0.2259    0.082    0.3898"
+    Quaternion="0.5715    0.0000    0.8206    0.0000"
+    LinearVelocity="2.1936    0.0000    0.0085"
+    AngularVelocity="0.0000    -1.5992    0.0000"
+/>
+
+<BODY
+    ID="LeftFoot"
+    GraphicFile="left_foot.obj"
+    Scale="0.169"
+    Mass="1.0846"
+    MOI="0.00070 0.0070 0.0070 0 0 0"
+    Position="-0.2315    0.082    0.1349"
+    Quaternion="0.9963    0.0000    0.0862    0.0000"
+    LinearVelocity="2.6471    0.0000    -0.6604"
+    AngularVelocity="0.0000    -3.2482    0.0000"
+/>
+
+
+<!--
+Joints
+-->
+
+<JOINT
+    ID="RightHip"
+    Type="Hinge"
+    Body1ID="Torso"
+    Body2ID="RightThigh"
+    HingeAnchor="0.3437 -0.0820 0"
+    HingeAxis="0 1 0"
+    StartAngleReference="0.241"
+    ParamLoStop="-0.175"
+    ParamHiStop="2.094"
+/>
+
+<JOINT
+    ID="RightKnee"
+    Type="Hinge"
+    Body1ID="RightThigh"
+    Body2ID="RightLeg"
+    HingeAnchor="0.2580 0 0"
+    HingeAxis="0 1 0"
+    StartAngleReference="0.047"
+    ParamLoStop="-1.571"
+    ParamHiStop="0.000"
+/>
+
+<JOINT
+    ID="RightAnkle"
+    Type="Hinge"
+    Body1ID="RightLeg"
+    Body2ID="RightFoot"
+    HingeAnchor="0.2564 0 0"
+    HingeAxis="0 1 0"
+    StartAngleReference="1.517"
+    ParamLoStop="0.698"
+    ParamHiStop="1.972"
+/>
+
+<JOINT
+    ID="LeftHip"
+    Type="Hinge"
+    Body1ID="Torso"
+    Body2ID="LeftThigh"
+    HingeAnchor="0.3437 0.0820 0"
+    HingeAxis="0 1 0"
+    StartAngleReference="-0.180"
+    ParamLoStop="-0.175"
+    ParamHiStop="2.094"
+/>
+
+<JOINT
+    ID="LeftKnee"
+    Type="Hinge"
+    Body1ID="LeftThigh"
+    Body2ID="LeftLeg"
+    HingeAnchor="0.2580 0 0"
+    HingeAxis="0 1 0"
+    StartAngleReference="0.001"
+    ParamLoStop="-1.571"
+    ParamHiStop="0.000"
+/>
+
+<JOINT
+    ID="LeftAnkle"
+    Type="Hinge"
+    Body1ID="LeftLeg"
+    Body2ID="LeftFoot"
+    HingeAnchor="0.2564 0 0"
+    HingeAxis="0 1 0"
+    StartAngleReference="1.752"
+    ParamLoStop="0.698"
+    ParamHiStop="1.972"
+/>
+
+<!--
+Collision Geoms
+-->
+
+<GEOM
+    ID="RightFootContact1"
+    Type="CappedCylinder"
+    BodyID="RightFoot"
+    Position="-0.135 0.0 -0.05"
+    Quaternion="0.0000000000000000 0.0000000000000000 0.7071067811865475 0.7071067811865476"
+    Radius="0.03"
+    Length="0.05"
+/>
+
+<GEOM
+    ID="RightFootContact2"
+    Type="CappedCylinder"
+    BodyID="RightFoot"
+    Position="0.085 -0.02 0.0"
+    Quaternion="0.0000000000000000 0.0000000000000000 0.7071067811865475 0.7071067811865476"
+    Radius="0.03"
+    Length="0.12"
+/>
+
+<GEOM
+    ID="LeftFootContact1"
+    Type="CappedCylinder"
+    BodyID="LeftFoot"
+    Position="-0.135 0.0 -0.05"
+    Quaternion="0.0000000000000000 0.0000000000000000 0.7071067811865475 0.7071067811865476"
+    Radius="0.03"
+    Length="0.05"
+/>
+
+<GEOM
+    ID="LeftFootContact2"
+    Type="CappedCylinder"
+    BodyID="LeftFoot"
+    Position="0.085 0.02 0.0"
+    Quaternion="0.0000000000000000 0.0000000000000000 0.7071067811865475 0.7071067811865476"
+    Radius="0.03"
+    Length="0.12"
+/>
+
+<!--
+Muscles
+-->
+
+
+<MUSCLE
+    Type="UmbergerGerritsenMartin"
+    Strap="TwoPoint"
+    ID="RightHipExtensor"
+    OriginBodyID="Torso"
+    Origin="0.395 -0.082 -0.076"
+    InsertionBodyID="RightThigh"
+    Insertion="0.103 0.0 -0.005"
+    PCA="0.0137"
+    FibreLength="0.130"
+    TendonLength="0.129"
+    SerialStrainModel="Square"
+    SerialStrainAtFmax="0.06"
+    ParallelStrainModel="Square"
+    ParallelStrainAtFmax="0.6"
+    ForcePerUnitArea="250000"
+    VMaxFactor="12"
+    Width="0.97"
+    FastTwitchProportion="0.43"
+    MuscleDensity="1059.7"
+    Aerobic="true"
+    AllowReverseWork="true"
+
+/>
+
+<MUSCLE
+    Type="UmbergerGerritsenMartin"
+    Strap="TwoPoint"
+    ID="RightHipFlexor"
+    OriginBodyID="Torso"
+    Origin="0.263 -0.082 0.071"
+    InsertionBodyID="RightThigh"
+    Insertion="-0.037 0.0 0.029"
+    PCA="0.0075"
+    FibreLength="0.150"
+    TendonLength="0.094"
+    SerialStrainModel="Square"
+    SerialStrainAtFmax="0.06"
+    ParallelStrainModel="Square"
+    ParallelStrainAtFmax="0.6"
+    ForcePerUnitArea="250000"
+    VMaxFactor="12"
+    Width="0.97"
+    FastTwitchProportion="0.43"
+    MuscleDensity="1059.7"
+    Aerobic="true"
+    AllowReverseWork="true"
+
+/>
+
+<MUSCLE
+    Type="UmbergerGerritsenMartin"
+    Strap="CylinderWrap"
+    ID="RightKneeExtensor"
+    OriginBodyID="RightThigh"
+    Origin="0.053 0.0 0.029 "
+    InsertionBodyID="RightLeg"
+    Insertion="-0.12 0.0 0.043"
+    CylinderBodyID="RightLeg"
+    CylinderPosition="-0.1957 0.0 0.0"
+    CylinderRadius="0.06"
+    CylinderQuaternion="-0.7071067811865475 0.7071067811865476 0.0000000000000000 0.0000000000000000"
+    PCA="0.0203"
+    FibreLength="0.106"
+    TendonLength="0.179"
+    SerialStrainModel="Square"
+    SerialStrainAtFmax="0.06"
+    ParallelStrainModel="Square"
+    ParallelStrainAtFmax="0.6"
+    ForcePerUnitArea="250000"
+    VMaxFactor="12"
+    Width="0.97"
+    FastTwitchProportion="0.43"
+    MuscleDensity="1059.7"
+    Aerobic="true"
+    AllowReverseWork="true"
+
+/>
+
+<MUSCLE
+    Type="UmbergerGerritsenMartin"
+    Strap="TwoPoint"
+    ID="RightKneeFlexor"
+    OriginBodyID="RightThigh"
+    Origin="0.053 0.0 0.0"
+    InsertionBodyID="RightLeg"
+    Insertion="-0.14 0.0 -0.04"
+    PCA="0.0159"
+    FibreLength="0.104"
+    TendonLength="0.160"
+    SerialStrainModel="Square"
+    SerialStrainAtFmax="0.06"
+    ParallelStrainModel="Square"
+    ParallelStrainAtFmax="0.6"
+    ForcePerUnitArea="250000"
+    VMaxFactor="12"
+    Width="0.97"
+    FastTwitchProportion="0.43"
+    MuscleDensity="1059.7"
+    Aerobic="true"
+    AllowReverseWork="true"
+
+/>
+
+<!--dorsiflexion-->
+<MUSCLE
+    Type="UmbergerGerritsenMartin"
+    Strap="TwoPoint"
+    ID="RightAnkleExtensor"
+    OriginBodyID="RightLeg"
+    Origin="-0.056 0.0 0.033"
+    InsertionBodyID="RightFoot"
+    Insertion="-0.056 0.0  0.0"
+    PCA="0.0051"
+    FibreLength="0.089"
+    TendonLength="0.228"
+    SerialStrainModel="Square"
+    SerialStrainAtFmax="0.06"
+    ParallelStrainModel="Square"
+    ParallelStrainAtFmax="0.6"
+    ForcePerUnitArea="250000"
+    VMaxFactor="12"
+    Width="0.97"
+    FastTwitchProportion="0.43"
+    MuscleDensity="1059.7"
+    Aerobic="true"
+    AllowReverseWork="true"
+
+/>
+
+<!--plantarflexion-->
+<MUSCLE
+    Type="UmbergerGerritsenMartin"
+    Strap="TwoPoint"
+    ID="RightAnkleFlexor"
+    OriginBodyID="RightLeg"
+    Origin="-0.139 0.0 -0.029"
+    InsertionBodyID="RightFoot"
+    Insertion="-0.142 0.0 -0.038"
+    PCA="0.0264"
+    FibreLength="0.055"
+    TendonLength="0.369"
+    SerialStrainModel="Square"
+    SerialStrainAtFmax="0.06"
+    ParallelStrainModel="Square"
+    ParallelStrainAtFmax="0.6"
+    ForcePerUnitArea="250000"
+    VMaxFactor="12"
+    Width="0.97"
+    FastTwitchProportion="0.43"
+    MuscleDensity="1059.7"
+    Aerobic="true"
+    AllowReverseWork="true"
+
+/>
+
+
+
+<MUSCLE
+    Type="UmbergerGerritsenMartin"
+    Strap="TwoPoint"
+    ID="LeftHipExtensor"
+    OriginBodyID="Torso"
+    Origin="0.395 -0.082 -0.076"
+    InsertionBodyID="LeftThigh"
+    Insertion="0.103 0.0 -0.005"
+    PCA="0.0137"
+    FibreLength="0.130"
+    TendonLength="0.129"
+    SerialStrainModel="Square"
+    SerialStrainAtFmax="0.06"
+    ParallelStrainModel="Square"
+    ParallelStrainAtFmax="0.6"
+    ForcePerUnitArea="250000"
+    VMaxFactor="12"
+    Width="0.97"
+    FastTwitchProportion="0.43"
+    MuscleDensity="1059.7"
+    Aerobic="true"
+    AllowReverseWork="true"
+
+/>
+
+<MUSCLE
+    Type="UmbergerGerritsenMartin"
+    Strap="TwoPoint"
+    ID="LeftHipFlexor"
+    OriginBodyID="Torso"
+    Origin="0.263 -0.082 0.071"
+    InsertionBodyID="LeftThigh"
+    Insertion="-0.037 0.0 0.029"
+    PCA="0.0075"
+    FibreLength="0.150"
+    TendonLength="0.094"
+    SerialStrainModel="Square"
+    SerialStrainAtFmax="0.06"
+    ParallelStrainModel="Square"
+    ParallelStrainAtFmax="0.6"
+    ForcePerUnitArea="250000"
+    VMaxFactor="12"
+    Width="0.97"
+    FastTwitchProportion="0.43"
+    MuscleDensity="1059.7"
+    Aerobic="true"
+    AllowReverseWork="true"
+
+/>
+
+<MUSCLE
+    Type="UmbergerGerritsenMartin"
+    Strap="CylinderWrap"
+    ID="LeftKneeExtensor"
+    OriginBodyID="LeftThigh"
+    Origin="0.053 0.0 0.029 "
+    InsertionBodyID="LeftLeg"
+    Insertion="-0.12 0.0 0.043"
+    CylinderBodyID="LeftLeg"
+    CylinderPosition="-0.1957 0.0 0.0"
+    CylinderRadius="0.06"
+    CylinderQuaternion="-0.7071067811865475 0.7071067811865476 0.0000000000000000 0.0000000000000000"
+    PCA="0.0203"
+    FibreLength="0.106"
+    TendonLength="0.179"
+    SerialStrainModel="Square"
+    SerialStrainAtFmax="0.06"
+    ParallelStrainModel="Square"
+    ParallelStrainAtFmax="0.6"
+    ForcePerUnitArea="250000"
+    VMaxFactor="12"
+    Width="0.97"
+    FastTwitchProportion="0.43"
+    MuscleDensity="1059.7"
+    Aerobic="true"
+    AllowReverseWork="true"
+
+/>
+
+<MUSCLE
+    Type="UmbergerGerritsenMartin"
+    Strap="TwoPoint"
+    ID="LeftKneeFlexor"
+    OriginBodyID="LeftThigh"
+    Origin="0.053 0.0 0.0"
+    InsertionBodyID="LeftLeg"
+    Insertion="-0.14 0.0 -0.04"
+    PCA="0.0159"
+    FibreLength="0.104"
+    TendonLength="0.160"
+    SerialStrainModel="Square"
+    SerialStrainAtFmax="0.06"
+    ParallelStrainModel="Square"
+    ParallelStrainAtFmax="0.6"
+    ForcePerUnitArea="250000"
+    VMaxFactor="12"
+    Width="0.97"
+    FastTwitchProportion="0.43"
+    MuscleDensity="1059.7"
+    Aerobic="true"
+    AllowReverseWork="true"
+
+/>
+
+<!--dorsiflexion-->
+<MUSCLE
+    Type="UmbergerGerritsenMartin"
+    Strap="TwoPoint"
+    ID="LeftAnkleExtensor"
+    OriginBodyID="LeftLeg"
+    Origin="-0.056 0.0 0.033"
+    InsertionBodyID="LeftFoot"
+    Insertion="-0.056 0.0  0.0"
+    PCA="0.0051"
+    FibreLength="0.089"
+    TendonLength="0.228"
+    SerialStrainModel="Square"
+    SerialStrainAtFmax="0.06"
+    ParallelStrainModel="Square"
+    ParallelStrainAtFmax="0.6"
+    ForcePerUnitArea="250000"
+    VMaxFactor="12"
+    Width="0.97"
+    FastTwitchProportion="0.43"
+    MuscleDensity="1059.7"
+    Aerobic="true"
+    AllowReverseWork="true"
+
+/>
+
+<!--plantarflexion-->
+<MUSCLE
+    Type="UmbergerGerritsenMartin"
+    Strap="TwoPoint"
+    ID="LeftAnkleFlexor"
+    OriginBodyID="LeftLeg"
+    Origin="-0.139 0.0 -0.029"
+    InsertionBodyID="LeftFoot"
+    Insertion="-0.142 0.0 -0.038"
+    PCA="0.0264"
+    FibreLength="0.055"
+    TendonLength="0.369"
+    SerialStrainModel="Square"
+    SerialStrainAtFmax="0.06"
+    ParallelStrainModel="Square"
+    ParallelStrainAtFmax="0.6"
+    ForcePerUnitArea="250000"
+    VMaxFactor="12"
+    Width="0.97"
+    FastTwitchProportion="0.43"
+    MuscleDensity="1059.7"
+    Aerobic="true"
+    AllowReverseWork="true"
+
+/>
+
+
+
+  <DRIVER Type="Cyclic" ID="LeftAnkleExtensorDriver" Target="LeftAnkleExtensor" DurationValuePairs="0.54631352674987577 0.39622802403938173     0.10000000000000001 0.30554005942109319     0.38472945871621989 0.40045908271219499     0.54631352674987577 0.00000000000000000     0.10000000000000001 0.00000000000000000     0.38472945871621989 0.27679674298720441"/>
+  <DRIVER Type="Cyclic" ID="LeftAnkleFlexorDriver" Target="LeftAnkleFlexor" DurationValuePairs="0.54631352674987577 0.00000000000000000     0.10000000000000001 0.00000000000000000     0.38472945871621989 0.00000000000000000     0.54631352674987577 0.11364487558260089     0.10000000000000001 0.41333639467266625     0.38472945871621989 0.00000000000000000"/>
+  <DRIVER Type="Cyclic" ID="LeftHipExtensorDriver" Target="LeftHipExtensor" DurationValuePairs="0.54631352674987577 0.00000000000000000     0.10000000000000001 0.00000000000000000     0.38472945871621989 0.08245407079996231     0.54631352674987577 0.15161867151252750     0.10000000000000001 0.00000000000000000     0.38472945871621989 0.00000000000000000"/>
+  <DRIVER Type="Cyclic" ID="LeftHipFlexorDriver" Target="LeftHipFlexor" DurationValuePairs="0.54631352674987577 0.91169630307737648     0.10000000000000001 0.15255967085337024     0.38472945871621989 0.00000000000000000     0.54631352674987577 0.00000000000000000     0.10000000000000001 0.06048726703823604     0.38472945871621989 0.00040011409065335"/>
+  <DRIVER Type="Cyclic" ID="LeftKneeExtensorDriver" Target="LeftKneeExtensor" DurationValuePairs="0.54631352674987577 0.00000000000000000     0.10000000000000001 0.00000000000000000     0.38472945871621989 0.00125275706269891     0.54631352674987577 0.05165431764654141     0.10000000000000001 0.00548790418122652     0.38472945871621989 0.01293095194498545"/>
+  <DRIVER Type="Cyclic" ID="LeftKneeFlexorDriver" Target="LeftKneeFlexor" DurationValuePairs="0.54631352674987577 0.14132031160189590     0.10000000000000001 0.02018597679954463     0.38472945871621989 0.00000000000000000     0.54631352674987577 0.00000000000000000     0.10000000000000001 0.00000000000000000     0.38472945871621989 0.00000000000000000"/>
+  <DRIVER Type="Cyclic" ID="RightAnkleExtensorDriver" Target="RightAnkleExtensor" DurationValuePairs="0.54631352674987577 0.00000000000000000     0.10000000000000001 0.00000000000000000     0.38472945871621989 0.27679674298720441     0.54631352674987577 0.39622802403938173     0.10000000000000001 0.30554005942109319     0.38472945871621989 0.40045908271219499"/>
+  <DRIVER Type="Cyclic" ID="RightAnkleFlexorDriver" Target="RightAnkleFlexor" DurationValuePairs="0.54631352674987577 0.11364487558260089     0.10000000000000001 0.41333639467266625     0.38472945871621989 0.00000000000000000     0.54631352674987577 0.00000000000000000     0.10000000000000001 0.00000000000000000     0.38472945871621989 0.00000000000000000"/>
+  <DRIVER Type="Cyclic" ID="RightHipExtensorDriver" Target="RightHipExtensor" DurationValuePairs="0.54631352674987577 0.15161867151252750     0.10000000000000001 0.00000000000000000     0.38472945871621989 0.00000000000000000     0.54631352674987577 0.00000000000000000     0.10000000000000001 0.00000000000000000     0.38472945871621989 0.08245407079996231"/>
+  <DRIVER Type="Cyclic" ID="RightHipFlexorDriver" Target="RightHipFlexor" DurationValuePairs="0.54631352674987577 0.00000000000000000     0.10000000000000001 0.06048726703823604     0.38472945871621989 0.00040011409065335     0.54631352674987577 0.91169630307737648     0.10000000000000001 0.15255967085337024     0.38472945871621989 0.00000000000000000"/>
+  <DRIVER Type="Cyclic" ID="RightKneeExtensorDriver" Target="RightKneeExtensor" DurationValuePairs="0.54631352674987577 0.05165431764654141     0.10000000000000001 0.00548790418122652     0.38472945871621989 0.01293095194498545     0.54631352674987577 0.00000000000000000     0.10000000000000001 0.00000000000000000     0.38472945871621989 0.00125275706269891"/>
+  <DRIVER Type="Cyclic" ID="RightKneeFlexorDriver" Target="RightKneeFlexor" DurationValuePairs="0.54631352674987577 0.00000000000000000     0.10000000000000001 0.00000000000000000     0.38472945871621989 0.00000000000000000     0.54631352674987577 0.14132031160189590     0.10000000000000001 0.02018597679954463     0.38472945871621989 0.00000000000000000"/>
+
+
+</GAITSYMODE>

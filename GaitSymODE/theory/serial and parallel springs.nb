@@ -1,0 +1,326 @@
+(************** Content-type: application/mathematica **************
+                     CreatedBy='Mathematica 5.1'
+
+                    Mathematica-Compatible Notebook
+
+This notebook can be used with any Mathematica-compatible
+application, such as Mathematica, MathReader or Publicon. The data
+for the notebook starts with the line containing stars above.
+
+To get the notebook into a Mathematica-compatible application, do
+one of the following:
+
+* Save the data starting with the line of stars above into a file
+  with a name ending in .nb, then open the file inside the
+  application;
+
+* Copy the data starting with the line of stars above to the
+  clipboard, then use the Paste menu command inside the application.
+
+Data for notebooks contains only printable 7-bit ASCII and can be
+sent directly in email or through ftp in text mode.  Newlines can be
+CR, LF or CRLF (Unix, Macintosh or MS-DOS style).
+
+NOTE: If you modify the data for this notebook not in a Mathematica-
+compatible application, you must delete the line below containing
+the word CacheID, otherwise Mathematica-compatible applications may
+try to use invalid cache data.
+
+For more information on notebooks and Mathematica-compatible 
+applications, contact Wolfram Research:
+  web: http://www.wolfram.com
+  email: info@wolfram.com
+  phone: +1-217-398-0700 (U.S.)
+
+Notebook reader applications are available free of charge from 
+Wolfram Research.
+*******************************************************************)
+
+(*CacheID: 232*)
+
+
+(*NotebookFileLineBreakTest
+NotebookFileLineBreakTest*)
+(*NotebookOptionsPosition[      6116,        222]*)
+(*NotebookOutlinePosition[      6753,        244]*)
+(*  CellTagsIndexPosition[      6709,        240]*)
+(*WindowFrame->Normal*)
+
+
+
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Serial and Parallel Springs", "Title"],
+
+Cell["\<\
+Definitions:
+\tfce contractile force
+\tlpe contractile and parallel length
+\tspe slack length parallel element
+\tepe elastic constant parallel element
+\tfpe parallel element force
+\tlse serial length
+\tsse slack length serial element
+\tese elastic constant serial element
+\tfse serial element force
+\tlen total length of system\
+\>", "Text"],
+
+Cell[CellGroupData[{
+
+Cell["Initialisation", "Section"],
+
+Cell[BoxData[
+    \(Off[General::spell1]\)], "Input"],
+
+Cell[BoxData[
+    \(Remove["\<Global`*\>"]\)], "Input"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Equations", "Section"],
+
+Cell[BoxData[
+    \(eq1 := fce + fpe \[Equal] fse\)], "Input"],
+
+Cell[BoxData[
+    \(eq2 := fse == ese \((lse - sse)\)\)], "Input"],
+
+Cell[BoxData[
+    \(eq3 := fpe == epe \((lpe - spe)\)\)], "Input"],
+
+Cell[BoxData[
+    \(eq4 := len == lpe + lse\)], "Input"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Conditions", "Section"],
+
+Cell["\<\
+For correction simply assume that we are only worried about length \
+not velocity.\
+\>", "Text"],
+
+Cell["We know fce, len, ese, epe, sse, spe", "Text"],
+
+Cell["We don't know lpe, lse, fpe, fse", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Solve[{eq1, eq2, eq3, eq4}, {lpe, lse, fpe, fse}]\)], "Input"],
+
+Cell[BoxData[
+    \({{lpe \[Rule] \(-\(\(fce - ese\ len - epe\ spe + ese\ sse\)\/\(epe + 
+                  ese\)\)\), 
+        lse \[Rule] \(-\(\(\(-fce\) - epe\ len + epe\ spe - 
+                  ese\ sse\)\/\(epe + ese\)\)\), 
+        fpe \[Rule] \(-\(\(epe\ fce - epe\ ese\ len + epe\ ese\ spe + 
+                  epe\ ese\ sse\)\/\(epe + ese\)\)\), 
+        fse \[Rule] \(-\(\(\(-ese\)\ fce - epe\ ese\ len + epe\ ese\ spe + 
+                  epe\ ese\ sse\)\/\(epe + ese\)\)\)}}\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(FullSimplify[
+      Solve[{eq1, eq2, eq3, eq4}, {lpe, lse, fpe, fse}]]\)], "Input"],
+
+Cell[BoxData[
+    \({{lpe \[Rule] \(\(-fce\) + epe\ spe + ese\ \((len - sse)\)\)\/\(epe + \
+ese\), lse \[Rule] \(fce + epe\ len - epe\ spe + ese\ sse\)\/\(epe + ese\), 
+        fpe \[Rule] \(-\(\(epe\ \((fce + 
+                      ese\ \((\(-len\) + spe + sse)\))\)\)\/\(epe + 
+                  ese\)\)\), 
+        fse \[Rule] \(ese\ \((fce + epe\ \((len - spe - sse)\))\)\)\/\(epe + \
+ese\)}}\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(CForm[
+      FullSimplify[
+        Solve[{eq1, eq2, eq3, eq4}, {lpe, lse, fpe, fse}]]]\)], "Input"],
+
+Cell["\<\
+List(List(Rule(lpe,(-fce + epe*spe + ese*(len - sse))/(epe + ese)),
+    Rule(lse,(fce + epe*len - epe*spe + ese*sse)/(epe + ese)),
+    Rule(fpe,-((epe*(fce + ese*(-len + spe + sse)))/(epe + ese))),
+    Rule(fse,(ese*(fce + epe*(len - spe - sse)))/(epe + ese))))\
+\>", "Output"]
+}, Open  ]],
+
+Cell["Now what about some velocities", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(D[\(\(-fce\) + epe\ spe + ese\ \((len - sse)\)\)\/\(epe + ese\), t, 
+      NonConstants \[Rule] {len, fce}]\)], "Input"],
+
+Cell[BoxData[
+    \(\(\(-D[fce, t, NonConstants \[Rule] {fce, len}]\) + ese\ D[len, t, \
+NonConstants \[Rule] {fce, len}]\)\/\(epe + ese\)\)], "Output"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Alternatives", "Section"],
+
+Cell["If lpe <= spe then fpe \[Equal]0", "Text"],
+
+Cell[BoxData[
+    \(eq5 := fce \[Equal] fse\)], "Input"],
+
+Cell[BoxData[
+    \(eq6 := fse == ese \((lse - sse)\)\)], "Input"],
+
+Cell[BoxData[
+    \(eq7 := len == lpe + lse\)], "Input"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Solve[{eq5, eq6, eq7}, {lpe, lse, fse}]\)], "Input"],
+
+Cell[BoxData[
+    \({{lpe \[Rule] \(-\(\(fce - ese\ len + ese\ sse\)\/ese\)\), 
+        lse \[Rule] \(-\(\(\(-fce\) - ese\ sse\)\/ese\)\), 
+        fse \[Rule] fce}}\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(FullSimplify[Solve[{eq5, eq6, eq7}, {lpe, lse, fse}]]\)], "Input"],
+
+Cell[BoxData[
+    \({{lpe \[Rule] \(-\(fce\/ese\)\) + len - sse, 
+        lse \[Rule] fce\/ese + sse, fse \[Rule] fce}}\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(CForm[FullSimplify[Solve[{eq5, eq6, eq7}, {lpe, lse, fse}]]]\)], "Input"],
+
+Cell["\<\
+List(List(Rule(lpe,-(fce/ese) + len - sse),Rule(lse,fce/ese + \
+sse),Rule(fse,fce)))\
+\>", "Output"]
+}, Open  ]],
+
+Cell["If len <= sse", "Text"]
+}, Open  ]]
+}, Open  ]]
+},
+FrontEndVersion->"5.1 for Macintosh",
+ScreenRectangle->{{34, 1280}, {0, 1002}},
+WindowSize->{909, 774},
+WindowMargins->{{4, Automatic}, {Automatic, 4}}
+]
+
+(*******************************************************************
+Cached data follows.  If you edit this Notebook file directly, not
+using Mathematica, you must remove the line containing CacheID at
+the top of  the file.  The cache data will then be recreated when
+you save this file from within Mathematica.
+*******************************************************************)
+
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+
+(*NotebookFileOutline
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[1776, 53, 44, 0, 88, "Title"],
+Cell[1823, 55, 351, 12, 223, "Text"],
+
+Cell[CellGroupData[{
+Cell[2199, 71, 33, 0, 69, "Section"],
+Cell[2235, 73, 53, 1, 27, "Input"],
+Cell[2291, 76, 55, 1, 27, "Input"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[2383, 82, 28, 0, 69, "Section"],
+Cell[2414, 84, 62, 1, 27, "Input"],
+Cell[2479, 87, 66, 1, 27, "Input"],
+Cell[2548, 90, 66, 1, 27, "Input"],
+Cell[2617, 93, 56, 1, 27, "Input"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[2710, 99, 29, 0, 69, "Section"],
+Cell[2742, 101, 106, 3, 33, "Text"],
+Cell[2851, 106, 52, 0, 33, "Text"],
+Cell[2906, 108, 48, 0, 33, "Text"],
+
+Cell[CellGroupData[{
+Cell[2979, 112, 82, 1, 27, "Input"],
+Cell[3064, 115, 501, 8, 80, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[3602, 128, 103, 2, 27, "Input"],
+Cell[3708, 132, 410, 7, 80, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[4155, 144, 119, 3, 27, "Input"],
+Cell[4277, 149, 287, 5, 72, "Output"]
+}, Open  ]],
+Cell[4579, 157, 46, 0, 33, "Text"],
+
+Cell[CellGroupData[{
+Cell[4650, 161, 140, 2, 44, "Input"],
+Cell[4793, 165, 152, 2, 44, "Output"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[4994, 173, 31, 0, 69, "Section"],
+Cell[5028, 175, 48, 0, 33, "Text"],
+Cell[5079, 177, 56, 1, 27, "Input"],
+Cell[5138, 180, 66, 1, 27, "Input"],
+Cell[5207, 183, 56, 1, 27, "Input"],
+
+Cell[CellGroupData[{
+Cell[5288, 188, 72, 1, 27, "Input"],
+Cell[5363, 191, 179, 3, 42, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[5579, 199, 86, 1, 27, "Input"],
+Cell[5668, 202, 133, 2, 42, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[5838, 209, 93, 1, 27, "Input"],
+Cell[5934, 212, 110, 3, 27, "Output"]
+}, Open  ]],
+Cell[6059, 218, 29, 0, 33, "Text"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+
+
+(*******************************************************************
+End of Mathematica Notebook file.
+*******************************************************************)
+

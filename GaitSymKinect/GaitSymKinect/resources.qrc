@@ -1,0 +1,24 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource>
+    <file>images/Find Wiimote Icon.iconset/icon_32x32.png</file>
+    <file>images/Weigh Wiimote Icon.iconset/icon_32x32.png</file>
+    <file>images/Volume Wiimote Icon.iconset/icon_32x32.png</file>
+    <file>images/kg_outline.png</file>
+    <file>images/m3_outline.png</file>
+    <file>images/mps_outline.png</file>
+    <file>images/Left Foot Icon.png</file>
+    <file>images/Right Foot Icon.png</file>
+    <file>images/Right View Icon.png</file>
+    <file>images/Front View Icon.png</file>
+    <file>images/Top View Icon.png</file>
+    <file>images/Centre of Interest Icon.png</file>
+    <file>images/Open Icon.png</file>
+    <file>images/Fullscreen Icon.png</file>
+    <file>images/Hide Toolbar Icon.png</file>
+    <file>images/logo1.png</file>
+    <file>images/logo2.png</file>
+    <file>images/logo3.png</file>
+    <file>images/Icon.iconset/icon_32x32.png</file>
+</qresource>
+</RCC>
+

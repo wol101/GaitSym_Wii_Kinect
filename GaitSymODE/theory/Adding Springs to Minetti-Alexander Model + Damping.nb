@@ -1,0 +1,3105 @@
+(* Content-type: application/mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 6.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       145,          7]
+NotebookDataLength[    152076,       3096]
+NotebookOptionsPosition[    147245,       2933]
+NotebookOutlinePosition[    147582,       2948]
+CellTagsIndexPosition[    147539,       2945]
+WindowFrame->Normal
+ContainsDynamic->False*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Adding Springs to Minetti-Alexander Model", "Title"],
+
+Cell[CellGroupData[{
+
+Cell["Initialisation", "Section"],
+
+Cell[BoxData[
+ RowBox[{"Off", "[", 
+  RowBox[{"General", "::", "spell1"}], "]"}]], "Input"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Remove", "[", "\"\<Global`*\>\"", "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Remove", "::", "\<\"rmnsm\"\>"}], 
+  RowBox[{
+  ":", " "}], "\<\"There are no symbols matching \
+\\\"\\!\\(\\\"Global`*\\\"\\)\\\". \
+\\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", \
+ButtonFrame->None, ButtonData:>\\\"paclet:ref/message/Remove/rmnsm\\\", \
+ButtonNote -> \\\"Remove::rmnsm\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.446106682456957*^9}]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Old Minetti-Alexander Model", "Subtitle"],
+
+Cell["Program snippet:", "Text"],
+
+Cell["\<\
+if (v<0) // eccentric
+{
+\tfFull=m_F0*(1.8-0.8*((m_VMax+v)/(m_VMax-(7.56/m_K)*v)));
+}
+else // concentric
+{
+\tfFull=m_F0*(m_VMax-v)/(m_VMax+(v/m_K));
+}
+
+//now set the tension as a proportion of fFull
+fCE=m_Alpha*fFull;
+\
+\>", "Program"],
+
+Cell["\<\
+But, v is positive when muscle shortening which is illogical so we need to do \
+rearranging\
+\>", "Text"],
+
+Cell["eccentric:", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Simplify", "[", 
+  RowBox[{"fce", "\[Equal]", 
+   RowBox[{"alpha", 
+    RowBox[{"(", 
+     RowBox[{"f0", "*", 
+      RowBox[{"(", 
+       RowBox[{"1.8", "-", 
+        RowBox[{"0.8", "*", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"vmax", "+", 
+             RowBox[{"(", 
+              RowBox[{"-", "vce"}], ")"}]}], ")"}], "/", 
+           RowBox[{"(", 
+            RowBox[{"vmax", "-", 
+             RowBox[{
+              RowBox[{"(", 
+               RowBox[{"7.56", "/", "k"}], ")"}], "*", 
+              RowBox[{"(", 
+               RowBox[{"-", "vce"}], ")"}]}]}], ")"}]}], ")"}]}]}], ")"}]}], 
+     ")"}]}]}], "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"fce", "\[Equal]", 
+  RowBox[{"alpha", " ", "f0", " ", 
+   RowBox[{"(", 
+    RowBox[{"1.8`", "\[InvisibleSpace]", "+", 
+     FractionBox[
+      RowBox[{"0.8`", " ", "k", " ", 
+       RowBox[{"(", 
+        RowBox[{"vce", "-", 
+         RowBox[{"1.`", " ", "vmax"}]}], ")"}]}], 
+      RowBox[{
+       RowBox[{"7.56`", " ", "vce"}], "+", 
+       RowBox[{"k", " ", "vmax"}]}]]}], ")"}]}]}]], "Output",
+ CellChangeTimes->{3.446057021276292*^9, 3.446057243464329*^9, 
+  3.446106682638166*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"eq1", ":=", 
+  RowBox[{"fce", "\[Equal]", 
+   RowBox[{"alpha", " ", "f0", " ", 
+    RowBox[{"(", 
+     RowBox[{"1.8`", "\[InvisibleSpace]", "+", 
+      FractionBox[
+       RowBox[{"0.8`", " ", "k", " ", 
+        RowBox[{"(", 
+         RowBox[{"vce", "-", 
+          RowBox[{"1.`", " ", "vmax"}]}], ")"}]}], 
+       RowBox[{
+        RowBox[{"7.56`", " ", "vce"}], "+", 
+        RowBox[{"k", " ", "vmax"}]}]]}], ")"}]}]}]}]], "Input"],
+
+Cell["concentric:", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Simplify", "[", 
+  RowBox[{"fce", "\[Equal]", 
+   RowBox[{"alpha", 
+    RowBox[{"(", 
+     RowBox[{"f0", "*", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{"vmax", "-", 
+         RowBox[{"(", 
+          RowBox[{"-", "vce"}], ")"}]}], ")"}], "/", 
+       RowBox[{"(", 
+        RowBox[{"vmax", "+", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"-", "vce"}], ")"}], "/", "k"}], ")"}]}], ")"}]}]}], 
+     ")"}]}]}], "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"fce", "\[Equal]", 
+  FractionBox[
+   RowBox[{"alpha", " ", "f0", " ", "k", " ", 
+    RowBox[{"(", 
+     RowBox[{"vce", "+", "vmax"}], ")"}]}], 
+   RowBox[{
+    RowBox[{"-", "vce"}], "+", 
+    RowBox[{"k", " ", "vmax"}]}]]}]], "Output",
+ CellChangeTimes->{3.446057021363579*^9, 3.4460572435481167`*^9, 
+  3.4461066827483788`*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"eq2", ":=", 
+  RowBox[{"fce", "\[Equal]", 
+   FractionBox[
+    RowBox[{"alpha", " ", "f0", " ", "k", " ", 
+     RowBox[{"(", 
+      RowBox[{"vce", "+", "vmax"}], ")"}]}], 
+    RowBox[{
+     RowBox[{"-", "vce"}], "+", 
+     RowBox[{"k", " ", "vmax"}]}]]}]}]], "Input"],
+
+Cell["\<\
+Where:
+\tfce contractile element force (N)
+\talpha activation (0 to 1)
+\tk shape constant
+\tvce contractile element velocity (m/s)
+\tvmax maximum shortening velocity (m/s)
+\tf0 isometric force (N)\
+\>", "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Springs", "Subtitle"],
+
+Cell["\<\
+Definitions:
+\tfce contractile force (N)
+\tlpe contractile and parallel length (m)
+\tspe slack length parallel element (m)
+\tepe elastic constant parallel element (N/m)
+\tfpe parallel element force (N)
+\tlse serial length (m)
+\tsse slack length serial element (m)
+\tese elastic constant serial element (N/m)
+\tfse serial element force (N)
+\tlen total length of system (m)\
+\>", "Text"],
+
+Cell[CellGroupData[{
+
+Cell["Equations", "Subsubtitle"],
+
+Cell[BoxData[
+ RowBox[{"eq3", ":=", 
+  RowBox[{
+   RowBox[{"fce", "+", "fpe"}], "\[Equal]", "fse"}]}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"eq4", ":=", 
+  RowBox[{"fse", "==", 
+   RowBox[{"ese", 
+    RowBox[{"(", 
+     RowBox[{"lse", "-", "sse"}], ")"}]}]}]}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"eq5", ":=", 
+  RowBox[{"fpe", "==", 
+   RowBox[{"epe", 
+    RowBox[{"(", 
+     RowBox[{"lpe", "-", "spe"}], ")"}]}]}]}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"eq6", ":=", 
+  RowBox[{"len", "==", 
+   RowBox[{"lpe", "+", "lse"}]}]}]], "Input"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Extra Condition", "Subtitle"],
+
+Cell[BoxData[
+ RowBox[{"eq10", ":=", 
+  RowBox[{"vce", "==", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{"lpe", "-", "lastlpe"}], ")"}], "/", 
+    "timeIncrement"}]}]}]], "Input"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Integrated Model", "Subtitle"],
+
+Cell["Conditions", "Subsubtitle"],
+
+Cell["\<\
+For correction simply assume that we are only worried about length not \
+velocity.\
+\>", "Text"],
+
+Cell["We know  len, ese, epe, sse, spe, alpha, k, vmax", "Text"],
+
+Cell["And we are going to have to assume we know vce", "Text"],
+
+Cell["We don't know  lpe, lse, fpe, fse, fce", "Text"],
+
+Cell[CellGroupData[{
+
+Cell["Concentric", "Subsubtitle"],
+
+Cell["i.e. vce <= 0", "Text"],
+
+Cell["\<\
+There are a number of inequalities that can now be applied. For the \
+concentric case vce \[LessEqual] 0. For all cases len > 0, ese > 0, epe > 0, \
+sse > 0, spe > 0, alpha \[GreaterEqual] 0 && alpha \[LessEqual] 1, k \
+\[GreaterEqual] 0, vmax > 0, lpe > 0, lse > 0, fpe \[GreaterEqual] 0, fse \
+\[GreaterEqual] 0, fce \[GreaterEqual] 0, lastlpe > 0, timeIncrement > 0\
+\>", "Text"],
+
+Cell["\<\
+FullSimplify[Solve[{eq2, eq3, eq4, eq5, eq6, eq10}, {lpe, lse, fpe, fse, fce, \
+vce}], vce <= 0 && len > 0 && ese > 0 && epe > 0 && sse > 0 && spe > 0 && \
+alpha >= 0 && alpha <= 1 && k >= 0 && vmax > 0 && lpe > 0 && lse > 0 && fpe \
+>= 0 && fse >= 0 && fce >= 0 && lastlpe > 0 && timeIncrement > 0]\
+\>", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"CForm", "[", 
+  RowBox[{"FullSimplify", "[", 
+   RowBox[{"Solve", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+      "eq2", ",", "eq3", ",", "eq4", ",", "eq5", ",", "eq6", ",", "eq10"}], 
+      "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+      "lpe", ",", "lse", ",", "fpe", ",", "fse", ",", "fce", ",", "vce"}], 
+      "}"}]}], "]"}], "]"}], "]"}]], "Input"],
+
+Cell["\<\
+List(List(Rule(fpe,(epe*(alpha*f0*k + epe*lastlpe + ese*lastlpe + ese*len - \
+epe*spe - 2*ese*spe - ese*sse + epe*k*timeIncrement*vmax + 
+          ese*k*timeIncrement*vmax - Sqrt(4*(epe + ese)*k*(alpha*f0 + \
+epe*(lastlpe - spe) + ese*(lastlpe - len + sse))*timeIncrement*vmax + 
+            Power(epe*(-lastlpe + spe) - ese*(lastlpe - len + sse) + \
+k*(alpha*f0 + (epe + ese)*timeIncrement*vmax),2))))/(2.*(epe + ese))),
+    Rule(fse,-(ese*(alpha*f0*k + epe*lastlpe + ese*lastlpe - 2*epe*len - \
+ese*len + epe*spe + 2*epe*sse + ese*sse + epe*k*timeIncrement*vmax + 
+           ese*k*timeIncrement*vmax - Sqrt(4*(epe + ese)*k*(alpha*f0 + \
+epe*(lastlpe - spe) + ese*(lastlpe - len + sse))*timeIncrement*vmax + 
+             Power(epe*(-lastlpe + spe) - ese*(lastlpe - len + sse) + \
+k*(alpha*f0 + (epe + ese)*timeIncrement*vmax),2))))/(2.*(epe + ese))),
+    Rule(lse,-(alpha*f0*k + epe*lastlpe + ese*lastlpe - 2*epe*len - ese*len + \
+epe*spe - ese*sse + epe*k*timeIncrement*vmax + ese*k*timeIncrement*vmax - 
+         Sqrt(4*(epe + ese)*k*(alpha*f0 + epe*(lastlpe - spe) + ese*(lastlpe \
+- len + sse))*timeIncrement*vmax + 
+           Power(epe*(-lastlpe + spe) - ese*(lastlpe - len + sse) + \
+k*(alpha*f0 + (epe + ese)*timeIncrement*vmax),2)))/(2.*(epe + ese))),
+    Rule(lpe,(alpha*f0*k + epe*lastlpe + ese*lastlpe + ese*len + epe*spe - \
+ese*sse + epe*k*timeIncrement*vmax + ese*k*timeIncrement*vmax - 
+        Sqrt(4*(epe + ese)*k*(alpha*f0 + epe*(lastlpe - spe) + ese*(lastlpe - \
+len + sse))*timeIncrement*vmax + 
+          Power(epe*(-lastlpe + spe) - ese*(lastlpe - len + sse) + \
+k*(alpha*f0 + (epe + ese)*timeIncrement*vmax),2)))/(2.*(epe + ese))),
+    Rule(fce,(-(alpha*f0*k) - epe*lastlpe - ese*lastlpe + ese*len + epe*spe - \
+ese*sse - epe*k*timeIncrement*vmax - ese*k*timeIncrement*vmax + 
+        Sqrt(4*(epe + ese)*k*(alpha*f0 + epe*(lastlpe - spe) + ese*(lastlpe - \
+len + sse))*timeIncrement*vmax + 
+          Power(epe*(-lastlpe + spe) - ese*(lastlpe - len + sse) + \
+k*(alpha*f0 + (epe + ese)*timeIncrement*vmax),2)))/2.),
+    Rule(vce,(alpha*f0*k - epe*lastlpe - ese*lastlpe + ese*len + epe*spe - \
+ese*sse + epe*k*timeIncrement*vmax + ese*k*timeIncrement*vmax - 
+        Sqrt(4*(epe + ese)*k*(alpha*f0 + epe*(lastlpe - spe) + ese*(lastlpe - \
+len + sse))*timeIncrement*vmax + 
+          Power(epe*(-lastlpe + spe) - ese*(lastlpe - len + sse) + \
+k*(alpha*f0 + (epe + ese)*timeIncrement*vmax),2)))/(2.*(epe + \
+ese)*timeIncrement))),
+   List(Rule(fpe,(epe*(alpha*f0*k + epe*lastlpe + ese*lastlpe + ese*len - \
+epe*spe - 2*ese*spe - ese*sse + epe*k*timeIncrement*vmax + \
+ese*k*timeIncrement*vmax + 
+          Sqrt(4*(epe + ese)*k*(alpha*f0 + epe*(lastlpe - spe) + ese*(lastlpe \
+- len + sse))*timeIncrement*vmax + 
+            Power(epe*(-lastlpe + spe) - ese*(lastlpe - len + sse) + \
+k*(alpha*f0 + (epe + ese)*timeIncrement*vmax),2))))/(2.*(epe + ese))),
+    Rule(fse,-(ese*(alpha*f0*k + epe*lastlpe + ese*lastlpe - 2*epe*len - \
+ese*len + epe*spe + 2*epe*sse + ese*sse + epe*k*timeIncrement*vmax + 
+           ese*k*timeIncrement*vmax + Sqrt(4*(epe + ese)*k*(alpha*f0 + \
+epe*(lastlpe - spe) + ese*(lastlpe - len + sse))*timeIncrement*vmax + 
+             Power(epe*(-lastlpe + spe) - ese*(lastlpe - len + sse) + \
+k*(alpha*f0 + (epe + ese)*timeIncrement*vmax),2))))/(2.*(epe + ese))),
+    Rule(lse,-(alpha*f0*k + epe*lastlpe + ese*lastlpe - 2*epe*len - ese*len + \
+epe*spe - ese*sse + epe*k*timeIncrement*vmax + ese*k*timeIncrement*vmax + 
+         Sqrt(4*(epe + ese)*k*(alpha*f0 + epe*(lastlpe - spe) + ese*(lastlpe \
+- len + sse))*timeIncrement*vmax + 
+           Power(epe*(-lastlpe + spe) - ese*(lastlpe - len + sse) + \
+k*(alpha*f0 + (epe + ese)*timeIncrement*vmax),2)))/(2.*(epe + ese))),
+    Rule(lpe,(alpha*f0*k + epe*lastlpe + ese*lastlpe + ese*len + epe*spe - \
+ese*sse + epe*k*timeIncrement*vmax + ese*k*timeIncrement*vmax + 
+        Sqrt(4*(epe + ese)*k*(alpha*f0 + epe*(lastlpe - spe) + ese*(lastlpe - \
+len + sse))*timeIncrement*vmax + 
+          Power(epe*(-lastlpe + spe) - ese*(lastlpe - len + sse) + \
+k*(alpha*f0 + (epe + ese)*timeIncrement*vmax),2)))/(2.*(epe + ese))),
+    Rule(fce,(-(alpha*f0*k) - epe*lastlpe - ese*lastlpe + ese*len + epe*spe - \
+ese*sse - epe*k*timeIncrement*vmax - ese*k*timeIncrement*vmax - 
+        Sqrt(4*(epe + ese)*k*(alpha*f0 + epe*(lastlpe - spe) + ese*(lastlpe - \
+len + sse))*timeIncrement*vmax + 
+          Power(epe*(-lastlpe + spe) - ese*(lastlpe - len + sse) + \
+k*(alpha*f0 + (epe + ese)*timeIncrement*vmax),2)))/2.),
+    Rule(vce,(alpha*f0*k - epe*lastlpe - ese*lastlpe + ese*len + epe*spe - \
+ese*sse + epe*k*timeIncrement*vmax + ese*k*timeIncrement*vmax + 
+        Sqrt(4*(epe + ese)*k*(alpha*f0 + epe*(lastlpe - spe) + ese*(lastlpe - \
+len + sse))*timeIncrement*vmax + 
+          Power(epe*(-lastlpe + spe) - ese*(lastlpe - len + sse) + \
+k*(alpha*f0 + (epe + ese)*timeIncrement*vmax),2)))/(2.*(epe + \
+ese)*timeIncrement))))\
+\>", "Output",
+ CellChangeTimes->{3.446057293592008*^9, 3.4461067338746767`*^9}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Eccentric", "Subsubtitle"],
+
+Cell["i.e. vce > 0", "Text"],
+
+Cell["\<\
+FullSimplify[Solve[{eq1, eq3, eq4, eq5, eq6, eq10}, {lpe, lse, fpe, fse, fce, \
+vce}]]\
+\>", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"CForm", "[", 
+  RowBox[{"FullSimplify", "[", 
+   RowBox[{"Solve", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+      "eq1", ",", "eq3", ",", "eq4", ",", "eq5", ",", "eq6", ",", "eq10"}], 
+      "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+      "lpe", ",", "lse", ",", "fpe", ",", "fse", ",", "fce", ",", "vce"}], 
+      "}"}]}], "]"}], "]"}], "]"}]], "Input"],
+
+Cell["\<\
+List(List(Rule(fpe,(epe*(alpha*f0*(-850.5 - 50.*k) + 472.5*epe*lastlpe + \
+472.5*ese*lastlpe + 472.5*ese*len - 472.5*epe*spe - 945.*ese*spe - \
+472.5*ese*sse - 
+          62.5*epe*k*timeIncrement*vmax - 62.5*ese*k*timeIncrement*vmax - 
+          0.5*timeIncrement*Sqrt((10000.*Power(alpha,2)*Power(f0,2)*(17.\
+009999590960987 + k)*(17.010000409039023 + k) + 
+               Power(epe,2)*(893025.0000000001*Power(lastlpe,2) - \
+1.7860500000000002e6*lastlpe*spe + 893025.0000000001*Power(spe,2) - 
+                  236250.*k*lastlpe*timeIncrement*vmax + \
+236250.*k*spe*timeIncrement*vmax + \
+15625.*Power(k,2)*Power(timeIncrement,2)*Power(vmax,2)) + 
+               Power(ese,2)*(893025.0000000001*Power(lastlpe,2) + \
+893025.0000000001*Power(len,2) - 1.7860500000000002e6*len*sse + 
+                  893025.0000000001*Power(sse,2) + \
+236250.*k*len*timeIncrement*vmax - 236250.*k*sse*timeIncrement*vmax + 
+                  15625.*Power(k,2)*Power(timeIncrement,2)*Power(vmax,2) + 
+                  lastlpe*(-1.7860500000000002e6*len + \
+1.7860500000000002e6*sse - 236250.*k*timeIncrement*vmax)) + 
+               epe*ese*(1.7860500000000002e6*Power(lastlpe,2) + lastlpe*
+                   (-1.7860500000000002e6*len - 1.7860500000000002e6*spe + \
+1.7860500000000002e6*sse - 472500.*k*timeIncrement*vmax) + 
+                  k*timeIncrement*vmax*(-236250.*sse + \
+31250.*k*timeIncrement*vmax) + len*(1.7860500000000002e6*spe + \
+236250.*k*timeIncrement*vmax) + 
+                  spe*(-1.7860500000000002e6*sse + \
+236250.*k*timeIncrement*vmax)) + 
+               alpha*f0*(epe*((3.214890000000001e6 + \
+189000.00000000003*k)*lastlpe + (-3.214890000000001e6 - \
+189000.00000000003*k)*spe + 
+                     k*(-47250. + 24999.999999999993*k)*timeIncrement*vmax) + \
+
+                  ese*((3.214890000000001e6 + 189000.00000000003*k)*lastlpe - \
+3.214890000000001e6*len + 3.214890000000001e6*sse + 
+                     k*(-189000.00000000003*len + 189000.00000000003*sse + \
+(-47250. + \
+24999.999999999993*k)*timeIncrement*vmax))))/Power(timeIncrement,2))))/
+      (945.*epe + 945.*ese)),Rule(fse,(ese*(alpha*f0*(850.5 + 50.*k) - \
+472.5*ese*lastlpe + 472.5*ese*len - 472.5*ese*sse + \
+62.5*ese*k*timeIncrement*vmax + 
+          epe*(-472.5*lastlpe + 945.*len - 472.5*spe - 945.*sse + \
+62.5*k*timeIncrement*vmax) + 
+          0.5*timeIncrement*Sqrt((10000.*Power(alpha,2)*Power(f0,2)*(17.\
+009999590960987 + k)*(17.010000409039023 + k) + 
+               Power(epe,2)*(893025.0000000001*Power(lastlpe,2) - \
+1.7860500000000002e6*lastlpe*spe + 893025.0000000001*Power(spe,2) - 
+                  236250.*k*lastlpe*timeIncrement*vmax + \
+236250.*k*spe*timeIncrement*vmax + \
+15625.*Power(k,2)*Power(timeIncrement,2)*Power(vmax,2)) + 
+               Power(ese,2)*(893025.0000000001*Power(lastlpe,2) + \
+893025.0000000001*Power(len,2) - 1.7860500000000002e6*len*sse + 
+                  893025.0000000001*Power(sse,2) + \
+236250.*k*len*timeIncrement*vmax - 236250.*k*sse*timeIncrement*vmax + 
+                  15625.*Power(k,2)*Power(timeIncrement,2)*Power(vmax,2) + 
+                  lastlpe*(-1.7860500000000002e6*len + \
+1.7860500000000002e6*sse - 236250.*k*timeIncrement*vmax)) + 
+               epe*ese*(1.7860500000000002e6*Power(lastlpe,2) + lastlpe*
+                   (-1.7860500000000002e6*len - 1.7860500000000002e6*spe + \
+1.7860500000000002e6*sse - 472500.*k*timeIncrement*vmax) + 
+                  k*timeIncrement*vmax*(-236250.*sse + \
+31250.*k*timeIncrement*vmax) + len*(1.7860500000000002e6*spe + \
+236250.*k*timeIncrement*vmax) + 
+                  spe*(-1.7860500000000002e6*sse + \
+236250.*k*timeIncrement*vmax)) + 
+               alpha*f0*(epe*((3.214890000000001e6 + \
+189000.00000000003*k)*lastlpe + (-3.214890000000001e6 - \
+189000.00000000003*k)*spe + 
+                     k*(-47250. + 24999.999999999993*k)*timeIncrement*vmax) + \
+
+                  ese*((3.214890000000001e6 + 189000.00000000003*k)*lastlpe - \
+3.214890000000001e6*len + 3.214890000000001e6*sse + 
+                     k*(-189000.00000000003*len + 189000.00000000003*sse + \
+(-47250. + \
+24999.999999999993*k)*timeIncrement*vmax))))/Power(timeIncrement,2))))/
+      (945.*epe + 945.*ese)),Rule(lse,(alpha*f0*(850.5 + 50.*k) - \
+472.5*epe*lastlpe - 472.5*ese*lastlpe + 945.*epe*len + 472.5*ese*len - \
+472.5*epe*spe + 
+        472.5*ese*sse + 62.5*epe*k*timeIncrement*vmax + \
+62.5*ese*k*timeIncrement*vmax + 
+        0.5*timeIncrement*Sqrt((10000.*Power(alpha,2)*Power(f0,2)*(17.\
+009999590960987 + k)*(17.010000409039023 + k) + 
+             Power(epe,2)*(893025.0000000001*Power(lastlpe,2) - \
+1.7860500000000002e6*lastlpe*spe + 893025.0000000001*Power(spe,2) - 
+                236250.*k*lastlpe*timeIncrement*vmax + \
+236250.*k*spe*timeIncrement*vmax + \
+15625.*Power(k,2)*Power(timeIncrement,2)*Power(vmax,2)) + 
+             Power(ese,2)*(893025.0000000001*Power(lastlpe,2) + \
+893025.0000000001*Power(len,2) - 1.7860500000000002e6*len*sse + \
+893025.0000000001*Power(sse,2) + 
+                236250.*k*len*timeIncrement*vmax - \
+236250.*k*sse*timeIncrement*vmax + \
+15625.*Power(k,2)*Power(timeIncrement,2)*Power(vmax,2) + 
+                lastlpe*(-1.7860500000000002e6*len + 1.7860500000000002e6*sse \
+- 236250.*k*timeIncrement*vmax)) + 
+             epe*ese*(1.7860500000000002e6*Power(lastlpe,2) + lastlpe*
+                 (-1.7860500000000002e6*len - 1.7860500000000002e6*spe + \
+1.7860500000000002e6*sse - 472500.*k*timeIncrement*vmax) + 
+                k*timeIncrement*vmax*(-236250.*sse + \
+31250.*k*timeIncrement*vmax) + len*(1.7860500000000002e6*spe + \
+236250.*k*timeIncrement*vmax) + 
+                spe*(-1.7860500000000002e6*sse + \
+236250.*k*timeIncrement*vmax)) + 
+             alpha*f0*(epe*((3.214890000000001e6 + \
+189000.00000000003*k)*lastlpe + (-3.214890000000001e6 - \
+189000.00000000003*k)*spe + 
+                   k*(-47250. + 24999.999999999993*k)*timeIncrement*vmax) + 
+                ese*((3.214890000000001e6 + 189000.00000000003*k)*lastlpe - \
+3.214890000000001e6*len + 3.214890000000001e6*sse + 
+                   k*(-189000.00000000003*len + 189000.00000000003*sse + \
+(-47250. + \
+24999.999999999993*k)*timeIncrement*vmax))))/Power(timeIncrement,2)))/
+      (945.*epe + 945.*ese)),Rule(lpe,(alpha*f0*(-850.5 - 50.*k) + \
+472.5*epe*lastlpe + 472.5*ese*lastlpe + 472.5*ese*len + 472.5*epe*spe - \
+472.5*ese*sse - 
+        62.5*epe*k*timeIncrement*vmax - 62.5*ese*k*timeIncrement*vmax - 
+        0.5*timeIncrement*Sqrt((10000.*Power(alpha,2)*Power(f0,2)*(17.\
+009999590960987 + k)*(17.010000409039023 + k) + 
+             Power(epe,2)*(893025.0000000001*Power(lastlpe,2) - \
+1.7860500000000002e6*lastlpe*spe + 893025.0000000001*Power(spe,2) - 
+                236250.*k*lastlpe*timeIncrement*vmax + \
+236250.*k*spe*timeIncrement*vmax + \
+15625.*Power(k,2)*Power(timeIncrement,2)*Power(vmax,2)) + 
+             Power(ese,2)*(893025.0000000001*Power(lastlpe,2) + \
+893025.0000000001*Power(len,2) - 1.7860500000000002e6*len*sse + \
+893025.0000000001*Power(sse,2) + 
+                236250.*k*len*timeIncrement*vmax - \
+236250.*k*sse*timeIncrement*vmax + \
+15625.*Power(k,2)*Power(timeIncrement,2)*Power(vmax,2) + 
+                lastlpe*(-1.7860500000000002e6*len + 1.7860500000000002e6*sse \
+- 236250.*k*timeIncrement*vmax)) + 
+             epe*ese*(1.7860500000000002e6*Power(lastlpe,2) + lastlpe*
+                 (-1.7860500000000002e6*len - 1.7860500000000002e6*spe + \
+1.7860500000000002e6*sse - 472500.*k*timeIncrement*vmax) + 
+                k*timeIncrement*vmax*(-236250.*sse + \
+31250.*k*timeIncrement*vmax) + len*(1.7860500000000002e6*spe + \
+236250.*k*timeIncrement*vmax) + 
+                spe*(-1.7860500000000002e6*sse + \
+236250.*k*timeIncrement*vmax)) + 
+             alpha*f0*(epe*((3.214890000000001e6 + \
+189000.00000000003*k)*lastlpe + (-3.214890000000001e6 - \
+189000.00000000003*k)*spe + 
+                   k*(-47250. + 24999.999999999993*k)*timeIncrement*vmax) + 
+                ese*((3.214890000000001e6 + 189000.00000000003*k)*lastlpe - \
+3.214890000000001e6*len + 3.214890000000001e6*sse + 
+                   k*(-189000.00000000003*len + 189000.00000000003*sse + \
+(-47250. + \
+24999.999999999993*k)*timeIncrement*vmax))))/Power(timeIncrement,2)))/
+      (945.*epe + 945.*ese)),Rule(fce,(alpha*(epe + ese)*f0*(850.5 + 50.*k) + \
+Power(epe,2)*(-472.5*lastlpe + 472.5*spe + 62.5*k*timeIncrement*vmax) + 
+        ese*(ese*(-472.5*lastlpe + 472.5*len - 472.5*sse + \
+62.5*k*timeIncrement*vmax) + 
+           0.5*timeIncrement*Sqrt((10000.*Power(alpha,2)*Power(f0,2)*(17.\
+009999590960987 + k)*(17.010000409039023 + k) + 
+                Power(epe,2)*(893025.0000000005*Power(lastlpe,2) - \
+1.786050000000001e6*lastlpe*spe + 893025.0000000005*Power(spe,2) - 
+                   236250.00000000003*k*lastlpe*timeIncrement*vmax + \
+236250.00000000003*k*spe*timeIncrement*vmax + 
+                   15624.999999999998*Power(k,2)*Power(timeIncrement,2)*Power(\
+vmax,2)) + 
+                Power(ese,2)*(893025.0000000005*Power(lastlpe,2) + \
+893025.0000000005*Power(len,2) - 1.786050000000001e6*len*sse + 
+                   893025.0000000005*Power(sse,2) + \
+236250.00000000003*k*len*timeIncrement*vmax - \
+236250.00000000003*k*sse*timeIncrement*vmax + 
+                   15624.999999999998*Power(k,2)*Power(timeIncrement,2)*Power(\
+vmax,2) + 
+                   lastlpe*(-1.786050000000001e6*len + \
+1.786050000000001e6*sse - 236250.00000000003*k*timeIncrement*vmax)) + 
+                epe*ese*(1.786050000000001e6*Power(lastlpe,2) + lastlpe*
+                    (-1.786050000000001e6*len - 1.786050000000001e6*spe + \
+1.786050000000001e6*sse - 472500.00000000006*k*timeIncrement*vmax) + 
+                   k*timeIncrement*vmax*(-236250.00000000003*sse + \
+31249.999999999996*k*timeIncrement*vmax) + 
+                   len*(1.786050000000001e6*spe + \
+236250.00000000003*k*timeIncrement*vmax) + 
+                   spe*(-1.786050000000001e6*sse + \
+236250.00000000003*k*timeIncrement*vmax)) + 
+                alpha*f0*(epe*((3.214890000000001e6 + \
+189000.00000000003*k)*lastlpe + (-3.214890000000001e6 - \
+189000.00000000003*k)*spe + 
+                      k*(-47250.00000000001 + \
+25000.000000000004*k)*timeIncrement*vmax) + 
+                   ese*((3.214890000000001e6 + 189000.00000000003*k)*lastlpe \
+- 3.214890000000001e6*len + 3.214890000000001e6*sse + 
+                      k*(-189000.00000000003*len + 189000.00000000003*sse + \
+(-47250.00000000001 + 25000.000000000004*k)*timeIncrement*vmax))))/
+              Power(timeIncrement,2))) + epe*(ese*(-945.*lastlpe + 472.5*len \
++ 472.5*spe - 472.5*sse + 125.*k*timeIncrement*vmax) + 
+           0.5*timeIncrement*Sqrt((10000.*Power(alpha,2)*Power(f0,2)*(17.\
+009999590960987 + k)*(17.010000409039023 + k) + 
+                Power(epe,2)*(893025.0000000005*Power(lastlpe,2) - \
+1.786050000000001e6*lastlpe*spe + 893025.0000000005*Power(spe,2) - 
+                   236250.00000000003*k*lastlpe*timeIncrement*vmax + \
+236250.00000000003*k*spe*timeIncrement*vmax + 
+                   15624.999999999998*Power(k,2)*Power(timeIncrement,2)*Power(\
+vmax,2)) + 
+                Power(ese,2)*(893025.0000000005*Power(lastlpe,2) + \
+893025.0000000005*Power(len,2) - 1.786050000000001e6*len*sse + 
+                   893025.0000000005*Power(sse,2) + \
+236250.00000000003*k*len*timeIncrement*vmax - \
+236250.00000000003*k*sse*timeIncrement*vmax + 
+                   15624.999999999998*Power(k,2)*Power(timeIncrement,2)*Power(\
+vmax,2) + 
+                   lastlpe*(-1.786050000000001e6*len + \
+1.786050000000001e6*sse - 236250.00000000003*k*timeIncrement*vmax)) + 
+                epe*ese*(1.786050000000001e6*Power(lastlpe,2) + lastlpe*
+                    (-1.786050000000001e6*len - 1.786050000000001e6*spe + \
+1.786050000000001e6*sse - 472500.00000000006*k*timeIncrement*vmax) + 
+                   k*timeIncrement*vmax*(-236250.00000000003*sse + \
+31249.999999999996*k*timeIncrement*vmax) + 
+                   len*(1.786050000000001e6*spe + \
+236250.00000000003*k*timeIncrement*vmax) + 
+                   spe*(-1.786050000000001e6*sse + \
+236250.00000000003*k*timeIncrement*vmax)) + 
+                alpha*f0*(epe*((3.214890000000001e6 + \
+189000.00000000003*k)*lastlpe + (-3.214890000000001e6 - \
+189000.00000000003*k)*spe + 
+                      k*(-47250.00000000001 + \
+25000.000000000004*k)*timeIncrement*vmax) + 
+                   ese*((3.214890000000001e6 + 189000.00000000003*k)*lastlpe \
+- 3.214890000000001e6*len + 3.214890000000001e6*sse + 
+                      k*(-189000.00000000003*len + 189000.00000000003*sse + \
+(-47250.00000000001 + 25000.000000000004*k)*timeIncrement*vmax))))/
+              Power(timeIncrement,2))))/(945.*epe + 945.*ese)),Rule(vce,
+     (-850.5*alpha*f0 - 50.*alpha*f0*k - 472.5*epe*lastlpe - \
+472.5*ese*lastlpe + 472.5*ese*len + 472.5*epe*spe - 472.5*ese*sse - \
+62.5*epe*k*timeIncrement*vmax - 
+        62.5*ese*k*timeIncrement*vmax - 0.5*timeIncrement*Sqrt((-4.*(945.*epe \
++ 945.*ese)*k*
+              (125.*alpha*f0 + 125.*epe*lastlpe + 125.*ese*lastlpe - \
+125.*ese*len - 125.*epe*spe + 125.*ese*sse)*timeIncrement*vmax + 
+             Power(alpha*f0*(1701. + 100.*k) + epe*(945.*lastlpe - 945.*spe + \
+125.*k*timeIncrement*vmax) + 
+               ese*(945.*lastlpe - 945.*len + 945.*sse + \
+125.*k*timeIncrement*vmax),2))/Power(timeIncrement,2)))/
+      (945.*epe*timeIncrement + 945.*ese*timeIncrement))),List(Rule(fpe,
+     (epe*(alpha*f0*(-850.5 - 50.*k) + 472.5*epe*lastlpe + 472.5*ese*lastlpe \
++ 472.5*ese*len - 472.5*epe*spe - 945.*ese*spe - 472.5*ese*sse - 
+          62.5*epe*k*timeIncrement*vmax - 62.5*ese*k*timeIncrement*vmax + 
+          0.5*timeIncrement*Sqrt((10000.*Power(alpha,2)*Power(f0,2)*(17.\
+009999590960987 + k)*(17.010000409039023 + k) + 
+               Power(epe,2)*(893025.0000000001*Power(lastlpe,2) - \
+1.7860500000000002e6*lastlpe*spe + 893025.0000000001*Power(spe,2) - 
+                  236250.*k*lastlpe*timeIncrement*vmax + \
+236250.*k*spe*timeIncrement*vmax + \
+15625.*Power(k,2)*Power(timeIncrement,2)*Power(vmax,2)) + 
+               Power(ese,2)*(893025.0000000001*Power(lastlpe,2) + \
+893025.0000000001*Power(len,2) - 1.7860500000000002e6*len*sse + 
+                  893025.0000000001*Power(sse,2) + \
+236250.*k*len*timeIncrement*vmax - 236250.*k*sse*timeIncrement*vmax + 
+                  15625.*Power(k,2)*Power(timeIncrement,2)*Power(vmax,2) + 
+                  lastlpe*(-1.7860500000000002e6*len + \
+1.7860500000000002e6*sse - 236250.*k*timeIncrement*vmax)) + 
+               epe*ese*(1.7860500000000002e6*Power(lastlpe,2) + lastlpe*
+                   (-1.7860500000000002e6*len - 1.7860500000000002e6*spe + \
+1.7860500000000002e6*sse - 472500.*k*timeIncrement*vmax) + 
+                  k*timeIncrement*vmax*(-236250.*sse + \
+31250.*k*timeIncrement*vmax) + len*(1.7860500000000002e6*spe + \
+236250.*k*timeIncrement*vmax) + 
+                  spe*(-1.7860500000000002e6*sse + \
+236250.*k*timeIncrement*vmax)) + 
+               alpha*f0*(epe*((3.214890000000001e6 + \
+189000.00000000003*k)*lastlpe + (-3.214890000000001e6 - \
+189000.00000000003*k)*spe + 
+                     k*(-47250. + 24999.999999999993*k)*timeIncrement*vmax) + \
+
+                  ese*((3.214890000000001e6 + 189000.00000000003*k)*lastlpe - \
+3.214890000000001e6*len + 3.214890000000001e6*sse + 
+                     k*(-189000.00000000003*len + 189000.00000000003*sse + \
+(-47250. + \
+24999.999999999993*k)*timeIncrement*vmax))))/Power(timeIncrement,2))))/
+      (945.*epe + 945.*ese)),Rule(fse,(ese*(alpha*f0*(850.5 + 50.*k) - \
+472.5*ese*lastlpe + 472.5*ese*len - 472.5*ese*sse + \
+62.5*ese*k*timeIncrement*vmax + 
+          epe*(-472.5*lastlpe + 945.*len - 472.5*spe - 945.*sse + \
+62.5*k*timeIncrement*vmax) - 
+          0.5*timeIncrement*Sqrt((10000.*Power(alpha,2)*Power(f0,2)*(17.\
+009999590960987 + k)*(17.010000409039023 + k) + 
+               Power(epe,2)*(893025.0000000001*Power(lastlpe,2) - \
+1.7860500000000002e6*lastlpe*spe + 893025.0000000001*Power(spe,2) - 
+                  236250.*k*lastlpe*timeIncrement*vmax + \
+236250.*k*spe*timeIncrement*vmax + \
+15625.*Power(k,2)*Power(timeIncrement,2)*Power(vmax,2)) + 
+               Power(ese,2)*(893025.0000000001*Power(lastlpe,2) + \
+893025.0000000001*Power(len,2) - 1.7860500000000002e6*len*sse + 
+                  893025.0000000001*Power(sse,2) + \
+236250.*k*len*timeIncrement*vmax - 236250.*k*sse*timeIncrement*vmax + 
+                  15625.*Power(k,2)*Power(timeIncrement,2)*Power(vmax,2) + 
+                  lastlpe*(-1.7860500000000002e6*len + \
+1.7860500000000002e6*sse - 236250.*k*timeIncrement*vmax)) + 
+               epe*ese*(1.7860500000000002e6*Power(lastlpe,2) + lastlpe*
+                   (-1.7860500000000002e6*len - 1.7860500000000002e6*spe + \
+1.7860500000000002e6*sse - 472500.*k*timeIncrement*vmax) + 
+                  k*timeIncrement*vmax*(-236250.*sse + \
+31250.*k*timeIncrement*vmax) + len*(1.7860500000000002e6*spe + \
+236250.*k*timeIncrement*vmax) + 
+                  spe*(-1.7860500000000002e6*sse + \
+236250.*k*timeIncrement*vmax)) + 
+               alpha*f0*(epe*((3.214890000000001e6 + \
+189000.00000000003*k)*lastlpe + (-3.214890000000001e6 - \
+189000.00000000003*k)*spe + 
+                     k*(-47250. + 24999.999999999993*k)*timeIncrement*vmax) + \
+
+                  ese*((3.214890000000001e6 + 189000.00000000003*k)*lastlpe - \
+3.214890000000001e6*len + 3.214890000000001e6*sse + 
+                     k*(-189000.00000000003*len + 189000.00000000003*sse + \
+(-47250. + \
+24999.999999999993*k)*timeIncrement*vmax))))/Power(timeIncrement,2))))/
+      (945.*epe + 945.*ese)),Rule(lse,(alpha*f0*(850.5 + 50.*k) - \
+472.5*epe*lastlpe - 472.5*ese*lastlpe + 945.*epe*len + 472.5*ese*len - \
+472.5*epe*spe + 
+        472.5*ese*sse + 62.5*epe*k*timeIncrement*vmax + \
+62.5*ese*k*timeIncrement*vmax - 
+        0.5*timeIncrement*Sqrt((10000.*Power(alpha,2)*Power(f0,2)*(17.\
+009999590960987 + k)*(17.010000409039023 + k) + 
+             Power(epe,2)*(893025.0000000001*Power(lastlpe,2) - \
+1.7860500000000002e6*lastlpe*spe + 893025.0000000001*Power(spe,2) - 
+                236250.*k*lastlpe*timeIncrement*vmax + \
+236250.*k*spe*timeIncrement*vmax + \
+15625.*Power(k,2)*Power(timeIncrement,2)*Power(vmax,2)) + 
+             Power(ese,2)*(893025.0000000001*Power(lastlpe,2) + \
+893025.0000000001*Power(len,2) - 1.7860500000000002e6*len*sse + \
+893025.0000000001*Power(sse,2) + 
+                236250.*k*len*timeIncrement*vmax - \
+236250.*k*sse*timeIncrement*vmax + \
+15625.*Power(k,2)*Power(timeIncrement,2)*Power(vmax,2) + 
+                lastlpe*(-1.7860500000000002e6*len + 1.7860500000000002e6*sse \
+- 236250.*k*timeIncrement*vmax)) + 
+             epe*ese*(1.7860500000000002e6*Power(lastlpe,2) + lastlpe*
+                 (-1.7860500000000002e6*len - 1.7860500000000002e6*spe + \
+1.7860500000000002e6*sse - 472500.*k*timeIncrement*vmax) + 
+                k*timeIncrement*vmax*(-236250.*sse + \
+31250.*k*timeIncrement*vmax) + len*(1.7860500000000002e6*spe + \
+236250.*k*timeIncrement*vmax) + 
+                spe*(-1.7860500000000002e6*sse + \
+236250.*k*timeIncrement*vmax)) + 
+             alpha*f0*(epe*((3.214890000000001e6 + \
+189000.00000000003*k)*lastlpe + (-3.214890000000001e6 - \
+189000.00000000003*k)*spe + 
+                   k*(-47250. + 24999.999999999993*k)*timeIncrement*vmax) + 
+                ese*((3.214890000000001e6 + 189000.00000000003*k)*lastlpe - \
+3.214890000000001e6*len + 3.214890000000001e6*sse + 
+                   k*(-189000.00000000003*len + 189000.00000000003*sse + \
+(-47250. + \
+24999.999999999993*k)*timeIncrement*vmax))))/Power(timeIncrement,2)))/
+      (945.*epe + 945.*ese)),Rule(lpe,(alpha*f0*(-850.5 - 50.*k) + \
+472.5*epe*lastlpe + 472.5*ese*lastlpe + 472.5*ese*len + 472.5*epe*spe - \
+472.5*ese*sse - 
+        62.5*epe*k*timeIncrement*vmax - 62.5*ese*k*timeIncrement*vmax + 
+        0.5*timeIncrement*Sqrt((10000.*Power(alpha,2)*Power(f0,2)*(17.\
+009999590960987 + k)*(17.010000409039023 + k) + 
+             Power(epe,2)*(893025.0000000001*Power(lastlpe,2) - \
+1.7860500000000002e6*lastlpe*spe + 893025.0000000001*Power(spe,2) - 
+                236250.*k*lastlpe*timeIncrement*vmax + \
+236250.*k*spe*timeIncrement*vmax + \
+15625.*Power(k,2)*Power(timeIncrement,2)*Power(vmax,2)) + 
+             Power(ese,2)*(893025.0000000001*Power(lastlpe,2) + \
+893025.0000000001*Power(len,2) - 1.7860500000000002e6*len*sse + \
+893025.0000000001*Power(sse,2) + 
+                236250.*k*len*timeIncrement*vmax - \
+236250.*k*sse*timeIncrement*vmax + \
+15625.*Power(k,2)*Power(timeIncrement,2)*Power(vmax,2) + 
+                lastlpe*(-1.7860500000000002e6*len + 1.7860500000000002e6*sse \
+- 236250.*k*timeIncrement*vmax)) + 
+             epe*ese*(1.7860500000000002e6*Power(lastlpe,2) + lastlpe*
+                 (-1.7860500000000002e6*len - 1.7860500000000002e6*spe + \
+1.7860500000000002e6*sse - 472500.*k*timeIncrement*vmax) + 
+                k*timeIncrement*vmax*(-236250.*sse + \
+31250.*k*timeIncrement*vmax) + len*(1.7860500000000002e6*spe + \
+236250.*k*timeIncrement*vmax) + 
+                spe*(-1.7860500000000002e6*sse + \
+236250.*k*timeIncrement*vmax)) + 
+             alpha*f0*(epe*((3.214890000000001e6 + \
+189000.00000000003*k)*lastlpe + (-3.214890000000001e6 - \
+189000.00000000003*k)*spe + 
+                   k*(-47250. + 24999.999999999993*k)*timeIncrement*vmax) + 
+                ese*((3.214890000000001e6 + 189000.00000000003*k)*lastlpe - \
+3.214890000000001e6*len + 3.214890000000001e6*sse + 
+                   k*(-189000.00000000003*len + 189000.00000000003*sse + \
+(-47250. + \
+24999.999999999993*k)*timeIncrement*vmax))))/Power(timeIncrement,2)))/
+      (945.*epe + 945.*ese)),Rule(fce,(alpha*(epe + ese)*f0*(850.5 + 50.*k) + \
+Power(epe,2)*(-472.5*lastlpe + 472.5*spe + 62.5*k*timeIncrement*vmax) + 
+        ese*(ese*(-472.5*lastlpe + 472.5*len - 472.5*sse + \
+62.5*k*timeIncrement*vmax) - 
+           0.5*timeIncrement*Sqrt((10000.*Power(alpha,2)*Power(f0,2)*(17.\
+009999590960987 + k)*(17.010000409039023 + k) + 
+                Power(epe,2)*(893025.0000000005*Power(lastlpe,2) - \
+1.786050000000001e6*lastlpe*spe + 893025.0000000005*Power(spe,2) - 
+                   236250.00000000003*k*lastlpe*timeIncrement*vmax + \
+236250.00000000003*k*spe*timeIncrement*vmax + 
+                   15624.999999999998*Power(k,2)*Power(timeIncrement,2)*Power(\
+vmax,2)) + 
+                Power(ese,2)*(893025.0000000005*Power(lastlpe,2) + \
+893025.0000000005*Power(len,2) - 1.786050000000001e6*len*sse + 
+                   893025.0000000005*Power(sse,2) + \
+236250.00000000003*k*len*timeIncrement*vmax - \
+236250.00000000003*k*sse*timeIncrement*vmax + 
+                   15624.999999999998*Power(k,2)*Power(timeIncrement,2)*Power(\
+vmax,2) + 
+                   lastlpe*(-1.786050000000001e6*len + \
+1.786050000000001e6*sse - 236250.00000000003*k*timeIncrement*vmax)) + 
+                epe*ese*(1.786050000000001e6*Power(lastlpe,2) + lastlpe*
+                    (-1.786050000000001e6*len - 1.786050000000001e6*spe + \
+1.786050000000001e6*sse - 472500.00000000006*k*timeIncrement*vmax) + 
+                   k*timeIncrement*vmax*(-236250.00000000003*sse + \
+31249.999999999996*k*timeIncrement*vmax) + 
+                   len*(1.786050000000001e6*spe + \
+236250.00000000003*k*timeIncrement*vmax) + 
+                   spe*(-1.786050000000001e6*sse + \
+236250.00000000003*k*timeIncrement*vmax)) + 
+                alpha*f0*(epe*((3.214890000000001e6 + \
+189000.00000000003*k)*lastlpe + (-3.214890000000001e6 - \
+189000.00000000003*k)*spe + 
+                      k*(-47250.00000000001 + \
+25000.000000000004*k)*timeIncrement*vmax) + 
+                   ese*((3.214890000000001e6 + 189000.00000000003*k)*lastlpe \
+- 3.214890000000001e6*len + 3.214890000000001e6*sse + 
+                      k*(-189000.00000000003*len + 189000.00000000003*sse + \
+(-47250.00000000001 + 25000.000000000004*k)*timeIncrement*vmax))))/
+              Power(timeIncrement,2))) + epe*(ese*(-945.*lastlpe + 472.5*len \
++ 472.5*spe - 472.5*sse + 125.*k*timeIncrement*vmax) - 
+           0.5*timeIncrement*Sqrt((10000.*Power(alpha,2)*Power(f0,2)*(17.\
+009999590960987 + k)*(17.010000409039023 + k) + 
+                Power(epe,2)*(893025.0000000005*Power(lastlpe,2) - \
+1.786050000000001e6*lastlpe*spe + 893025.0000000005*Power(spe,2) - 
+                   236250.00000000003*k*lastlpe*timeIncrement*vmax + \
+236250.00000000003*k*spe*timeIncrement*vmax + 
+                   15624.999999999998*Power(k,2)*Power(timeIncrement,2)*Power(\
+vmax,2)) + 
+                Power(ese,2)*(893025.0000000005*Power(lastlpe,2) + \
+893025.0000000005*Power(len,2) - 1.786050000000001e6*len*sse + 
+                   893025.0000000005*Power(sse,2) + \
+236250.00000000003*k*len*timeIncrement*vmax - \
+236250.00000000003*k*sse*timeIncrement*vmax + 
+                   15624.999999999998*Power(k,2)*Power(timeIncrement,2)*Power(\
+vmax,2) + 
+                   lastlpe*(-1.786050000000001e6*len + \
+1.786050000000001e6*sse - 236250.00000000003*k*timeIncrement*vmax)) + 
+                epe*ese*(1.786050000000001e6*Power(lastlpe,2) + lastlpe*
+                    (-1.786050000000001e6*len - 1.786050000000001e6*spe + \
+1.786050000000001e6*sse - 472500.00000000006*k*timeIncrement*vmax) + 
+                   k*timeIncrement*vmax*(-236250.00000000003*sse + \
+31249.999999999996*k*timeIncrement*vmax) + 
+                   len*(1.786050000000001e6*spe + \
+236250.00000000003*k*timeIncrement*vmax) + 
+                   spe*(-1.786050000000001e6*sse + \
+236250.00000000003*k*timeIncrement*vmax)) + 
+                alpha*f0*(epe*((3.214890000000001e6 + \
+189000.00000000003*k)*lastlpe + (-3.214890000000001e6 - \
+189000.00000000003*k)*spe + 
+                      k*(-47250.00000000001 + \
+25000.000000000004*k)*timeIncrement*vmax) + 
+                   ese*((3.214890000000001e6 + 189000.00000000003*k)*lastlpe \
+- 3.214890000000001e6*len + 3.214890000000001e6*sse + 
+                      k*(-189000.00000000003*len + 189000.00000000003*sse + \
+(-47250.00000000001 + 25000.000000000004*k)*timeIncrement*vmax))))/
+              Power(timeIncrement,2))))/(945.*epe + 945.*ese)),Rule(vce,
+     (-850.5*alpha*f0 - 50.*alpha*f0*k - 472.5*epe*lastlpe - \
+472.5*ese*lastlpe + 472.5*ese*len + 472.5*epe*spe - 472.5*ese*sse - \
+62.5*epe*k*timeIncrement*vmax - 
+        62.5*ese*k*timeIncrement*vmax + 0.5*timeIncrement*Sqrt((-4.*(945.*epe \
++ 945.*ese)*k*
+              (125.*alpha*f0 + 125.*epe*lastlpe + 125.*ese*lastlpe - \
+125.*ese*len - 125.*epe*spe + 125.*ese*sse)*timeIncrement*vmax + 
+             Power(alpha*f0*(1701. + 100.*k) + epe*(945.*lastlpe - 945.*spe + \
+125.*k*timeIncrement*vmax) + 
+               ese*(945.*lastlpe - 945.*len + 945.*sse + \
+125.*k*timeIncrement*vmax),2))/Power(timeIncrement,2)))/
+      (945.*epe*timeIncrement + 945.*ese*timeIncrement))))\
+\>", "Output",
+ CellChangeTimes->{3.446057441747313*^9, 3.446106880199415*^9}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Special Conditions", "Subsubtitle"],
+
+Cell["\<\
+The main additional consitions are when the springs are slack. This is common \
+for the parallel element but should probably never happen for the serial \
+element.\
+\>", "Text"],
+
+Cell["lpe <= spe", "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Concentric", "Subsubtitle"],
+
+Cell["i.e. vce <= 0", "Text"],
+
+Cell[BoxData[
+ RowBox[{"eq5b", ":=", 
+  RowBox[{"fpe", "\[Equal]", "0"}]}]], "Input"],
+
+Cell["\<\
+FullSimplify[Solve[{eq2, eq3, eq4, eq5b, eq6, eq10}, {lpe, lse, fpe, fse, \
+fce, vce}]]\
+\>", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"CForm", "[", 
+  RowBox[{"FullSimplify", "[", 
+   RowBox[{"Solve", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+      "eq2", ",", "eq3", ",", "eq4", ",", "eq5b", ",", "eq6", ",", "eq10"}], 
+      "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+      "lpe", ",", "lse", ",", "fpe", ",", "fse", ",", "fce", ",", "vce"}], 
+      "}"}]}], "]"}], "]"}], "]"}]], "Input"],
+
+Cell["\<\
+List(List(Rule(lpe,(alpha*f0*k + ese*(lastlpe + len - sse + \
+k*timeIncrement*vmax) - 
+        Sqrt(4*ese*k*(alpha*f0 + ese*(lastlpe - len + \
+sse))*timeIncrement*vmax + Power(alpha*f0*k + ese*(-lastlpe + len - sse + \
+k*timeIncrement*vmax),2)))/
+      (2.*ese)),Rule(fpe,0),Rule(fse,(-(alpha*f0*k) - ese*(lastlpe - len + \
+sse + k*timeIncrement*vmax) + 
+        Sqrt(4*ese*k*(alpha*f0 + ese*(lastlpe - len + \
+sse))*timeIncrement*vmax + Power(alpha*f0*k + ese*(-lastlpe + len - sse + \
+k*timeIncrement*vmax),2)))/2.),
+    Rule(lse,(-(alpha*f0*k) - ese*lastlpe + ese*len + ese*sse - \
+ese*k*timeIncrement*vmax + 
+        Sqrt(4*ese*k*(alpha*f0 + ese*(lastlpe - len + \
+sse))*timeIncrement*vmax + Power(alpha*f0*k + ese*(-lastlpe + len - sse + \
+k*timeIncrement*vmax),2)))/
+      (2.*ese)),Rule(fce,(-(alpha*f0*k) - ese*(lastlpe - len + sse + \
+k*timeIncrement*vmax) + 
+        Sqrt(4*ese*k*(alpha*f0 + ese*(lastlpe - len + \
+sse))*timeIncrement*vmax + Power(alpha*f0*k + ese*(-lastlpe + len - sse + \
+k*timeIncrement*vmax),2)))/2.),
+    Rule(vce,(alpha*f0*k + ese*(-lastlpe + len - sse + k*timeIncrement*vmax) \
+- 
+        Sqrt(4*ese*k*(alpha*f0 + ese*(lastlpe - len + \
+sse))*timeIncrement*vmax + Power(alpha*f0*k + ese*(-lastlpe + len - sse + \
+k*timeIncrement*vmax),2)))/
+      (2.*ese*timeIncrement))),List(Rule(lpe,(alpha*f0*k + ese*(lastlpe + len \
+- sse + k*timeIncrement*vmax) + 
+        Sqrt(4*ese*k*(alpha*f0 + ese*(lastlpe - len + \
+sse))*timeIncrement*vmax + Power(alpha*f0*k + ese*(-lastlpe + len - sse + \
+k*timeIncrement*vmax),2)))/
+      (2.*ese)),Rule(fpe,0),Rule(fse,(-(alpha*f0*k) - ese*(lastlpe - len + \
+sse + k*timeIncrement*vmax) - 
+        Sqrt(4*ese*k*(alpha*f0 + ese*(lastlpe - len + \
+sse))*timeIncrement*vmax + Power(alpha*f0*k + ese*(-lastlpe + len - sse + \
+k*timeIncrement*vmax),2)))/2.),
+    Rule(lse,-(alpha*f0*k + ese*(lastlpe - len - sse + k*timeIncrement*vmax) \
++ 
+         Sqrt(4*ese*k*(alpha*f0 + ese*(lastlpe - len + \
+sse))*timeIncrement*vmax + Power(alpha*f0*k + ese*(-lastlpe + len - sse + \
+k*timeIncrement*vmax),2)))/
+      (2.*ese)),Rule(fce,(-(alpha*f0*k) - ese*(lastlpe - len + sse + \
+k*timeIncrement*vmax) - 
+        Sqrt(4*ese*k*(alpha*f0 + ese*(lastlpe - len + \
+sse))*timeIncrement*vmax + Power(alpha*f0*k + ese*(-lastlpe + len - sse + \
+k*timeIncrement*vmax),2)))/2.),
+    Rule(vce,(alpha*f0*k + ese*(-lastlpe + len - sse + k*timeIncrement*vmax) \
++ 
+        Sqrt(4*ese*k*(alpha*f0 + ese*(lastlpe - len + \
+sse))*timeIncrement*vmax + Power(alpha*f0*k + ese*(-lastlpe + len - sse + \
+k*timeIncrement*vmax),2)))/
+      (2.*ese*timeIncrement))))\
+\>", "Output",
+ CellChangeTimes->{3.44605745099476*^9, 3.446106889181937*^9}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Eccentric", "Subsubtitle"],
+
+Cell["i.e. vce > 0", "Text"],
+
+Cell["\<\
+FullSimplify[Solve[{eq1, eq3, eq4, eq5b, eq6, eq10}, {lpe, lse, fpe, fse, \
+fce, vce}]]\
+\>", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"CForm", "[", 
+  RowBox[{"FullSimplify", "[", 
+   RowBox[{"Solve", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+      "eq1", ",", "eq3", ",", "eq4", ",", "eq5b", ",", "eq6", ",", "eq10"}], 
+      "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+      "lpe", ",", "lse", ",", "fpe", ",", "fse", ",", "fce", ",", "vce"}], 
+      "}"}]}], "]"}], "]"}], "]"}]], "Input"],
+
+Cell["\<\
+List(List(Rule(lpe,(alpha*f0*(-0.9 - 0.052910052910052914*k) + \
+ese*(0.5*lastlpe + 0.5*len - 0.5*sse - \
+0.06613756613756615*k*timeIncrement*vmax) - 
+        0.0005291005291005291*timeIncrement*Sqrt((10000.*Power(alpha,2)*Power(\
+f0,2)*(17.009999590960987 + k)*(17.010000409039023 + k) + 
+             Power(ese,2)*(893025.0000000005*Power(lastlpe,2) + \
+893025.0000000005*Power(len,2) - 1.786050000000001e6*len*sse + \
+893025.0000000005*Power(sse,2) + 
+                236250.00000000003*k*len*timeIncrement*vmax - \
+236250.00000000003*k*sse*timeIncrement*vmax + 
+                15624.999999999998*Power(k,2)*Power(timeIncrement,2)*Power(\
+vmax,2) + 
+                lastlpe*(-1.786050000000001e6*len + 1.786050000000001e6*sse - \
+236250.00000000003*k*timeIncrement*vmax)) + 
+             alpha*ese*f0*((3.214890000000001e6 + \
+189000.00000000003*k)*lastlpe - 3.214890000000001e6*len + \
+3.214890000000001e6*sse + 
+                k*(-189000.00000000003*len + 189000.00000000003*sse + \
+(-47250.00000000001 + \
+25000.000000000004*k)*timeIncrement*vmax)))/Power(timeIncrement,2)))/
+      ese),Rule(fpe,0.),Rule(fse,alpha*f0*(0.9 + 0.052910052910052914*k) + \
+ese*(-0.5*lastlpe + 0.5*len - 0.5*sse + \
+0.06613756613756615*k*timeIncrement*vmax) + 
+      0.0005291005291005291*timeIncrement*Sqrt((10000.*Power(alpha,2)*Power(\
+f0,2)*(17.009999590960987 + k)*(17.010000409039023 + k) + 
+           Power(ese,2)*(893025.0000000005*Power(lastlpe,2) + \
+893025.0000000005*Power(len,2) - 1.786050000000001e6*len*sse + \
+893025.0000000005*Power(sse,2) + 
+              236250.00000000003*k*len*timeIncrement*vmax - \
+236250.00000000003*k*sse*timeIncrement*vmax + 
+              15624.999999999998*Power(k,2)*Power(timeIncrement,2)*Power(vmax,\
+2) + 
+              lastlpe*(-1.786050000000001e6*len + 1.786050000000001e6*sse - \
+236250.00000000003*k*timeIncrement*vmax)) + 
+           alpha*ese*f0*((3.214890000000001e6 + 189000.00000000003*k)*lastlpe \
+- 3.214890000000001e6*len + 3.214890000000001e6*sse + 
+              k*(-189000.00000000003*len + 189000.00000000003*sse + \
+(-47250.00000000001 + \
+25000.000000000004*k)*timeIncrement*vmax)))/Power(timeIncrement,2))),
+    Rule(lse,(alpha*f0*(0.9 + 0.052910052910052914*k) + ese*(-0.5*lastlpe + \
+0.5*len + 0.5*sse + 0.06613756613756615*k*timeIncrement*vmax) + 
+        0.0005291005291005291*timeIncrement*Sqrt((10000.*Power(alpha,2)*Power(\
+f0,2)*(17.009999590960987 + k)*(17.010000409039023 + k) + 
+             Power(ese,2)*(893025.0000000005*Power(lastlpe,2) + \
+893025.0000000005*Power(len,2) - 1.786050000000001e6*len*sse + \
+893025.0000000005*Power(sse,2) + 
+                236250.00000000003*k*len*timeIncrement*vmax - \
+236250.00000000003*k*sse*timeIncrement*vmax + 
+                15624.999999999998*Power(k,2)*Power(timeIncrement,2)*Power(\
+vmax,2) + 
+                lastlpe*(-1.786050000000001e6*len + 1.786050000000001e6*sse - \
+236250.00000000003*k*timeIncrement*vmax)) + 
+             alpha*ese*f0*((3.214890000000001e6 + \
+189000.00000000003*k)*lastlpe - 3.214890000000001e6*len + \
+3.214890000000001e6*sse + 
+                k*(-189000.00000000003*len + 189000.00000000003*sse + \
+(-47250.00000000001 + \
+25000.000000000004*k)*timeIncrement*vmax)))/Power(timeIncrement,2)))/
+      ese),Rule(fce,alpha*f0*(0.9 + 0.052910052910052914*k) + \
+ese*(-0.5*lastlpe + 0.5*len - 0.5*sse + \
+0.06613756613756615*k*timeIncrement*vmax) + 
+      0.0005291005291005291*timeIncrement*Sqrt((10000.*Power(alpha,2)*Power(\
+f0,2)*(17.009999590960987 + k)*(17.010000409039023 + k) + 
+           Power(ese,2)*(893025.0000000005*Power(lastlpe,2) + \
+893025.0000000005*Power(len,2) - 1.786050000000001e6*len*sse + \
+893025.0000000005*Power(sse,2) + 
+              236250.00000000003*k*len*timeIncrement*vmax - \
+236250.00000000003*k*sse*timeIncrement*vmax + 
+              15624.999999999998*Power(k,2)*Power(timeIncrement,2)*Power(vmax,\
+2) + 
+              lastlpe*(-1.786050000000001e6*len + 1.786050000000001e6*sse - \
+236250.00000000003*k*timeIncrement*vmax)) + 
+           alpha*ese*f0*((3.214890000000001e6 + 189000.00000000003*k)*lastlpe \
+- 3.214890000000001e6*len + 3.214890000000001e6*sse + 
+              k*(-189000.00000000003*len + 189000.00000000003*sse + \
+(-47250.00000000001 + \
+25000.000000000004*k)*timeIncrement*vmax)))/Power(timeIncrement,2))),
+    Rule(vce,(-0.9*alpha*f0 - 0.052910052910052914*alpha*f0*k - \
+0.5*ese*lastlpe + 0.5*ese*len - 0.5*ese*sse - \
+0.06613756613756615*ese*k*timeIncrement*vmax - 
+        0.0005291005291005291*timeIncrement*Sqrt((ese*k*(-472500.*alpha*f0 + \
+ese*(-472500.*lastlpe + 472500.*len - 472500.*sse))*timeIncrement*vmax + 
+             Power(alpha*f0*(1701. + 100.*k) + ese*(945.*lastlpe - 945.*len + \
+945.*sse + 125.*k*timeIncrement*vmax),2))/Power(timeIncrement,2)))/
+      (ese*timeIncrement))),List(Rule(lpe,(alpha*f0*(-0.9 - \
+0.052910052910052914*k) + 
+        ese*(0.5*lastlpe + 0.5*len - 0.5*sse - \
+0.06613756613756615*k*timeIncrement*vmax) + 
+        0.0005291005291005291*timeIncrement*Sqrt((10000.*Power(alpha,2)*Power(\
+f0,2)*(17.009999590960987 + k)*(17.010000409039023 + k) + 
+             Power(ese,2)*(893025.0000000005*Power(lastlpe,2) + \
+893025.0000000005*Power(len,2) - 1.786050000000001e6*len*sse + \
+893025.0000000005*Power(sse,2) + 
+                236250.00000000003*k*len*timeIncrement*vmax - \
+236250.00000000003*k*sse*timeIncrement*vmax + 
+                15624.999999999998*Power(k,2)*Power(timeIncrement,2)*Power(\
+vmax,2) + 
+                lastlpe*(-1.786050000000001e6*len + 1.786050000000001e6*sse - \
+236250.00000000003*k*timeIncrement*vmax)) + 
+             alpha*ese*f0*((3.214890000000001e6 + \
+189000.00000000003*k)*lastlpe - 3.214890000000001e6*len + \
+3.214890000000001e6*sse + 
+                k*(-189000.00000000003*len + 189000.00000000003*sse + \
+(-47250.00000000001 + \
+25000.000000000004*k)*timeIncrement*vmax)))/Power(timeIncrement,2)))/
+      ese),Rule(fpe,0.),Rule(fse,alpha*f0*(0.9 + 0.052910052910052914*k) + \
+ese*(-0.5*lastlpe + 0.5*len - 0.5*sse + \
+0.06613756613756615*k*timeIncrement*vmax) - 
+      0.0005291005291005291*timeIncrement*Sqrt((10000.*Power(alpha,2)*Power(\
+f0,2)*(17.009999590960987 + k)*(17.010000409039023 + k) + 
+           Power(ese,2)*(893025.0000000005*Power(lastlpe,2) + \
+893025.0000000005*Power(len,2) - 1.786050000000001e6*len*sse + \
+893025.0000000005*Power(sse,2) + 
+              236250.00000000003*k*len*timeIncrement*vmax - \
+236250.00000000003*k*sse*timeIncrement*vmax + 
+              15624.999999999998*Power(k,2)*Power(timeIncrement,2)*Power(vmax,\
+2) + 
+              lastlpe*(-1.786050000000001e6*len + 1.786050000000001e6*sse - \
+236250.00000000003*k*timeIncrement*vmax)) + 
+           alpha*ese*f0*((3.214890000000001e6 + 189000.00000000003*k)*lastlpe \
+- 3.214890000000001e6*len + 3.214890000000001e6*sse + 
+              k*(-189000.00000000003*len + 189000.00000000003*sse + \
+(-47250.00000000001 + \
+25000.000000000004*k)*timeIncrement*vmax)))/Power(timeIncrement,2))),
+    Rule(lse,(alpha*f0*(0.9 + 0.052910052910052914*k) + ese*(-0.5*lastlpe + \
+0.5*len + 0.5*sse + 0.06613756613756615*k*timeIncrement*vmax) - 
+        0.0005291005291005291*timeIncrement*Sqrt((10000.*Power(alpha,2)*Power(\
+f0,2)*(17.009999590960987 + k)*(17.010000409039023 + k) + 
+             Power(ese,2)*(893025.0000000005*Power(lastlpe,2) + \
+893025.0000000005*Power(len,2) - 1.786050000000001e6*len*sse + \
+893025.0000000005*Power(sse,2) + 
+                236250.00000000003*k*len*timeIncrement*vmax - \
+236250.00000000003*k*sse*timeIncrement*vmax + 
+                15624.999999999998*Power(k,2)*Power(timeIncrement,2)*Power(\
+vmax,2) + 
+                lastlpe*(-1.786050000000001e6*len + 1.786050000000001e6*sse - \
+236250.00000000003*k*timeIncrement*vmax)) + 
+             alpha*ese*f0*((3.214890000000001e6 + \
+189000.00000000003*k)*lastlpe - 3.214890000000001e6*len + \
+3.214890000000001e6*sse + 
+                k*(-189000.00000000003*len + 189000.00000000003*sse + \
+(-47250.00000000001 + \
+25000.000000000004*k)*timeIncrement*vmax)))/Power(timeIncrement,2)))/
+      ese),Rule(fce,alpha*f0*(0.9 + 0.052910052910052914*k) + \
+ese*(-0.5*lastlpe + 0.5*len - 0.5*sse + \
+0.06613756613756615*k*timeIncrement*vmax) - 
+      0.0005291005291005291*timeIncrement*Sqrt((10000.*Power(alpha,2)*Power(\
+f0,2)*(17.009999590960987 + k)*(17.010000409039023 + k) + 
+           Power(ese,2)*(893025.0000000005*Power(lastlpe,2) + \
+893025.0000000005*Power(len,2) - 1.786050000000001e6*len*sse + \
+893025.0000000005*Power(sse,2) + 
+              236250.00000000003*k*len*timeIncrement*vmax - \
+236250.00000000003*k*sse*timeIncrement*vmax + 
+              15624.999999999998*Power(k,2)*Power(timeIncrement,2)*Power(vmax,\
+2) + 
+              lastlpe*(-1.786050000000001e6*len + 1.786050000000001e6*sse - \
+236250.00000000003*k*timeIncrement*vmax)) + 
+           alpha*ese*f0*((3.214890000000001e6 + 189000.00000000003*k)*lastlpe \
+- 3.214890000000001e6*len + 3.214890000000001e6*sse + 
+              k*(-189000.00000000003*len + 189000.00000000003*sse + \
+(-47250.00000000001 + \
+25000.000000000004*k)*timeIncrement*vmax)))/Power(timeIncrement,2))),
+    Rule(vce,(-0.9*alpha*f0 - 0.052910052910052914*alpha*f0*k - \
+0.5*ese*lastlpe + 0.5*ese*len - 0.5*ese*sse - \
+0.06613756613756615*ese*k*timeIncrement*vmax + 
+        0.0005291005291005291*timeIncrement*Sqrt((ese*k*(-472500.*alpha*f0 + \
+ese*(-472500.*lastlpe + 472500.*len - 472500.*sse))*timeIncrement*vmax + 
+             Power(alpha*f0*(1701. + 100.*k) + ese*(945.*lastlpe - 945.*len + \
+945.*sse + 125.*k*timeIncrement*vmax),2))/Power(timeIncrement,2)))/
+      (ese*timeIncrement))))\
+\>", "Output",
+ CellChangeTimes->{3.446057471320644*^9, 3.4461069085808487`*^9}]
+}, Open  ]],
+
+Cell["lse <= sse", "Text"],
+
+Cell["\<\
+Results indeterminate but might as well set the forces to zero, the \
+velocities to zero and lse to that slack length and lpe to zero\
+\>", "Text"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Adding Damping", "Subtitle"],
+
+Cell["\<\
+All that is needed for damping is to rewrite eqations 4 and 5 to include \
+velocity terms\
+\>", "Text"],
+
+Cell["\<\
+vse velocity of the serial element (m/s)
+dse damping constant of serial element (Ns/m)
+dpe damping constant of parallel element (Ns/m)
+vel velocity of the system\
+\>", "Text"],
+
+Cell[CellGroupData[{
+
+Cell["Equations", "Subsubtitle"],
+
+Cell[BoxData[
+ RowBox[{"eq7", ":=", 
+  RowBox[{"fse", "==", 
+   RowBox[{
+    RowBox[{"ese", 
+     RowBox[{"(", 
+      RowBox[{"lse", "-", "sse"}], ")"}]}], "+", 
+    RowBox[{"dse", " ", "vse"}]}]}]}]], "Input",
+ CellChangeTimes->{3.4461065837176323`*^9}],
+
+Cell[BoxData[
+ RowBox[{"eq8", ":=", 
+  RowBox[{"fpe", "==", 
+   RowBox[{
+    RowBox[{"epe", 
+     RowBox[{"(", 
+      RowBox[{"lpe", "-", "spe"}], ")"}]}], "+", 
+    RowBox[{"dpe", " ", "vce"}]}]}]}]], "Input",
+ CellChangeTimes->{3.446106586803691*^9}],
+
+Cell[BoxData[
+ RowBox[{"eq9", ":=", 
+  RowBox[{"vel", "==", 
+   RowBox[{"vce", "+", "vse"}]}]}]], "Input"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Concentric", "Subsubtitle"],
+
+Cell["i.e. vce <= 0", "Text"],
+
+Cell["\<\
+FullSimplify[Solve[{eq2, eq3, eq7, eq8, eq6, eq9, eq10}, {lpe, lse, fpe, fse, \
+fce, vse, vce}]]\
+\>", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"CForm", "[", 
+  RowBox[{"FullSimplify", "[", 
+   RowBox[{"Solve", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+      "eq2", ",", "eq3", ",", "eq7", ",", "eq8", ",", "eq6", ",", "eq9", ",", 
+       "eq10"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+      "lpe", ",", "lse", ",", "fpe", ",", "fse", ",", "fce", ",", "vse", ",", 
+       "vce"}], "}"}]}], "]"}], "]"}], "]"}]], "Input"],
+
+Cell["\<\
+List(List(Rule(fpe,(Power(epe,2)*timeIncrement*(lastlpe - spe + \
+k*timeIncrement*vmax) + 
+        dpe*(-(ese*(lastlpe - len + sse)) + dse*vel + k*(alpha*f0 + (dpe + \
+dse + ese*timeIncrement)*vmax)) + 
+        epe*(alpha*f0*k*timeIncrement + ese*timeIncrement*(lastlpe + len - \
+2*spe - sse + k*timeIncrement*vmax) + dpe*(lastlpe - spe + \
+2*k*timeIncrement*vmax) + 
+           dse*(2*lastlpe - 2*spe + timeIncrement*(vel + k*vmax))) - 
+        dpe*Sqrt(4*k*(dpe + dse + (epe + ese)*timeIncrement)*(alpha*f0 + \
+epe*(lastlpe - spe) + ese*(lastlpe - len + sse) - dse*vel)*vmax + 
+           Power(epe*(-lastlpe + spe) - ese*(lastlpe - len + sse) + dse*vel + \
+k*(alpha*f0 + (dpe + dse + (epe + ese)*timeIncrement)*vmax),2)) - 
+        epe*timeIncrement*Sqrt(4*k*(dpe + dse + (epe + \
+ese)*timeIncrement)*(alpha*f0 + epe*(lastlpe - spe) + ese*(lastlpe - len + \
+sse) - dse*vel)*vmax + 
+           Power(epe*(-lastlpe + spe) - ese*(lastlpe - len + sse) + dse*vel + \
+k*(alpha*f0 + (dpe + dse + (epe + ese)*timeIncrement)*vmax),2)))/
+      (2.*(dpe + dse + (epe + \
+ese)*timeIncrement))),Rule(fse,(-(alpha*f0*k*(dse + ese*timeIncrement)) + \
+Power(dse,2)*(vel - k*vmax) + 
+        dse*(2*dpe*vel - dpe*k*vmax + epe*(lastlpe - spe + \
+2*timeIncrement*vel - k*timeIncrement*vmax) - 
+           ese*(lastlpe - len + sse - timeIncrement*vel + \
+2*k*timeIncrement*vmax) + 
+           Sqrt(Power(alpha,2)*Power(f0,2)*Power(k,2) + Power(epe*lastlpe + \
+ese*lastlpe - ese*len - epe*spe + ese*sse - dse*vel + 
+               k*(dpe + dse + (epe + ese)*timeIncrement)*vmax,2) + 
+             2*alpha*f0*k*(-(epe*lastlpe) - ese*lastlpe + ese*len + epe*spe - \
+ese*sse + dse*vel + (2 + k)*(dpe + dse + (epe + ese)*timeIncrement)*vmax))) + \
+
+        ese*(-(dpe*(2*(lastlpe - len + sse) + k*timeIncrement*vmax)) - 
+           timeIncrement*(ese*(lastlpe - len + sse + k*timeIncrement*vmax) + \
+epe*(lastlpe - 2*len + spe + 2*sse + k*timeIncrement*vmax)) + 
+           timeIncrement*Sqrt(Power(alpha,2)*Power(f0,2)*Power(k,2) + 
+              Power(epe*lastlpe + ese*lastlpe - ese*len - epe*spe + ese*sse - \
+dse*vel + k*(dpe + dse + (epe + ese)*timeIncrement)*vmax,2) + 
+              2*alpha*f0*k*(-(epe*lastlpe) - ese*lastlpe + ese*len + epe*spe \
+- ese*sse + dse*vel + (2 + k)*(dpe + dse + (epe + \
+ese)*timeIncrement)*vmax))))/
+      (2.*(dpe + dse + (epe + ese)*timeIncrement))),Rule(lse,(-2*lastlpe + \
+2*len - 
+        (timeIncrement*(alpha*f0*k + epe*(-lastlpe + spe) - ese*(lastlpe - \
+len + sse) + dse*vel))/(dpe + dse + (epe + ese)*timeIncrement) - 
+        k*timeIncrement*vmax + \
+(timeIncrement*Sqrt(Power(alpha,2)*Power(f0,2)*Power(k,2) + 
+             Power(epe*lastlpe + ese*lastlpe - ese*len - epe*spe + ese*sse - \
+dse*vel + k*(dpe + dse + (epe + ese)*timeIncrement)*vmax,2) + 
+             2*alpha*f0*k*(-(epe*lastlpe) - ese*lastlpe + ese*len + epe*spe - \
+ese*sse + dse*vel + (2 + k)*(dpe + dse + (epe + ese)*timeIncrement)*vmax)))/
+         (dpe + dse + (epe + ese)*timeIncrement))/2.),Rule(vse,(2*dpe*vel + \
+dse*vel + epe*(lastlpe - spe + 2*timeIncrement*vel) + 
+        ese*(lastlpe - len + sse + 2*timeIncrement*vel) - k*(alpha*f0 + (dpe \
++ dse + (epe + ese)*timeIncrement)*vmax) + 
+        Sqrt(Power(alpha,2)*Power(f0,2)*Power(k,2) + Power(epe*lastlpe + \
+ese*lastlpe - ese*len - epe*spe + ese*sse - dse*vel + 
+            k*(dpe + dse + (epe + ese)*timeIncrement)*vmax,2) + 2*alpha*f0*k*
+           (-(epe*lastlpe) - ese*lastlpe + ese*len + epe*spe - ese*sse + \
+dse*vel + (2 + k)*(dpe + dse + (epe + ese)*timeIncrement)*vmax)))/
+      (2.*(dpe + dse + (epe + ese)*timeIncrement))),Rule(lpe,(dpe*(2*lastlpe \
++ k*timeIncrement*vmax) + dse*(2*lastlpe + timeIncrement*(vel + k*vmax)) + 
+        timeIncrement*(epe*(lastlpe + spe) + ese*(lastlpe + len - sse) + \
+k*(alpha*f0 + (epe + ese)*timeIncrement*vmax) - 
+           Sqrt(Power(alpha,2)*Power(f0,2)*Power(k,2) + Power(epe*lastlpe + \
+ese*lastlpe - ese*len - epe*spe + ese*sse - dse*vel + 
+               k*(dpe + dse + (epe + ese)*timeIncrement)*vmax,2) + 
+             2*alpha*f0*k*(-(epe*lastlpe) - ese*lastlpe + ese*len + epe*spe - \
+ese*sse + dse*vel + (2 + k)*(dpe + dse + (epe + ese)*timeIncrement)*vmax))))/
+      (2.*(dpe + dse + (epe + ese)*timeIncrement))),Rule(fce,(epe*(-lastlpe + \
+spe) - ese*(lastlpe - len + sse) + dse*vel - 
+        k*(alpha*f0 + (dpe + dse + (epe + ese)*timeIncrement)*vmax) + 
+        Sqrt(Power(alpha,2)*Power(f0,2)*Power(k,2) + Power(epe*lastlpe + \
+ese*lastlpe - ese*len - epe*spe + ese*sse - dse*vel + 
+            k*(dpe + dse + (epe + ese)*timeIncrement)*vmax,2) + 2*alpha*f0*k*
+           (-(epe*lastlpe) - ese*lastlpe + ese*len + epe*spe - ese*sse + \
+dse*vel + (2 + k)*(dpe + dse + (epe + ese)*timeIncrement)*vmax)))/2.),
+    Rule(vce,(alpha*f0*k - epe*lastlpe - ese*lastlpe + ese*len + epe*spe - \
+ese*sse + dse*vel + dpe*k*vmax + dse*k*vmax + epe*k*timeIncrement*vmax + 
+        ese*k*timeIncrement*vmax - Sqrt(4*k*(dpe + dse + (epe + \
+ese)*timeIncrement)*(alpha*f0 + epe*(lastlpe - spe) + ese*(lastlpe - len + \
+sse) - dse*vel)*
+           vmax + Power(epe*(-lastlpe + spe) - ese*(lastlpe - len + sse) + \
+dse*vel + k*(alpha*f0 + (dpe + dse + (epe + ese)*timeIncrement)*vmax),2)))/
+      (2.*(dpe + dse + (epe + ese)*timeIncrement)))),List(Rule(fpe,
+     (Power(epe,2)*timeIncrement*(lastlpe - spe + k*timeIncrement*vmax) + 
+        dpe*(-(ese*(lastlpe - len + sse)) + dse*vel + k*(alpha*f0 + (dpe + \
+dse + ese*timeIncrement)*vmax)) + 
+        epe*(alpha*f0*k*timeIncrement + ese*timeIncrement*(lastlpe + len - \
+2*spe - sse + k*timeIncrement*vmax) + dpe*(lastlpe - spe + \
+2*k*timeIncrement*vmax) + 
+           dse*(2*lastlpe - 2*spe + timeIncrement*(vel + k*vmax))) + 
+        dpe*Sqrt(4*k*(dpe + dse + (epe + ese)*timeIncrement)*(alpha*f0 + \
+epe*(lastlpe - spe) + ese*(lastlpe - len + sse) - dse*vel)*vmax + 
+           Power(epe*(-lastlpe + spe) - ese*(lastlpe - len + sse) + dse*vel + \
+k*(alpha*f0 + (dpe + dse + (epe + ese)*timeIncrement)*vmax),2)) + 
+        epe*timeIncrement*Sqrt(4*k*(dpe + dse + (epe + \
+ese)*timeIncrement)*(alpha*f0 + epe*(lastlpe - spe) + ese*(lastlpe - len + \
+sse) - dse*vel)*vmax + 
+           Power(epe*(-lastlpe + spe) - ese*(lastlpe - len + sse) + dse*vel + \
+k*(alpha*f0 + (dpe + dse + (epe + ese)*timeIncrement)*vmax),2)))/
+      (2.*(dpe + dse + (epe + \
+ese)*timeIncrement))),Rule(fse,-(alpha*f0*k*(dse + ese*timeIncrement) + \
+Power(dse,2)*(-vel + k*vmax) + 
+         dse*(-2*dpe*vel + dpe*k*vmax + epe*(-lastlpe + spe - \
+2*timeIncrement*vel + k*timeIncrement*vmax) + 
+            ese*(lastlpe - len + sse - timeIncrement*vel + \
+2*k*timeIncrement*vmax) + 
+            Sqrt(Power(alpha,2)*Power(f0,2)*Power(k,2) + Power(epe*lastlpe + \
+ese*lastlpe - ese*len - epe*spe + ese*sse - dse*vel + 
+                k*(dpe + dse + (epe + ese)*timeIncrement)*vmax,2) + 
+              2*alpha*f0*k*(-(epe*lastlpe) - ese*lastlpe + ese*len + epe*spe \
+- ese*sse + dse*vel + (2 + k)*(dpe + dse + (epe + ese)*timeIncrement)*vmax))) \
++ 
+         ese*(2*dpe*(lastlpe - len + sse) + dpe*k*timeIncrement*vmax + 
+            timeIncrement*(ese*(lastlpe - len + sse + k*timeIncrement*vmax) + \
+epe*(lastlpe - 2*len + spe + 2*sse + k*timeIncrement*vmax) + 
+               Sqrt(Power(alpha,2)*Power(f0,2)*Power(k,2) + Power(epe*lastlpe \
++ ese*lastlpe - ese*len - epe*spe + ese*sse - dse*vel + 
+                   k*(dpe + dse + (epe + ese)*timeIncrement)*vmax,2) + 
+                 2*alpha*f0*k*(-(epe*lastlpe) - ese*lastlpe + ese*len + \
+epe*spe - ese*sse + dse*vel + (2 + k)*(dpe + dse + (epe + \
+ese)*timeIncrement)*vmax)))))/
+      (2.*(dpe + dse + (epe + ese)*timeIncrement))),Rule(lse,-(dpe*(2*lastlpe \
+- 2*len + k*timeIncrement*vmax) + 
+         dse*(2*lastlpe - 2*len + timeIncrement*(vel + k*vmax)) + 
+         timeIncrement*(epe*(lastlpe - 2*len + spe) + ese*(lastlpe - len - \
+sse) + k*(alpha*f0 + (epe + ese)*timeIncrement*vmax) + 
+            Sqrt(Power(alpha,2)*Power(f0,2)*Power(k,2) + Power(epe*lastlpe + \
+ese*lastlpe - ese*len - epe*spe + ese*sse - dse*vel + 
+                k*(dpe + dse + (epe + ese)*timeIncrement)*vmax,2) + 
+              2*alpha*f0*k*(-(epe*lastlpe) - ese*lastlpe + ese*len + epe*spe \
+- ese*sse + dse*vel + (2 + k)*(dpe + dse + (epe + \
+ese)*timeIncrement)*vmax))))/
+      (2.*(dpe + dse + (epe + ese)*timeIncrement))),Rule(vse,(2*dpe*vel + \
+dse*vel + epe*(lastlpe - spe + 2*timeIncrement*vel) + 
+        ese*(lastlpe - len + sse + 2*timeIncrement*vel) - k*(alpha*f0 + (dpe \
++ dse + (epe + ese)*timeIncrement)*vmax) - 
+        Sqrt(Power(alpha,2)*Power(f0,2)*Power(k,2) + Power(epe*lastlpe + \
+ese*lastlpe - ese*len - epe*spe + ese*sse - dse*vel + 
+            k*(dpe + dse + (epe + ese)*timeIncrement)*vmax,2) + 2*alpha*f0*k*
+           (-(epe*lastlpe) - ese*lastlpe + ese*len + epe*spe - ese*sse + \
+dse*vel + (2 + k)*(dpe + dse + (epe + ese)*timeIncrement)*vmax)))/
+      (2.*(dpe + dse + (epe + ese)*timeIncrement))),Rule(lpe,(dpe*(2*lastlpe \
++ k*timeIncrement*vmax) + dse*(2*lastlpe + timeIncrement*(vel + k*vmax)) + 
+        timeIncrement*(epe*(lastlpe + spe) + ese*(lastlpe + len - sse) + \
+k*(alpha*f0 + (epe + ese)*timeIncrement*vmax) + 
+           Sqrt(Power(alpha,2)*Power(f0,2)*Power(k,2) + Power(epe*lastlpe + \
+ese*lastlpe - ese*len - epe*spe + ese*sse - dse*vel + 
+               k*(dpe + dse + (epe + ese)*timeIncrement)*vmax,2) + 
+             2*alpha*f0*k*(-(epe*lastlpe) - ese*lastlpe + ese*len + epe*spe - \
+ese*sse + dse*vel + (2 + k)*(dpe + dse + (epe + ese)*timeIncrement)*vmax))))/
+      (2.*(dpe + dse + (epe + ese)*timeIncrement))),Rule(fce,(epe*(-lastlpe + \
+spe) - ese*(lastlpe - len + sse) + dse*vel - 
+        k*(alpha*f0 + (dpe + dse + (epe + ese)*timeIncrement)*vmax) - 
+        Sqrt(Power(alpha,2)*Power(f0,2)*Power(k,2) + Power(epe*lastlpe + \
+ese*lastlpe - ese*len - epe*spe + ese*sse - dse*vel + 
+            k*(dpe + dse + (epe + ese)*timeIncrement)*vmax,2) + 2*alpha*f0*k*
+           (-(epe*lastlpe) - ese*lastlpe + ese*len + epe*spe - ese*sse + \
+dse*vel + (2 + k)*(dpe + dse + (epe + ese)*timeIncrement)*vmax)))/2.),
+    Rule(vce,(alpha*f0*k - epe*lastlpe - ese*lastlpe + ese*len + epe*spe - \
+ese*sse + dse*vel + dpe*k*vmax + dse*k*vmax + epe*k*timeIncrement*vmax + 
+        ese*k*timeIncrement*vmax + Sqrt(4*k*(dpe + dse + (epe + \
+ese)*timeIncrement)*(alpha*f0 + epe*(lastlpe - spe) + ese*(lastlpe - len + \
+sse) - dse*vel)*
+           vmax + Power(epe*(-lastlpe + spe) - ese*(lastlpe - len + sse) + \
+dse*vel + k*(alpha*f0 + (dpe + dse + (epe + ese)*timeIncrement)*vmax),2)))/
+      (2.*(dpe + dse + (epe + ese)*timeIncrement)))))\
+\>", "Output",
+ CellChangeTimes->{3.4460578404071302`*^9, 3.4461072392697363`*^9}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Eccentric", "Subsubtitle"],
+
+Cell["i.e. vce > 0", "Text"],
+
+Cell["\<\
+FullSimplify[Solve[{eq1, eq3, eq7, eq8, eq6, eq9, eq10}, {lpe, lse, fpe, fse, \
+fce, vse, vce}]]\
+\>", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"CForm", "[", 
+  RowBox[{"FullSimplify", "[", 
+   RowBox[{"Solve", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+      "eq1", ",", "eq3", ",", "eq7", ",", "eq8", ",", "eq6", ",", "eq9", ",", 
+       "eq10"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+      "lpe", ",", "lse", ",", "fpe", ",", "fse", ",", "fce", ",", "vse", ",", 
+       "vce"}], "}"}]}], "]"}], "]"}], "]"}]], "Input"],
+
+Cell["\<\
+List(List(Rule(fpe,(alpha*f0*(-850.5 - 50.*k)*(dpe + epe*timeIncrement) + 
+        Power(epe,2)*timeIncrement*(472.5*lastlpe - 472.5*spe - \
+62.50000000000001*k*timeIncrement*vmax) + 
+        epe*(dpe*(472.5*lastlpe - 472.5*spe - \
+125.00000000000001*k*timeIncrement*vmax) + 
+           ese*timeIncrement*(472.5*lastlpe + 472.5*len - 945.*spe - \
+472.5*sse - 62.50000000000001*k*timeIncrement*vmax) + 
+           dse*(945.*lastlpe - 945.*spe + 472.5*timeIncrement*vel - \
+62.50000000000001*k*timeIncrement*vmax)) + 
+        dpe*(472.5000000000001*dse*vel - 62.5*dpe*k*vmax - 62.5*dse*k*vmax + 
+           ese*(-472.5000000000001*lastlpe + 472.5000000000001*len - \
+472.5000000000001*sse - 62.5*k*timeIncrement*vmax)) - 
+        0.5*dpe*Sqrt(10000.*Power(alpha,2)*Power(f0,2)*(17.009999590960987 + \
+k)*(17.010000409039023 + k) + 15625.*Power(dpe,2)*Power(k,2)*Power(vmax,2) + 
+           dpe*dse*k*vmax*(236250.*vel + 31250.*k*vmax) + \
+Power(dse,2)*(893025.*Power(vel,2) + 236250.*k*vel*vmax + \
+15625.*Power(k,2)*Power(vmax,2)) + 
+           Power(epe,2)*(893025.0000000002*Power(lastlpe,2) - \
+1.7860500000000005e6*lastlpe*spe + 893025.0000000002*Power(spe,2) - 
+              236250.00000000003*k*lastlpe*timeIncrement*vmax + \
+236250.00000000003*k*spe*timeIncrement*vmax + 
+              15624.999999999998*Power(k,2)*Power(timeIncrement,2)*Power(vmax,\
+2)) + 
+           Power(ese,2)*(893025.*Power(lastlpe,2) + 893025.*Power(len,2) - \
+1.78605e6*len*sse + 893025.*Power(sse,2) + 236250.*k*len*timeIncrement*vmax - \
+
+              236250.*k*sse*timeIncrement*vmax + \
+15625.*Power(k,2)*Power(timeIncrement,2)*Power(vmax,2) + 
+              lastlpe*(-1.78605e6*len + 1.78605e6*sse - \
+236250.*k*timeIncrement*vmax)) + 
+           ese*(dpe*k*vmax*(-236250.*lastlpe + 236250.*len - 236250.*sse + \
+31250.*k*timeIncrement*vmax) + 
+              dse*(-1.78605e6*lastlpe*vel + 1.78605e6*len*vel - \
+1.78605e6*sse*vel - 236250.*k*lastlpe*vmax + 236250.*k*len*vmax - \
+236250.*k*sse*vmax + 
+                 236250.*k*timeIncrement*vel*vmax + \
+31250.*Power(k,2)*timeIncrement*Power(vmax,2))) + 
+           epe*(dpe*k*vmax*(-236250.*lastlpe + 236250.*spe + \
+31250.*k*timeIncrement*vmax) + 
+              dse*(lastlpe*(-1.78605e6*vel - 236250.*k*vmax) + \
+k*timeIncrement*vmax*(236250.*vel + 31250.*k*vmax) + spe*(1.78605e6*vel + \
+236250.*k*vmax)) + 
+              ese*(1.78605e6*Power(lastlpe,2) + lastlpe*(-1.78605e6*len - \
+1.78605e6*spe + 1.78605e6*sse - 472500.*k*timeIncrement*vmax) + 
+                 k*timeIncrement*vmax*(-236250.*sse + \
+31250.*k*timeIncrement*vmax) + len*(1.78605e6*spe + \
+236250.*k*timeIncrement*vmax) + 
+                 spe*(-1.78605e6*sse + 236250.*k*timeIncrement*vmax))) + 
+           alpha*f0*(dpe*k*(-47250. + 24999.999999999993*k)*vmax + 
+              dse*((-3.2148900000000014e6 - 189000.00000000003*k)*vel + \
+24999.999999999993*(-1.8900000000000006 + k)*k*vmax) + 
+              epe*((3.2148900000000023e6 + 189000.00000000003*k)*lastlpe + \
+(-3.2148900000000023e6 - 189000.00000000003*k)*spe + 
+                 k*(-47250.00000000001 + \
+24999.999999999993*k)*timeIncrement*vmax) + 
+              ese*((3.2148900000000023e6 + 189000.00000000003*k)*lastlpe - \
+3.2148900000000014e6*len + 3.2148900000000014e6*sse + 
+                 k*(-189000.00000000003*len + 189000.00000000003*sse + \
+(-47250. + 24999.999999999993*k)*timeIncrement*vmax)))) - 
+        0.5*epe*timeIncrement*Sqrt(10000.*Power(alpha,2)*Power(f0,2)*(17.\
+009999590960987 + k)*(17.010000409039023 + k) + 
+           15625.*Power(dpe,2)*Power(k,2)*Power(vmax,2) + \
+dpe*dse*k*vmax*(236250.*vel + 31250.*k*vmax) + 
+           Power(dse,2)*(893025.*Power(vel,2) + 236250.*k*vel*vmax + \
+15625.*Power(k,2)*Power(vmax,2)) + 
+           Power(epe,2)*(893025.0000000002*Power(lastlpe,2) - \
+1.7860500000000005e6*lastlpe*spe + 893025.0000000002*Power(spe,2) - 
+              236250.00000000003*k*lastlpe*timeIncrement*vmax + \
+236250.00000000003*k*spe*timeIncrement*vmax + 
+              15624.999999999998*Power(k,2)*Power(timeIncrement,2)*Power(vmax,\
+2)) + 
+           Power(ese,2)*(893025.*Power(lastlpe,2) + 893025.*Power(len,2) - \
+1.78605e6*len*sse + 893025.*Power(sse,2) + 236250.*k*len*timeIncrement*vmax - \
+
+              236250.*k*sse*timeIncrement*vmax + \
+15625.*Power(k,2)*Power(timeIncrement,2)*Power(vmax,2) + 
+              lastlpe*(-1.78605e6*len + 1.78605e6*sse - \
+236250.*k*timeIncrement*vmax)) + 
+           ese*(dpe*k*vmax*(-236250.*lastlpe + 236250.*len - 236250.*sse + \
+31250.*k*timeIncrement*vmax) + 
+              dse*(-1.78605e6*lastlpe*vel + 1.78605e6*len*vel - \
+1.78605e6*sse*vel - 236250.*k*lastlpe*vmax + 236250.*k*len*vmax - \
+236250.*k*sse*vmax + 
+                 236250.*k*timeIncrement*vel*vmax + \
+31250.*Power(k,2)*timeIncrement*Power(vmax,2))) + 
+           epe*(dpe*k*vmax*(-236250.*lastlpe + 236250.*spe + \
+31250.*k*timeIncrement*vmax) + 
+              dse*(lastlpe*(-1.78605e6*vel - 236250.*k*vmax) + \
+k*timeIncrement*vmax*(236250.*vel + 31250.*k*vmax) + spe*(1.78605e6*vel + \
+236250.*k*vmax)) + 
+              ese*(1.78605e6*Power(lastlpe,2) + lastlpe*(-1.78605e6*len - \
+1.78605e6*spe + 1.78605e6*sse - 472500.*k*timeIncrement*vmax) + 
+                 k*timeIncrement*vmax*(-236250.*sse + \
+31250.*k*timeIncrement*vmax) + len*(1.78605e6*spe + \
+236250.*k*timeIncrement*vmax) + 
+                 spe*(-1.78605e6*sse + 236250.*k*timeIncrement*vmax))) + 
+           alpha*f0*(dpe*k*(-47250. + 24999.999999999993*k)*vmax + 
+              dse*((-3.2148900000000014e6 - 189000.00000000003*k)*vel + \
+24999.999999999993*(-1.8900000000000006 + k)*k*vmax) + 
+              epe*((3.2148900000000023e6 + 189000.00000000003*k)*lastlpe + \
+(-3.2148900000000023e6 - 189000.00000000003*k)*spe + 
+                 k*(-47250.00000000001 + \
+24999.999999999993*k)*timeIncrement*vmax) + 
+              ese*((3.2148900000000023e6 + 189000.00000000003*k)*lastlpe - \
+3.2148900000000014e6*len + 3.2148900000000014e6*sse + 
+                 k*(-189000.00000000003*len + 189000.00000000003*sse + \
+(-47250. + 24999.999999999993*k)*timeIncrement*vmax)))))/
+      (945.*dpe + 945.*dse + 945.*epe*timeIncrement + \
+945.*ese*timeIncrement)),
+    Rule(fse,(850.5*alpha*dse*f0 + 50.*alpha*dse*f0*k + 472.5*dse*epe*lastlpe \
+- 945.*dpe*ese*lastlpe - 472.5*dse*ese*lastlpe + 945.*dpe*ese*len + 
+        472.5*dse*ese*len - 472.5*dse*epe*spe - 945.*dpe*ese*sse - \
+472.5*dse*ese*sse + 850.5*alpha*ese*f0*timeIncrement + \
+50.*alpha*ese*f0*k*timeIncrement - 
+        472.5*epe*ese*lastlpe*timeIncrement - \
+472.5*Power(ese,2)*lastlpe*timeIncrement + 945.*epe*ese*len*timeIncrement + \
+472.5*Power(ese,2)*len*timeIncrement - 
+        472.5*epe*ese*spe*timeIncrement - 945.*epe*ese*sse*timeIncrement - \
+472.5*Power(ese,2)*sse*timeIncrement + 945.*dpe*dse*vel + \
+472.5*Power(dse,2)*vel + 
+        945.*dse*epe*timeIncrement*vel + 472.5*dse*ese*timeIncrement*vel + \
+62.5*dpe*dse*k*vmax + 62.5*Power(dse,2)*k*vmax + \
+62.5*dse*epe*k*timeIncrement*vmax + 
+        62.5*dpe*ese*k*timeIncrement*vmax + 125.*dse*ese*k*timeIncrement*vmax \
++ 62.5*epe*ese*k*Power(timeIncrement,2)*vmax + 
+        62.5*Power(ese,2)*k*Power(timeIncrement,2)*vmax + 0.5*dse*
+         Sqrt(10000.*Power(alpha,2)*Power(f0,2)*(17.009999590960987 + \
+k)*(17.010000409039023 + k) + 15625.*Power(dpe,2)*Power(k,2)*Power(vmax,2) + 
+           dpe*dse*k*vmax*(236250.*vel + 31250.*k*vmax) + \
+Power(dse,2)*(893025.*Power(vel,2) + 236250.*k*vel*vmax + \
+15625.*Power(k,2)*Power(vmax,2)) + 
+           Power(epe,2)*(893025.0000000002*Power(lastlpe,2) - \
+1.7860500000000005e6*lastlpe*spe + 893025.0000000002*Power(spe,2) - 
+              236250.00000000003*k*lastlpe*timeIncrement*vmax + \
+236250.00000000003*k*spe*timeIncrement*vmax + 
+              15624.999999999998*Power(k,2)*Power(timeIncrement,2)*Power(vmax,\
+2)) + 
+           Power(ese,2)*(893025.*Power(lastlpe,2) + 893025.*Power(len,2) - \
+1.78605e6*len*sse + 893025.*Power(sse,2) + 236250.*k*len*timeIncrement*vmax - \
+
+              236250.*k*sse*timeIncrement*vmax + \
+15625.*Power(k,2)*Power(timeIncrement,2)*Power(vmax,2) + 
+              lastlpe*(-1.78605e6*len + 1.78605e6*sse - \
+236250.*k*timeIncrement*vmax)) + 
+           ese*(dpe*k*vmax*(-236250.*lastlpe + 236250.*len - 236250.*sse + \
+31250.*k*timeIncrement*vmax) + 
+              dse*(-1.78605e6*lastlpe*vel + 1.78605e6*len*vel - \
+1.78605e6*sse*vel - 236250.*k*lastlpe*vmax + 236250.*k*len*vmax - \
+236250.*k*sse*vmax + 
+                 236250.*k*timeIncrement*vel*vmax + \
+31250.*Power(k,2)*timeIncrement*Power(vmax,2))) + 
+           epe*(dpe*k*vmax*(-236250.*lastlpe + 236250.*spe + \
+31250.*k*timeIncrement*vmax) + 
+              dse*(lastlpe*(-1.78605e6*vel - 236250.*k*vmax) + \
+k*timeIncrement*vmax*(236250.*vel + 31250.*k*vmax) + spe*(1.78605e6*vel + \
+236250.*k*vmax)) + 
+              ese*(1.78605e6*Power(lastlpe,2) + lastlpe*(-1.78605e6*len - \
+1.78605e6*spe + 1.78605e6*sse - 472500.*k*timeIncrement*vmax) + 
+                 k*timeIncrement*vmax*(-236250.*sse + \
+31250.*k*timeIncrement*vmax) + len*(1.78605e6*spe + \
+236250.*k*timeIncrement*vmax) + 
+                 spe*(-1.78605e6*sse + 236250.*k*timeIncrement*vmax))) + 
+           alpha*f0*(dpe*k*(-47250.00000000001 + 24999.999999999996*k)*vmax + \
+
+              dse*((-3.214890000000001e6 - 189000.00000000003*k)*vel + \
+24999.999999999996*(-1.8900000000000006 + k)*k*vmax) + 
+              epe*((3.214890000000001e6 + 189000.00000000003*k)*lastlpe + \
+(-3.214890000000001e6 - 189000.00000000003*k)*spe + 
+                 k*(-47250.00000000001 + \
+24999.999999999996*k)*timeIncrement*vmax) + 
+              ese*((3.214890000000001e6 + 189000.00000000003*k)*lastlpe - \
+3.214890000000001e6*len + 3.214890000000001e6*sse + 
+                 k*(-189000.00000000003*len + 189000.00000000003*sse + \
+(-47250.00000000001 + 24999.999999999996*k)*timeIncrement*vmax)))) + 
+        0.5*ese*timeIncrement*Sqrt(10000.*Power(alpha,2)*Power(f0,2)*(17.\
+009999590960987 + k)*(17.010000409039023 + k) + 
+           15625.*Power(dpe,2)*Power(k,2)*Power(vmax,2) + \
+dpe*dse*k*vmax*(236250.*vel + 31250.*k*vmax) + 
+           Power(dse,2)*(893025.*Power(vel,2) + 236250.*k*vel*vmax + \
+15625.*Power(k,2)*Power(vmax,2)) + 
+           Power(epe,2)*(893025.0000000002*Power(lastlpe,2) - \
+1.7860500000000005e6*lastlpe*spe + 893025.0000000002*Power(spe,2) - 
+              236250.00000000003*k*lastlpe*timeIncrement*vmax + \
+236250.00000000003*k*spe*timeIncrement*vmax + 
+              15624.999999999998*Power(k,2)*Power(timeIncrement,2)*Power(vmax,\
+2)) + 
+           Power(ese,2)*(893025.*Power(lastlpe,2) + 893025.*Power(len,2) - \
+1.78605e6*len*sse + 893025.*Power(sse,2) + 236250.*k*len*timeIncrement*vmax - \
+
+              236250.*k*sse*timeIncrement*vmax + \
+15625.*Power(k,2)*Power(timeIncrement,2)*Power(vmax,2) + 
+              lastlpe*(-1.78605e6*len + 1.78605e6*sse - \
+236250.*k*timeIncrement*vmax)) + 
+           ese*(dpe*k*vmax*(-236250.*lastlpe + 236250.*len - 236250.*sse + \
+31250.*k*timeIncrement*vmax) + 
+              dse*(-1.78605e6*lastlpe*vel + 1.78605e6*len*vel - \
+1.78605e6*sse*vel - 236250.*k*lastlpe*vmax + 236250.*k*len*vmax - \
+236250.*k*sse*vmax + 
+                 236250.*k*timeIncrement*vel*vmax + \
+31250.*Power(k,2)*timeIncrement*Power(vmax,2))) + 
+           epe*(dpe*k*vmax*(-236250.*lastlpe + 236250.*spe + \
+31250.*k*timeIncrement*vmax) + 
+              dse*(lastlpe*(-1.78605e6*vel - 236250.*k*vmax) + \
+k*timeIncrement*vmax*(236250.*vel + 31250.*k*vmax) + spe*(1.78605e6*vel + \
+236250.*k*vmax)) + 
+              ese*(1.78605e6*Power(lastlpe,2) + lastlpe*(-1.78605e6*len - \
+1.78605e6*spe + 1.78605e6*sse - 472500.*k*timeIncrement*vmax) + 
+                 k*timeIncrement*vmax*(-236250.*sse + \
+31250.*k*timeIncrement*vmax) + len*(1.78605e6*spe + \
+236250.*k*timeIncrement*vmax) + 
+                 spe*(-1.78605e6*sse + 236250.*k*timeIncrement*vmax))) + 
+           alpha*f0*(dpe*k*(-47250.00000000001 + 24999.999999999996*k)*vmax + \
+
+              dse*((-3.214890000000001e6 - 189000.00000000003*k)*vel + \
+24999.999999999996*(-1.8900000000000006 + k)*k*vmax) + 
+              epe*((3.214890000000001e6 + 189000.00000000003*k)*lastlpe + \
+(-3.214890000000001e6 - 189000.00000000003*k)*spe + 
+                 k*(-47250.00000000001 + \
+24999.999999999996*k)*timeIncrement*vmax) + 
+              ese*((3.214890000000001e6 + 189000.00000000003*k)*lastlpe - \
+3.214890000000001e6*len + 3.214890000000001e6*sse + 
+                 k*(-189000.00000000003*len + 189000.00000000003*sse + \
+(-47250.00000000001 + 24999.999999999996*k)*timeIncrement*vmax)))))/
+      (945.*dpe + 945.*dse + 945.*epe*timeIncrement + \
+945.*ese*timeIncrement)),
+    Rule(lse,(-945.*dpe*lastlpe - 945.*dse*lastlpe + 945.*dpe*len + \
+945.*dse*len + alpha*f0*(850.5 + 50.*k)*timeIncrement - \
+472.5*epe*lastlpe*timeIncrement - 
+        472.5*ese*lastlpe*timeIncrement + 945.*epe*len*timeIncrement + \
+472.5*ese*len*timeIncrement - 472.5*epe*spe*timeIncrement + \
+472.5*ese*sse*timeIncrement - 
+        472.5*dse*timeIncrement*vel + 62.5*dpe*k*timeIncrement*vmax + \
+62.5*dse*k*timeIncrement*vmax + 62.5*epe*k*Power(timeIncrement,2)*vmax + 
+        62.5*ese*k*Power(timeIncrement,2)*vmax + 0.5*timeIncrement*
+         Sqrt(10000.*Power(alpha,2)*Power(f0,2)*(17.009999590960987 + \
+k)*(17.010000409039023 + k) + 15625.*Power(dpe,2)*Power(k,2)*Power(vmax,2) + 
+           dpe*dse*k*vmax*(236250.*vel + 31250.*k*vmax) + \
+Power(dse,2)*(893025.*Power(vel,2) + 236250.*k*vel*vmax + \
+15625.*Power(k,2)*Power(vmax,2)) + 
+           Power(epe,2)*(893025.0000000002*Power(lastlpe,2) - \
+1.7860500000000005e6*lastlpe*spe + 893025.0000000002*Power(spe,2) - 
+              236250.00000000003*k*lastlpe*timeIncrement*vmax + \
+236250.00000000003*k*spe*timeIncrement*vmax + 
+              15624.999999999998*Power(k,2)*Power(timeIncrement,2)*Power(vmax,\
+2)) + 
+           Power(ese,2)*(893025.*Power(lastlpe,2) + 893025.*Power(len,2) - \
+1.78605e6*len*sse + 893025.*Power(sse,2) + 236250.*k*len*timeIncrement*vmax - \
+
+              236250.*k*sse*timeIncrement*vmax + \
+15625.*Power(k,2)*Power(timeIncrement,2)*Power(vmax,2) + 
+              lastlpe*(-1.78605e6*len + 1.78605e6*sse - \
+236250.*k*timeIncrement*vmax)) + 
+           ese*(dpe*k*vmax*(-236250.*lastlpe + 236250.*len - 236250.*sse + \
+31250.*k*timeIncrement*vmax) + 
+              dse*(-1.78605e6*lastlpe*vel + 1.78605e6*len*vel - \
+1.78605e6*sse*vel - 236250.*k*lastlpe*vmax + 236250.*k*len*vmax - \
+236250.*k*sse*vmax + 
+                 236250.*k*timeIncrement*vel*vmax + \
+31250.*Power(k,2)*timeIncrement*Power(vmax,2))) + 
+           epe*(dpe*k*vmax*(-236250.*lastlpe + 236250.*spe + \
+31250.*k*timeIncrement*vmax) + 
+              dse*(lastlpe*(-1.78605e6*vel - 236250.*k*vmax) + \
+k*timeIncrement*vmax*(236250.*vel + 31250.*k*vmax) + spe*(1.78605e6*vel + \
+236250.*k*vmax)) + 
+              ese*(1.78605e6*Power(lastlpe,2) + \
+lastlpe*(-1.7860500000000012e6*len - 1.7860500000000012e6*spe + \
+1.7860500000000012e6*sse - 
+                    472500.*k*timeIncrement*vmax) + \
+k*timeIncrement*vmax*(-236250.*sse + 31250.*k*timeIncrement*vmax) + 
+                 len*(1.78605e6*spe + 236250.*k*timeIncrement*vmax) + \
+spe*(-1.78605e6*sse + 236250.*k*timeIncrement*vmax))) + 
+           alpha*f0*(dpe*k*(-47250.00000000001 + 24999.999999999996*k)*vmax + \
+
+              dse*((-3.214890000000001e6 - 189000.00000000003*k)*vel + \
+24999.999999999996*(-1.8900000000000006 + k)*k*vmax) + 
+              epe*((3.214890000000001e6 + 189000.00000000003*k)*lastlpe + \
+(-3.214890000000001e6 - 189000.00000000003*k)*spe + 
+                 k*(-47250.00000000001 + \
+24999.999999999996*k)*timeIncrement*vmax) + 
+              ese*((3.214890000000001e6 + 189000.00000000003*k)*lastlpe - \
+3.214890000000001e6*len + 3.214890000000001e6*sse + 
+                 k*(-189000.00000000003*len + 189000.00000000003*sse + \
+(-47250.00000000001 + 24999.999999999996*k)*timeIncrement*vmax)))))/
+      (945.*dpe + 945.*dse + 945.*epe*timeIncrement + \
+945.*ese*timeIncrement)),
+    Rule(vse,(alpha*f0*(850.5 + 50.*k) + 945.*dpe*vel + 472.5*dse*vel + \
+epe*(472.5*lastlpe - 472.5*spe + 945.*timeIncrement*vel) + 
+        ese*(472.5*lastlpe - 472.5*len + 472.5*sse + 945.*timeIncrement*vel) \
++ k*(62.5*dpe + 62.5*dse + 62.5*epe*timeIncrement + \
+62.5*ese*timeIncrement)*vmax + 
+        0.5*Sqrt(10000.*Power(alpha,2)*Power(f0,2)*(17.009999590960987 + \
+k)*(17.010000409039023 + k) + 15625.*Power(dpe,2)*Power(k,2)*Power(vmax,2) + 
+           dpe*dse*k*vmax*(236250.*vel + 31250.*k*vmax) + \
+Power(dse,2)*(893024.9999999998*Power(vel,2) + 236250.*k*vel*vmax + \
+15625.*Power(k,2)*Power(vmax,2)) + 
+           Power(epe,2)*(893025.0000000001*Power(lastlpe,2) - \
+1.7860500000000002e6*lastlpe*spe + 893025.0000000001*Power(spe,2) - 
+              236250.*k*lastlpe*timeIncrement*vmax + \
+236250.*k*spe*timeIncrement*vmax + \
+15625.*Power(k,2)*Power(timeIncrement,2)*Power(vmax,2)) + 
+           Power(ese,2)*(893024.9999999998*Power(lastlpe,2) + \
+893024.9999999998*Power(len,2) - 1.7860499999999995e6*len*sse + \
+893024.9999999998*Power(sse,2) + 
+              236250.*k*len*timeIncrement*vmax - \
+236250.*k*sse*timeIncrement*vmax + \
+15625.*Power(k,2)*Power(timeIncrement,2)*Power(vmax,2) + 
+              lastlpe*(-1.7860499999999995e6*len + 1.7860499999999995e6*sse - \
+236250.*k*timeIncrement*vmax)) + 
+           ese*(dpe*k*vmax*(-236250.*lastlpe + 236250.*len - 236250.*sse + \
+31250.*k*timeIncrement*vmax) + 
+              dse*(-1.7860499999999995e6*lastlpe*vel + \
+1.7860499999999995e6*len*vel - 1.7860499999999995e6*sse*vel - \
+236250.*k*lastlpe*vmax + 
+                 236250.*k*len*vmax - 236250.*k*sse*vmax + \
+236250.*k*timeIncrement*vel*vmax + \
+31250.*Power(k,2)*timeIncrement*Power(vmax,2))) + 
+           epe*(dpe*k*vmax*(-236250.*lastlpe + 236250.*spe + \
+31250.*k*timeIncrement*vmax) + 
+              dse*(lastlpe*(-1.7860499999999995e6*vel - 236250.*k*vmax) + \
+k*timeIncrement*vmax*(236250.*vel + 31250.*k*vmax) + 
+                 spe*(1.7860499999999995e6*vel + 236250.*k*vmax)) + 
+              ese*(1.7860499999999995e6*Power(lastlpe,2) + lastlpe*
+                  (-1.7860499999999995e6*len - 1.7860499999999995e6*spe + \
+1.7860499999999995e6*sse - 472499.99999999994*k*timeIncrement*vmax) + 
+                 k*timeIncrement*vmax*(-236250.*sse + \
+31250.*k*timeIncrement*vmax) + len*(1.7860499999999995e6*spe + \
+236249.99999999997*k*timeIncrement*vmax) + 
+                 spe*(-1.7860499999999995e6*sse + \
+236249.99999999997*k*timeIncrement*vmax))) + 
+           alpha*f0*(dpe*k*(-47250.00000000001 + 24999.999999999996*k)*vmax + \
+
+              dse*((-3.214890000000001e6 - 189000.00000000003*k)*vel + \
+24999.999999999996*(-1.8900000000000006 + k)*k*vmax) + 
+              epe*((3.214890000000001e6 + 189000.00000000003*k)*lastlpe + \
+(-3.214890000000001e6 - 189000.00000000003*k)*spe + 
+                 k*(-47250.00000000001 + \
+24999.999999999996*k)*timeIncrement*vmax) + 
+              ese*((3.214890000000001e6 + 189000.00000000003*k)*lastlpe - \
+3.214890000000001e6*len + 3.214890000000001e6*sse + 
+                 k*(-189000.00000000003*len + 189000.00000000003*sse + \
+(-47250.00000000001 + 24999.999999999996*k)*timeIncrement*vmax)))))/
+      (945.*dpe + 945.*dse + 945.*epe*timeIncrement + \
+945.*ese*timeIncrement)),
+    Rule(lpe,(945.*dpe*lastlpe + 945.*dse*lastlpe + alpha*f0*(-850.5 - \
+50.*k)*timeIncrement + 472.5*epe*lastlpe*timeIncrement + 
+        472.5*ese*lastlpe*timeIncrement + 472.5*ese*len*timeIncrement + \
+472.5*epe*spe*timeIncrement - 472.5*ese*sse*timeIncrement + 
+        472.5*dse*timeIncrement*vel - 62.5*dpe*k*timeIncrement*vmax - \
+62.5*dse*k*timeIncrement*vmax - 62.5*epe*k*Power(timeIncrement,2)*vmax - 
+        62.5*ese*k*Power(timeIncrement,2)*vmax - 0.5*timeIncrement*
+         Sqrt(10000.*Power(alpha,2)*Power(f0,2)*(17.009999590960987 + \
+k)*(17.010000409039023 + k) + 15625.*Power(dpe,2)*Power(k,2)*Power(vmax,2) + 
+           dpe*dse*k*vmax*(236250.*vel + 31250.*k*vmax) + \
+Power(dse,2)*(893025.*Power(vel,2) + 236250.*k*vel*vmax + \
+15625.*Power(k,2)*Power(vmax,2)) + 
+           Power(epe,2)*(893025.0000000002*Power(lastlpe,2) - \
+1.7860500000000005e6*lastlpe*spe + 893025.0000000002*Power(spe,2) - 
+              236250.00000000003*k*lastlpe*timeIncrement*vmax + \
+236250.00000000003*k*spe*timeIncrement*vmax + 
+              15624.999999999998*Power(k,2)*Power(timeIncrement,2)*Power(vmax,\
+2)) + 
+           Power(ese,2)*(893025.*Power(lastlpe,2) + 893025.*Power(len,2) - \
+1.78605e6*len*sse + 893025.*Power(sse,2) + 236250.*k*len*timeIncrement*vmax - \
+
+              236250.*k*sse*timeIncrement*vmax + \
+15625.*Power(k,2)*Power(timeIncrement,2)*Power(vmax,2) + 
+              lastlpe*(-1.78605e6*len + 1.78605e6*sse - \
+236250.*k*timeIncrement*vmax)) + 
+           ese*(dpe*k*vmax*(-236250.*lastlpe + 236250.*len - 236250.*sse + \
+31250.*k*timeIncrement*vmax) + 
+              dse*(-1.78605e6*lastlpe*vel + 1.78605e6*len*vel - \
+1.78605e6*sse*vel - 236250.*k*lastlpe*vmax + 236250.*k*len*vmax - \
+236250.*k*sse*vmax + 
+                 236250.*k*timeIncrement*vel*vmax + \
+31250.*Power(k,2)*timeIncrement*Power(vmax,2))) + 
+           epe*(dpe*k*vmax*(-236250.*lastlpe + 236250.*spe + \
+31250.*k*timeIncrement*vmax) + 
+              dse*(lastlpe*(-1.78605e6*vel - 236250.*k*vmax) + \
+k*timeIncrement*vmax*(236250.*vel + 31250.*k*vmax) + spe*(1.78605e6*vel + \
+236250.*k*vmax)) + 
+              ese*(1.78605e6*Power(lastlpe,2) + \
+lastlpe*(-1.7860500000000012e6*len - 1.7860500000000012e6*spe + \
+1.7860500000000012e6*sse - 
+                    472500.*k*timeIncrement*vmax) + \
+k*timeIncrement*vmax*(-236250.*sse + 31250.*k*timeIncrement*vmax) + 
+                 len*(1.78605e6*spe + 236250.*k*timeIncrement*vmax) + \
+spe*(-1.78605e6*sse + 236250.*k*timeIncrement*vmax))) + 
+           alpha*f0*(dpe*k*(-47250.00000000001 + 24999.999999999996*k)*vmax + \
+
+              dse*((-3.214890000000001e6 - 189000.00000000003*k)*vel + \
+24999.999999999996*(-1.8900000000000006 + k)*k*vmax) + 
+              epe*((3.214890000000001e6 + 189000.00000000003*k)*lastlpe + \
+(-3.214890000000001e6 - 189000.00000000003*k)*spe + 
+                 k*(-47250.00000000001 + \
+24999.999999999996*k)*timeIncrement*vmax) + 
+              ese*((3.214890000000001e6 + 189000.00000000003*k)*lastlpe - \
+3.214890000000001e6*len + 3.214890000000001e6*sse + 
+                 k*(-189000.00000000003*len + 189000.00000000003*sse + \
+(-47250.00000000001 + 24999.999999999996*k)*timeIncrement*vmax)))))/
+      (945.*dpe + 945.*dse + 945.*epe*timeIncrement + \
+945.*ese*timeIncrement)),
+    Rule(fce,-0.5000000000000001*epe*lastlpe - 0.5000000000000001*ese*lastlpe \
++ 0.5000000000000001*ese*len + 0.5000000000000001*epe*spe - 
+      0.5000000000000001*ese*sse + (alpha*f0*(dpe*(0.9000000000000001 + \
+0.052910052910052914*k) + dse*(0.9000000000000001 + 0.052910052910052914*k) + \
+
+            (ese*(0.9000000000000001 + 0.052910052910052914*k) + \
+epe*(0.9000000000000001 + 0.05291005291005293*k))*timeIncrement) + 
+         0.06613756613756615*Power(dpe,2)*k*vmax + \
+(0.06613756613756616*Power(epe,2) + 0.13227513227513232*epe*ese + \
+0.06613756613756613*Power(ese,2))*k*
+          Power(timeIncrement,2)*vmax + Power(dse,2)*(0.5000000000000001*vel \
++ 0.06613756613756613*k*vmax) + 
+         dse*timeIncrement*(0.5000000000000001*epe*vel + \
+0.5000000000000001*ese*vel + 0.13227513227513232*epe*k*vmax + \
+0.13227513227513227*ese*k*vmax) + 
+         dpe*((0.13227513227513232*epe + \
+0.13227513227513227*ese)*k*timeIncrement*vmax + dse*(0.5000000000000001*vel + \
+0.13227513227513227*k*vmax)))/
+       (1.*dpe + 1.*dse + 1.*epe*timeIncrement + 1.*ese*timeIncrement) + 
+      0.0005291005291005291*Sqrt(10000.*Power(alpha,2)*Power(f0,2)*(17.\
+009999590960987 + k)*(17.010000409039023 + k) + 
+         15625.*Power(dpe,2)*Power(k,2)*Power(vmax,2) + \
+dpe*dse*k*vmax*(236250.*vel + 31250.*k*vmax) + 
+         Power(dse,2)*(893025.*Power(vel,2) + 236250.*k*vel*vmax + \
+15625.*Power(k,2)*Power(vmax,2)) + 
+         Power(epe,2)*(893025.0000000002*Power(lastlpe,2) - \
+1.7860500000000005e6*lastlpe*spe + 893025.0000000002*Power(spe,2) - 
+            236250.00000000003*k*lastlpe*timeIncrement*vmax + \
+236250.00000000003*k*spe*timeIncrement*vmax + 
+            15624.999999999998*Power(k,2)*Power(timeIncrement,2)*Power(vmax,2)\
+) + 
+         Power(ese,2)*(893025.*Power(lastlpe,2) + 893025.*Power(len,2) - \
+1.78605e6*len*sse + 893025.*Power(sse,2) + 236250.*k*len*timeIncrement*vmax - \
+
+            236250.*k*sse*timeIncrement*vmax + \
+15625.*Power(k,2)*Power(timeIncrement,2)*Power(vmax,2) + 
+            lastlpe*(-1.78605e6*len + 1.78605e6*sse - \
+236250.*k*timeIncrement*vmax)) + 
+         ese*(dpe*k*vmax*(-236250.*lastlpe + 236250.*len - 236250.*sse + \
+31250.*k*timeIncrement*vmax) + 
+            dse*(-1.78605e6*lastlpe*vel + 1.78605e6*len*vel - \
+1.78605e6*sse*vel - 236250.*k*lastlpe*vmax + 236250.*k*len*vmax - \
+236250.*k*sse*vmax + 
+               236250.*k*timeIncrement*vel*vmax + \
+31250.*Power(k,2)*timeIncrement*Power(vmax,2))) + 
+         epe*(dpe*k*vmax*(-236250.*lastlpe + 236250.*spe + \
+31250.*k*timeIncrement*vmax) + 
+            dse*(lastlpe*(-1.78605e6*vel - 236250.*k*vmax) + \
+k*timeIncrement*vmax*(236250.*vel + 31250.*k*vmax) + spe*(1.78605e6*vel + \
+236250.*k*vmax)) + 
+            ese*(1.78605e6*Power(lastlpe,2) + \
+lastlpe*(-1.7860500000000012e6*len - 1.7860500000000012e6*spe + \
+1.7860500000000012e6*sse - 
+                  472500.*k*timeIncrement*vmax) + \
+k*timeIncrement*vmax*(-236250.*sse + 31250.*k*timeIncrement*vmax) + 
+               len*(1.78605e6*spe + 236250.*k*timeIncrement*vmax) + \
+spe*(-1.78605e6*sse + 236250.*k*timeIncrement*vmax))) + 
+         alpha*f0*(dpe*k*(-47250.00000000001 + 24999.999999999996*k)*vmax + 
+            dse*((-3.214890000000001e6 - 189000.00000000003*k)*vel + \
+24999.999999999996*(-1.8900000000000006 + k)*k*vmax) + 
+            epe*((3.214890000000001e6 + 189000.00000000003*k)*lastlpe + \
+(-3.214890000000001e6 - 189000.00000000003*k)*spe + 
+               k*(-47250.00000000001 + \
+24999.999999999996*k)*timeIncrement*vmax) + 
+            ese*((3.214890000000001e6 + 189000.00000000003*k)*lastlpe - \
+3.214890000000001e6*len + 3.214890000000001e6*sse + 
+               k*(-189000.00000000003*len + 189000.00000000003*sse + \
+(-47250.00000000001 + 24999.999999999996*k)*timeIncrement*vmax))))),
+    Rule(vce,(-850.5*alpha*f0 - 50.*alpha*f0*k - 472.5*epe*lastlpe - \
+472.5*ese*lastlpe + 472.5*ese*len + 472.5*epe*spe - 472.5*ese*sse + \
+472.5*dse*vel - 
+        62.5*dpe*k*vmax - 62.5*dse*k*vmax - 62.5*epe*k*timeIncrement*vmax - \
+62.5*ese*k*timeIncrement*vmax - 
+        0.5*Sqrt(-4.*k*(945.*dpe + 945.*dse + 945.*epe*timeIncrement + \
+945.*ese*timeIncrement)*
+            (125.*alpha*f0 + 125.*epe*lastlpe + 125.*ese*lastlpe - \
+125.*ese*len - 125.*epe*spe + 125.*ese*sse - 125.*dse*vel)*vmax + 
+           Power(alpha*f0*(1701. + 100.*k) + 945.*epe*lastlpe + \
+945.*ese*lastlpe - 945.*ese*len - 945.*epe*spe + 945.*ese*sse - 945.*dse*vel \
++ 
+             k*(125.*dpe + 125.*dse + 125.*epe*timeIncrement + \
+125.*ese*timeIncrement)*vmax,2)))/
+      (945.*dpe + 945.*dse + 945.*epe*timeIncrement + \
+945.*ese*timeIncrement))),
+   List(Rule(fpe,(alpha*f0*(-850.5 - 50.*k)*(dpe + epe*timeIncrement) + 
+        Power(epe,2)*timeIncrement*(472.5*lastlpe - 472.5*spe - \
+62.50000000000001*k*timeIncrement*vmax) + 
+        epe*(dpe*(472.5*lastlpe - 472.5*spe - \
+125.00000000000001*k*timeIncrement*vmax) + 
+           ese*timeIncrement*(472.5*lastlpe + 472.5*len - 945.*spe - \
+472.5*sse - 62.50000000000001*k*timeIncrement*vmax) + 
+           dse*(945.*lastlpe - 945.*spe + 472.5*timeIncrement*vel - \
+62.50000000000001*k*timeIncrement*vmax)) + 
+        dpe*(472.5000000000001*dse*vel - 62.5*dpe*k*vmax - 62.5*dse*k*vmax + 
+           ese*(-472.5000000000001*lastlpe + 472.5000000000001*len - \
+472.5000000000001*sse - 62.5*k*timeIncrement*vmax)) + 
+        0.5*dpe*Sqrt(10000.*Power(alpha,2)*Power(f0,2)*(17.009999590960987 + \
+k)*(17.010000409039023 + k) + 15625.*Power(dpe,2)*Power(k,2)*Power(vmax,2) + 
+           dpe*dse*k*vmax*(236250.*vel + 31250.*k*vmax) + \
+Power(dse,2)*(893025.*Power(vel,2) + 236250.*k*vel*vmax + \
+15625.*Power(k,2)*Power(vmax,2)) + 
+           Power(epe,2)*(893025.0000000002*Power(lastlpe,2) - \
+1.7860500000000005e6*lastlpe*spe + 893025.0000000002*Power(spe,2) - 
+              236250.00000000003*k*lastlpe*timeIncrement*vmax + \
+236250.00000000003*k*spe*timeIncrement*vmax + 
+              15624.999999999998*Power(k,2)*Power(timeIncrement,2)*Power(vmax,\
+2)) + 
+           Power(ese,2)*(893025.*Power(lastlpe,2) + 893025.*Power(len,2) - \
+1.78605e6*len*sse + 893025.*Power(sse,2) + 236250.*k*len*timeIncrement*vmax - \
+
+              236250.*k*sse*timeIncrement*vmax + \
+15625.*Power(k,2)*Power(timeIncrement,2)*Power(vmax,2) + 
+              lastlpe*(-1.78605e6*len + 1.78605e6*sse - \
+236250.*k*timeIncrement*vmax)) + 
+           ese*(dpe*k*vmax*(-236250.*lastlpe + 236250.*len - 236250.*sse + \
+31250.*k*timeIncrement*vmax) + 
+              dse*(-1.78605e6*lastlpe*vel + 1.78605e6*len*vel - \
+1.78605e6*sse*vel - 236250.*k*lastlpe*vmax + 236250.*k*len*vmax - \
+236250.*k*sse*vmax + 
+                 236250.*k*timeIncrement*vel*vmax + \
+31250.*Power(k,2)*timeIncrement*Power(vmax,2))) + 
+           epe*(dpe*k*vmax*(-236250.*lastlpe + 236250.*spe + \
+31250.*k*timeIncrement*vmax) + 
+              dse*(lastlpe*(-1.78605e6*vel - 236250.*k*vmax) + \
+k*timeIncrement*vmax*(236250.*vel + 31250.*k*vmax) + spe*(1.78605e6*vel + \
+236250.*k*vmax)) + 
+              ese*(1.78605e6*Power(lastlpe,2) + lastlpe*(-1.78605e6*len - \
+1.78605e6*spe + 1.78605e6*sse - 472500.*k*timeIncrement*vmax) + 
+                 k*timeIncrement*vmax*(-236250.*sse + \
+31250.*k*timeIncrement*vmax) + len*(1.78605e6*spe + \
+236250.*k*timeIncrement*vmax) + 
+                 spe*(-1.78605e6*sse + 236250.*k*timeIncrement*vmax))) + 
+           alpha*f0*(dpe*k*(-47250. + 24999.999999999993*k)*vmax + 
+              dse*((-3.2148900000000014e6 - 189000.00000000003*k)*vel + \
+24999.999999999993*(-1.8900000000000006 + k)*k*vmax) + 
+              epe*((3.2148900000000023e6 + 189000.00000000003*k)*lastlpe + \
+(-3.2148900000000023e6 - 189000.00000000003*k)*spe + 
+                 k*(-47250.00000000001 + \
+24999.999999999993*k)*timeIncrement*vmax) + 
+              ese*((3.2148900000000023e6 + 189000.00000000003*k)*lastlpe - \
+3.2148900000000014e6*len + 3.2148900000000014e6*sse + 
+                 k*(-189000.00000000003*len + 189000.00000000003*sse + \
+(-47250. + 24999.999999999993*k)*timeIncrement*vmax)))) + 
+        0.5*epe*timeIncrement*Sqrt(10000.*Power(alpha,2)*Power(f0,2)*(17.\
+009999590960987 + k)*(17.010000409039023 + k) + 
+           15625.*Power(dpe,2)*Power(k,2)*Power(vmax,2) + \
+dpe*dse*k*vmax*(236250.*vel + 31250.*k*vmax) + 
+           Power(dse,2)*(893025.*Power(vel,2) + 236250.*k*vel*vmax + \
+15625.*Power(k,2)*Power(vmax,2)) + 
+           Power(epe,2)*(893025.0000000002*Power(lastlpe,2) - \
+1.7860500000000005e6*lastlpe*spe + 893025.0000000002*Power(spe,2) - 
+              236250.00000000003*k*lastlpe*timeIncrement*vmax + \
+236250.00000000003*k*spe*timeIncrement*vmax + 
+              15624.999999999998*Power(k,2)*Power(timeIncrement,2)*Power(vmax,\
+2)) + 
+           Power(ese,2)*(893025.*Power(lastlpe,2) + 893025.*Power(len,2) - \
+1.78605e6*len*sse + 893025.*Power(sse,2) + 236250.*k*len*timeIncrement*vmax - \
+
+              236250.*k*sse*timeIncrement*vmax + \
+15625.*Power(k,2)*Power(timeIncrement,2)*Power(vmax,2) + 
+              lastlpe*(-1.78605e6*len + 1.78605e6*sse - \
+236250.*k*timeIncrement*vmax)) + 
+           ese*(dpe*k*vmax*(-236250.*lastlpe + 236250.*len - 236250.*sse + \
+31250.*k*timeIncrement*vmax) + 
+              dse*(-1.78605e6*lastlpe*vel + 1.78605e6*len*vel - \
+1.78605e6*sse*vel - 236250.*k*lastlpe*vmax + 236250.*k*len*vmax - \
+236250.*k*sse*vmax + 
+                 236250.*k*timeIncrement*vel*vmax + \
+31250.*Power(k,2)*timeIncrement*Power(vmax,2))) + 
+           epe*(dpe*k*vmax*(-236250.*lastlpe + 236250.*spe + \
+31250.*k*timeIncrement*vmax) + 
+              dse*(lastlpe*(-1.78605e6*vel - 236250.*k*vmax) + \
+k*timeIncrement*vmax*(236250.*vel + 31250.*k*vmax) + spe*(1.78605e6*vel + \
+236250.*k*vmax)) + 
+              ese*(1.78605e6*Power(lastlpe,2) + lastlpe*(-1.78605e6*len - \
+1.78605e6*spe + 1.78605e6*sse - 472500.*k*timeIncrement*vmax) + 
+                 k*timeIncrement*vmax*(-236250.*sse + \
+31250.*k*timeIncrement*vmax) + len*(1.78605e6*spe + \
+236250.*k*timeIncrement*vmax) + 
+                 spe*(-1.78605e6*sse + 236250.*k*timeIncrement*vmax))) + 
+           alpha*f0*(dpe*k*(-47250. + 24999.999999999993*k)*vmax + 
+              dse*((-3.2148900000000014e6 - 189000.00000000003*k)*vel + \
+24999.999999999993*(-1.8900000000000006 + k)*k*vmax) + 
+              epe*((3.2148900000000023e6 + 189000.00000000003*k)*lastlpe + \
+(-3.2148900000000023e6 - 189000.00000000003*k)*spe + 
+                 k*(-47250.00000000001 + \
+24999.999999999993*k)*timeIncrement*vmax) + 
+              ese*((3.2148900000000023e6 + 189000.00000000003*k)*lastlpe - \
+3.2148900000000014e6*len + 3.2148900000000014e6*sse + 
+                 k*(-189000.00000000003*len + 189000.00000000003*sse + \
+(-47250. + 24999.999999999993*k)*timeIncrement*vmax)))))/
+      (945.*dpe + 945.*dse + 945.*epe*timeIncrement + \
+945.*ese*timeIncrement)),
+    Rule(fse,(850.5*alpha*dse*f0 + 50.*alpha*dse*f0*k + 472.5*dse*epe*lastlpe \
+- 945.*dpe*ese*lastlpe - 472.5*dse*ese*lastlpe + 945.*dpe*ese*len + 
+        472.5*dse*ese*len - 472.5*dse*epe*spe - 945.*dpe*ese*sse - \
+472.5*dse*ese*sse + 850.5*alpha*ese*f0*timeIncrement + \
+50.*alpha*ese*f0*k*timeIncrement - 
+        472.5*epe*ese*lastlpe*timeIncrement - \
+472.5*Power(ese,2)*lastlpe*timeIncrement + 945.*epe*ese*len*timeIncrement + \
+472.5*Power(ese,2)*len*timeIncrement - 
+        472.5*epe*ese*spe*timeIncrement - 945.*epe*ese*sse*timeIncrement - \
+472.5*Power(ese,2)*sse*timeIncrement + 945.*dpe*dse*vel + \
+472.5*Power(dse,2)*vel + 
+        945.*dse*epe*timeIncrement*vel + 472.5*dse*ese*timeIncrement*vel + \
+62.5*dpe*dse*k*vmax + 62.5*Power(dse,2)*k*vmax + \
+62.5*dse*epe*k*timeIncrement*vmax + 
+        62.5*dpe*ese*k*timeIncrement*vmax + 125.*dse*ese*k*timeIncrement*vmax \
++ 62.5*epe*ese*k*Power(timeIncrement,2)*vmax + 
+        62.5*Power(ese,2)*k*Power(timeIncrement,2)*vmax - 0.5*dse*
+         Sqrt(10000.*Power(alpha,2)*Power(f0,2)*(17.009999590960987 + \
+k)*(17.010000409039023 + k) + 15625.*Power(dpe,2)*Power(k,2)*Power(vmax,2) + 
+           dpe*dse*k*vmax*(236250.*vel + 31250.*k*vmax) + \
+Power(dse,2)*(893025.*Power(vel,2) + 236250.*k*vel*vmax + \
+15625.*Power(k,2)*Power(vmax,2)) + 
+           Power(epe,2)*(893025.0000000002*Power(lastlpe,2) - \
+1.7860500000000005e6*lastlpe*spe + 893025.0000000002*Power(spe,2) - 
+              236250.00000000003*k*lastlpe*timeIncrement*vmax + \
+236250.00000000003*k*spe*timeIncrement*vmax + 
+              15624.999999999998*Power(k,2)*Power(timeIncrement,2)*Power(vmax,\
+2)) + 
+           Power(ese,2)*(893025.*Power(lastlpe,2) + 893025.*Power(len,2) - \
+1.78605e6*len*sse + 893025.*Power(sse,2) + 236250.*k*len*timeIncrement*vmax - \
+
+              236250.*k*sse*timeIncrement*vmax + \
+15625.*Power(k,2)*Power(timeIncrement,2)*Power(vmax,2) + 
+              lastlpe*(-1.78605e6*len + 1.78605e6*sse - \
+236250.*k*timeIncrement*vmax)) + 
+           ese*(dpe*k*vmax*(-236250.*lastlpe + 236250.*len - 236250.*sse + \
+31250.*k*timeIncrement*vmax) + 
+              dse*(-1.78605e6*lastlpe*vel + 1.78605e6*len*vel - \
+1.78605e6*sse*vel - 236250.*k*lastlpe*vmax + 236250.*k*len*vmax - \
+236250.*k*sse*vmax + 
+                 236250.*k*timeIncrement*vel*vmax + \
+31250.*Power(k,2)*timeIncrement*Power(vmax,2))) + 
+           epe*(dpe*k*vmax*(-236250.*lastlpe + 236250.*spe + \
+31250.*k*timeIncrement*vmax) + 
+              dse*(lastlpe*(-1.78605e6*vel - 236250.*k*vmax) + \
+k*timeIncrement*vmax*(236250.*vel + 31250.*k*vmax) + spe*(1.78605e6*vel + \
+236250.*k*vmax)) + 
+              ese*(1.78605e6*Power(lastlpe,2) + lastlpe*(-1.78605e6*len - \
+1.78605e6*spe + 1.78605e6*sse - 472500.*k*timeIncrement*vmax) + 
+                 k*timeIncrement*vmax*(-236250.*sse + \
+31250.*k*timeIncrement*vmax) + len*(1.78605e6*spe + \
+236250.*k*timeIncrement*vmax) + 
+                 spe*(-1.78605e6*sse + 236250.*k*timeIncrement*vmax))) + 
+           alpha*f0*(dpe*k*(-47250.00000000001 + 24999.999999999996*k)*vmax + \
+
+              dse*((-3.214890000000001e6 - 189000.00000000003*k)*vel + \
+24999.999999999996*(-1.8900000000000006 + k)*k*vmax) + 
+              epe*((3.214890000000001e6 + 189000.00000000003*k)*lastlpe + \
+(-3.214890000000001e6 - 189000.00000000003*k)*spe + 
+                 k*(-47250.00000000001 + \
+24999.999999999996*k)*timeIncrement*vmax) + 
+              ese*((3.214890000000001e6 + 189000.00000000003*k)*lastlpe - \
+3.214890000000001e6*len + 3.214890000000001e6*sse + 
+                 k*(-189000.00000000003*len + 189000.00000000003*sse + \
+(-47250.00000000001 + 24999.999999999996*k)*timeIncrement*vmax)))) - 
+        0.5*ese*timeIncrement*Sqrt(10000.*Power(alpha,2)*Power(f0,2)*(17.\
+009999590960987 + k)*(17.010000409039023 + k) + 
+           15625.*Power(dpe,2)*Power(k,2)*Power(vmax,2) + \
+dpe*dse*k*vmax*(236250.*vel + 31250.*k*vmax) + 
+           Power(dse,2)*(893025.*Power(vel,2) + 236250.*k*vel*vmax + \
+15625.*Power(k,2)*Power(vmax,2)) + 
+           Power(epe,2)*(893025.0000000002*Power(lastlpe,2) - \
+1.7860500000000005e6*lastlpe*spe + 893025.0000000002*Power(spe,2) - 
+              236250.00000000003*k*lastlpe*timeIncrement*vmax + \
+236250.00000000003*k*spe*timeIncrement*vmax + 
+              15624.999999999998*Power(k,2)*Power(timeIncrement,2)*Power(vmax,\
+2)) + 
+           Power(ese,2)*(893025.*Power(lastlpe,2) + 893025.*Power(len,2) - \
+1.78605e6*len*sse + 893025.*Power(sse,2) + 236250.*k*len*timeIncrement*vmax - \
+
+              236250.*k*sse*timeIncrement*vmax + \
+15625.*Power(k,2)*Power(timeIncrement,2)*Power(vmax,2) + 
+              lastlpe*(-1.78605e6*len + 1.78605e6*sse - \
+236250.*k*timeIncrement*vmax)) + 
+           ese*(dpe*k*vmax*(-236250.*lastlpe + 236250.*len - 236250.*sse + \
+31250.*k*timeIncrement*vmax) + 
+              dse*(-1.78605e6*lastlpe*vel + 1.78605e6*len*vel - \
+1.78605e6*sse*vel - 236250.*k*lastlpe*vmax + 236250.*k*len*vmax - \
+236250.*k*sse*vmax + 
+                 236250.*k*timeIncrement*vel*vmax + \
+31250.*Power(k,2)*timeIncrement*Power(vmax,2))) + 
+           epe*(dpe*k*vmax*(-236250.*lastlpe + 236250.*spe + \
+31250.*k*timeIncrement*vmax) + 
+              dse*(lastlpe*(-1.78605e6*vel - 236250.*k*vmax) + \
+k*timeIncrement*vmax*(236250.*vel + 31250.*k*vmax) + spe*(1.78605e6*vel + \
+236250.*k*vmax)) + 
+              ese*(1.78605e6*Power(lastlpe,2) + lastlpe*(-1.78605e6*len - \
+1.78605e6*spe + 1.78605e6*sse - 472500.*k*timeIncrement*vmax) + 
+                 k*timeIncrement*vmax*(-236250.*sse + \
+31250.*k*timeIncrement*vmax) + len*(1.78605e6*spe + \
+236250.*k*timeIncrement*vmax) + 
+                 spe*(-1.78605e6*sse + 236250.*k*timeIncrement*vmax))) + 
+           alpha*f0*(dpe*k*(-47250.00000000001 + 24999.999999999996*k)*vmax + \
+
+              dse*((-3.214890000000001e6 - 189000.00000000003*k)*vel + \
+24999.999999999996*(-1.8900000000000006 + k)*k*vmax) + 
+              epe*((3.214890000000001e6 + 189000.00000000003*k)*lastlpe + \
+(-3.214890000000001e6 - 189000.00000000003*k)*spe + 
+                 k*(-47250.00000000001 + \
+24999.999999999996*k)*timeIncrement*vmax) + 
+              ese*((3.214890000000001e6 + 189000.00000000003*k)*lastlpe - \
+3.214890000000001e6*len + 3.214890000000001e6*sse + 
+                 k*(-189000.00000000003*len + 189000.00000000003*sse + \
+(-47250.00000000001 + 24999.999999999996*k)*timeIncrement*vmax)))))/
+      (945.*dpe + 945.*dse + 945.*epe*timeIncrement + \
+945.*ese*timeIncrement)),
+    Rule(lse,(-945.*dpe*lastlpe - 945.*dse*lastlpe + 945.*dpe*len + \
+945.*dse*len + alpha*f0*(850.5 + 50.*k)*timeIncrement - \
+472.5*epe*lastlpe*timeIncrement - 
+        472.5*ese*lastlpe*timeIncrement + 945.*epe*len*timeIncrement + \
+472.5*ese*len*timeIncrement - 472.5*epe*spe*timeIncrement + \
+472.5*ese*sse*timeIncrement - 
+        472.5*dse*timeIncrement*vel + 62.5*dpe*k*timeIncrement*vmax + \
+62.5*dse*k*timeIncrement*vmax + 62.5*epe*k*Power(timeIncrement,2)*vmax + 
+        62.5*ese*k*Power(timeIncrement,2)*vmax - 0.5*timeIncrement*
+         Sqrt(10000.*Power(alpha,2)*Power(f0,2)*(17.009999590960987 + \
+k)*(17.010000409039023 + k) + 15625.*Power(dpe,2)*Power(k,2)*Power(vmax,2) + 
+           dpe*dse*k*vmax*(236250.*vel + 31250.*k*vmax) + \
+Power(dse,2)*(893025.*Power(vel,2) + 236250.*k*vel*vmax + \
+15625.*Power(k,2)*Power(vmax,2)) + 
+           Power(epe,2)*(893025.0000000002*Power(lastlpe,2) - \
+1.7860500000000005e6*lastlpe*spe + 893025.0000000002*Power(spe,2) - 
+              236250.00000000003*k*lastlpe*timeIncrement*vmax + \
+236250.00000000003*k*spe*timeIncrement*vmax + 
+              15624.999999999998*Power(k,2)*Power(timeIncrement,2)*Power(vmax,\
+2)) + 
+           Power(ese,2)*(893025.*Power(lastlpe,2) + 893025.*Power(len,2) - \
+1.78605e6*len*sse + 893025.*Power(sse,2) + 236250.*k*len*timeIncrement*vmax - \
+
+              236250.*k*sse*timeIncrement*vmax + \
+15625.*Power(k,2)*Power(timeIncrement,2)*Power(vmax,2) + 
+              lastlpe*(-1.78605e6*len + 1.78605e6*sse - \
+236250.*k*timeIncrement*vmax)) + 
+           ese*(dpe*k*vmax*(-236250.*lastlpe + 236250.*len - 236250.*sse + \
+31250.*k*timeIncrement*vmax) + 
+              dse*(-1.78605e6*lastlpe*vel + 1.78605e6*len*vel - \
+1.78605e6*sse*vel - 236250.*k*lastlpe*vmax + 236250.*k*len*vmax - \
+236250.*k*sse*vmax + 
+                 236250.*k*timeIncrement*vel*vmax + \
+31250.*Power(k,2)*timeIncrement*Power(vmax,2))) + 
+           epe*(dpe*k*vmax*(-236250.*lastlpe + 236250.*spe + \
+31250.*k*timeIncrement*vmax) + 
+              dse*(lastlpe*(-1.78605e6*vel - 236250.*k*vmax) + \
+k*timeIncrement*vmax*(236250.*vel + 31250.*k*vmax) + spe*(1.78605e6*vel + \
+236250.*k*vmax)) + 
+              ese*(1.78605e6*Power(lastlpe,2) + \
+lastlpe*(-1.7860500000000012e6*len - 1.7860500000000012e6*spe + \
+1.7860500000000012e6*sse - 
+                    472500.*k*timeIncrement*vmax) + \
+k*timeIncrement*vmax*(-236250.*sse + 31250.*k*timeIncrement*vmax) + 
+                 len*(1.78605e6*spe + 236250.*k*timeIncrement*vmax) + \
+spe*(-1.78605e6*sse + 236250.*k*timeIncrement*vmax))) + 
+           alpha*f0*(dpe*k*(-47250.00000000001 + 24999.999999999996*k)*vmax + \
+
+              dse*((-3.214890000000001e6 - 189000.00000000003*k)*vel + \
+24999.999999999996*(-1.8900000000000006 + k)*k*vmax) + 
+              epe*((3.214890000000001e6 + 189000.00000000003*k)*lastlpe + \
+(-3.214890000000001e6 - 189000.00000000003*k)*spe + 
+                 k*(-47250.00000000001 + \
+24999.999999999996*k)*timeIncrement*vmax) + 
+              ese*((3.214890000000001e6 + 189000.00000000003*k)*lastlpe - \
+3.214890000000001e6*len + 3.214890000000001e6*sse + 
+                 k*(-189000.00000000003*len + 189000.00000000003*sse + \
+(-47250.00000000001 + 24999.999999999996*k)*timeIncrement*vmax)))))/
+      (945.*dpe + 945.*dse + 945.*epe*timeIncrement + \
+945.*ese*timeIncrement)),
+    Rule(vse,(alpha*f0*(850.5 + 50.*k) + 945.*dpe*vel + 472.5*dse*vel + \
+epe*(472.5*lastlpe - 472.5*spe + 945.*timeIncrement*vel) + 
+        ese*(472.5*lastlpe - 472.5*len + 472.5*sse + 945.*timeIncrement*vel) \
++ k*(62.5*dpe + 62.5*dse + 62.5*epe*timeIncrement + \
+62.5*ese*timeIncrement)*vmax - 
+        0.5*Sqrt(10000.*Power(alpha,2)*Power(f0,2)*(17.009999590960987 + \
+k)*(17.010000409039023 + k) + 15625.*Power(dpe,2)*Power(k,2)*Power(vmax,2) + 
+           dpe*dse*k*vmax*(236250.*vel + 31250.*k*vmax) + \
+Power(dse,2)*(893024.9999999998*Power(vel,2) + 236250.*k*vel*vmax + \
+15625.*Power(k,2)*Power(vmax,2)) + 
+           Power(epe,2)*(893025.0000000001*Power(lastlpe,2) - \
+1.7860500000000002e6*lastlpe*spe + 893025.0000000001*Power(spe,2) - 
+              236250.*k*lastlpe*timeIncrement*vmax + \
+236250.*k*spe*timeIncrement*vmax + \
+15625.*Power(k,2)*Power(timeIncrement,2)*Power(vmax,2)) + 
+           Power(ese,2)*(893024.9999999998*Power(lastlpe,2) + \
+893024.9999999998*Power(len,2) - 1.7860499999999995e6*len*sse + \
+893024.9999999998*Power(sse,2) + 
+              236250.*k*len*timeIncrement*vmax - \
+236250.*k*sse*timeIncrement*vmax + \
+15625.*Power(k,2)*Power(timeIncrement,2)*Power(vmax,2) + 
+              lastlpe*(-1.7860499999999995e6*len + 1.7860499999999995e6*sse - \
+236250.*k*timeIncrement*vmax)) + 
+           ese*(dpe*k*vmax*(-236250.*lastlpe + 236250.*len - 236250.*sse + \
+31250.*k*timeIncrement*vmax) + 
+              dse*(-1.7860499999999995e6*lastlpe*vel + \
+1.7860499999999995e6*len*vel - 1.7860499999999995e6*sse*vel - \
+236250.*k*lastlpe*vmax + 
+                 236250.*k*len*vmax - 236250.*k*sse*vmax + \
+236250.*k*timeIncrement*vel*vmax + \
+31250.*Power(k,2)*timeIncrement*Power(vmax,2))) + 
+           epe*(dpe*k*vmax*(-236250.*lastlpe + 236250.*spe + \
+31250.*k*timeIncrement*vmax) + 
+              dse*(lastlpe*(-1.7860499999999995e6*vel - 236250.*k*vmax) + \
+k*timeIncrement*vmax*(236250.*vel + 31250.*k*vmax) + 
+                 spe*(1.7860499999999995e6*vel + 236250.*k*vmax)) + 
+              ese*(1.7860499999999995e6*Power(lastlpe,2) + lastlpe*
+                  (-1.7860499999999995e6*len - 1.7860499999999995e6*spe + \
+1.7860499999999995e6*sse - 472499.99999999994*k*timeIncrement*vmax) + 
+                 k*timeIncrement*vmax*(-236250.*sse + \
+31250.*k*timeIncrement*vmax) + len*(1.7860499999999995e6*spe + \
+236249.99999999997*k*timeIncrement*vmax) + 
+                 spe*(-1.7860499999999995e6*sse + \
+236249.99999999997*k*timeIncrement*vmax))) + 
+           alpha*f0*(dpe*k*(-47250.00000000001 + 24999.999999999996*k)*vmax + \
+
+              dse*((-3.214890000000001e6 - 189000.00000000003*k)*vel + \
+24999.999999999996*(-1.8900000000000006 + k)*k*vmax) + 
+              epe*((3.214890000000001e6 + 189000.00000000003*k)*lastlpe + \
+(-3.214890000000001e6 - 189000.00000000003*k)*spe + 
+                 k*(-47250.00000000001 + \
+24999.999999999996*k)*timeIncrement*vmax) + 
+              ese*((3.214890000000001e6 + 189000.00000000003*k)*lastlpe - \
+3.214890000000001e6*len + 3.214890000000001e6*sse + 
+                 k*(-189000.00000000003*len + 189000.00000000003*sse + \
+(-47250.00000000001 + 24999.999999999996*k)*timeIncrement*vmax)))))/
+      (945.*dpe + 945.*dse + 945.*epe*timeIncrement + \
+945.*ese*timeIncrement)),
+    Rule(lpe,(945.*dpe*lastlpe + 945.*dse*lastlpe + alpha*f0*(-850.5 - \
+50.*k)*timeIncrement + 472.5*epe*lastlpe*timeIncrement + 
+        472.5*ese*lastlpe*timeIncrement + 472.5*ese*len*timeIncrement + \
+472.5*epe*spe*timeIncrement - 472.5*ese*sse*timeIncrement + 
+        472.5*dse*timeIncrement*vel - 62.5*dpe*k*timeIncrement*vmax - \
+62.5*dse*k*timeIncrement*vmax - 62.5*epe*k*Power(timeIncrement,2)*vmax - 
+        62.5*ese*k*Power(timeIncrement,2)*vmax + 0.5*timeIncrement*
+         Sqrt(10000.*Power(alpha,2)*Power(f0,2)*(17.009999590960987 + \
+k)*(17.010000409039023 + k) + 15625.*Power(dpe,2)*Power(k,2)*Power(vmax,2) + 
+           dpe*dse*k*vmax*(236250.*vel + 31250.*k*vmax) + \
+Power(dse,2)*(893025.*Power(vel,2) + 236250.*k*vel*vmax + \
+15625.*Power(k,2)*Power(vmax,2)) + 
+           Power(epe,2)*(893025.0000000002*Power(lastlpe,2) - \
+1.7860500000000005e6*lastlpe*spe + 893025.0000000002*Power(spe,2) - 
+              236250.00000000003*k*lastlpe*timeIncrement*vmax + \
+236250.00000000003*k*spe*timeIncrement*vmax + 
+              15624.999999999998*Power(k,2)*Power(timeIncrement,2)*Power(vmax,\
+2)) + 
+           Power(ese,2)*(893025.*Power(lastlpe,2) + 893025.*Power(len,2) - \
+1.78605e6*len*sse + 893025.*Power(sse,2) + 236250.*k*len*timeIncrement*vmax - \
+
+              236250.*k*sse*timeIncrement*vmax + \
+15625.*Power(k,2)*Power(timeIncrement,2)*Power(vmax,2) + 
+              lastlpe*(-1.78605e6*len + 1.78605e6*sse - \
+236250.*k*timeIncrement*vmax)) + 
+           ese*(dpe*k*vmax*(-236250.*lastlpe + 236250.*len - 236250.*sse + \
+31250.*k*timeIncrement*vmax) + 
+              dse*(-1.78605e6*lastlpe*vel + 1.78605e6*len*vel - \
+1.78605e6*sse*vel - 236250.*k*lastlpe*vmax + 236250.*k*len*vmax - \
+236250.*k*sse*vmax + 
+                 236250.*k*timeIncrement*vel*vmax + \
+31250.*Power(k,2)*timeIncrement*Power(vmax,2))) + 
+           epe*(dpe*k*vmax*(-236250.*lastlpe + 236250.*spe + \
+31250.*k*timeIncrement*vmax) + 
+              dse*(lastlpe*(-1.78605e6*vel - 236250.*k*vmax) + \
+k*timeIncrement*vmax*(236250.*vel + 31250.*k*vmax) + spe*(1.78605e6*vel + \
+236250.*k*vmax)) + 
+              ese*(1.78605e6*Power(lastlpe,2) + \
+lastlpe*(-1.7860500000000012e6*len - 1.7860500000000012e6*spe + \
+1.7860500000000012e6*sse - 
+                    472500.*k*timeIncrement*vmax) + \
+k*timeIncrement*vmax*(-236250.*sse + 31250.*k*timeIncrement*vmax) + 
+                 len*(1.78605e6*spe + 236250.*k*timeIncrement*vmax) + \
+spe*(-1.78605e6*sse + 236250.*k*timeIncrement*vmax))) + 
+           alpha*f0*(dpe*k*(-47250.00000000001 + 24999.999999999996*k)*vmax + \
+
+              dse*((-3.214890000000001e6 - 189000.00000000003*k)*vel + \
+24999.999999999996*(-1.8900000000000006 + k)*k*vmax) + 
+              epe*((3.214890000000001e6 + 189000.00000000003*k)*lastlpe + \
+(-3.214890000000001e6 - 189000.00000000003*k)*spe + 
+                 k*(-47250.00000000001 + \
+24999.999999999996*k)*timeIncrement*vmax) + 
+              ese*((3.214890000000001e6 + 189000.00000000003*k)*lastlpe - \
+3.214890000000001e6*len + 3.214890000000001e6*sse + 
+                 k*(-189000.00000000003*len + 189000.00000000003*sse + \
+(-47250.00000000001 + 24999.999999999996*k)*timeIncrement*vmax)))))/
+      (945.*dpe + 945.*dse + 945.*epe*timeIncrement + \
+945.*ese*timeIncrement)),
+    Rule(fce,-0.5000000000000001*epe*lastlpe - 0.5000000000000001*ese*lastlpe \
++ 0.5000000000000001*ese*len + 0.5000000000000001*epe*spe - 
+      0.5000000000000001*ese*sse + (alpha*f0*(dpe*(0.9000000000000001 + \
+0.052910052910052914*k) + dse*(0.9000000000000001 + 0.052910052910052914*k) + \
+
+            (ese*(0.9000000000000001 + 0.052910052910052914*k) + \
+epe*(0.9000000000000001 + 0.05291005291005293*k))*timeIncrement) + 
+         0.06613756613756615*Power(dpe,2)*k*vmax + \
+(0.06613756613756616*Power(epe,2) + 0.13227513227513232*epe*ese + \
+0.06613756613756613*Power(ese,2))*k*
+          Power(timeIncrement,2)*vmax + Power(dse,2)*(0.5000000000000001*vel \
++ 0.06613756613756613*k*vmax) + 
+         dse*timeIncrement*(0.5000000000000001*epe*vel + \
+0.5000000000000001*ese*vel + 0.13227513227513232*epe*k*vmax + \
+0.13227513227513227*ese*k*vmax) + 
+         dpe*((0.13227513227513232*epe + \
+0.13227513227513227*ese)*k*timeIncrement*vmax + dse*(0.5000000000000001*vel + \
+0.13227513227513227*k*vmax)))/
+       (1.*dpe + 1.*dse + 1.*epe*timeIncrement + 1.*ese*timeIncrement) - 
+      0.0005291005291005291*Sqrt(10000.*Power(alpha,2)*Power(f0,2)*(17.\
+009999590960987 + k)*(17.010000409039023 + k) + 
+         15625.*Power(dpe,2)*Power(k,2)*Power(vmax,2) + \
+dpe*dse*k*vmax*(236250.*vel + 31250.*k*vmax) + 
+         Power(dse,2)*(893025.*Power(vel,2) + 236250.*k*vel*vmax + \
+15625.*Power(k,2)*Power(vmax,2)) + 
+         Power(epe,2)*(893025.0000000002*Power(lastlpe,2) - \
+1.7860500000000005e6*lastlpe*spe + 893025.0000000002*Power(spe,2) - 
+            236250.00000000003*k*lastlpe*timeIncrement*vmax + \
+236250.00000000003*k*spe*timeIncrement*vmax + 
+            15624.999999999998*Power(k,2)*Power(timeIncrement,2)*Power(vmax,2)\
+) + 
+         Power(ese,2)*(893025.*Power(lastlpe,2) + 893025.*Power(len,2) - \
+1.78605e6*len*sse + 893025.*Power(sse,2) + 236250.*k*len*timeIncrement*vmax - \
+
+            236250.*k*sse*timeIncrement*vmax + \
+15625.*Power(k,2)*Power(timeIncrement,2)*Power(vmax,2) + 
+            lastlpe*(-1.78605e6*len + 1.78605e6*sse - \
+236250.*k*timeIncrement*vmax)) + 
+         ese*(dpe*k*vmax*(-236250.*lastlpe + 236250.*len - 236250.*sse + \
+31250.*k*timeIncrement*vmax) + 
+            dse*(-1.78605e6*lastlpe*vel + 1.78605e6*len*vel - \
+1.78605e6*sse*vel - 236250.*k*lastlpe*vmax + 236250.*k*len*vmax - \
+236250.*k*sse*vmax + 
+               236250.*k*timeIncrement*vel*vmax + \
+31250.*Power(k,2)*timeIncrement*Power(vmax,2))) + 
+         epe*(dpe*k*vmax*(-236250.*lastlpe + 236250.*spe + \
+31250.*k*timeIncrement*vmax) + 
+            dse*(lastlpe*(-1.78605e6*vel - 236250.*k*vmax) + \
+k*timeIncrement*vmax*(236250.*vel + 31250.*k*vmax) + spe*(1.78605e6*vel + \
+236250.*k*vmax)) + 
+            ese*(1.78605e6*Power(lastlpe,2) + \
+lastlpe*(-1.7860500000000012e6*len - 1.7860500000000012e6*spe + \
+1.7860500000000012e6*sse - 
+                  472500.*k*timeIncrement*vmax) + \
+k*timeIncrement*vmax*(-236250.*sse + 31250.*k*timeIncrement*vmax) + 
+               len*(1.78605e6*spe + 236250.*k*timeIncrement*vmax) + \
+spe*(-1.78605e6*sse + 236250.*k*timeIncrement*vmax))) + 
+         alpha*f0*(dpe*k*(-47250.00000000001 + 24999.999999999996*k)*vmax + 
+            dse*((-3.214890000000001e6 - 189000.00000000003*k)*vel + \
+24999.999999999996*(-1.8900000000000006 + k)*k*vmax) + 
+            epe*((3.214890000000001e6 + 189000.00000000003*k)*lastlpe + \
+(-3.214890000000001e6 - 189000.00000000003*k)*spe + 
+               k*(-47250.00000000001 + \
+24999.999999999996*k)*timeIncrement*vmax) + 
+            ese*((3.214890000000001e6 + 189000.00000000003*k)*lastlpe - \
+3.214890000000001e6*len + 3.214890000000001e6*sse + 
+               k*(-189000.00000000003*len + 189000.00000000003*sse + \
+(-47250.00000000001 + 24999.999999999996*k)*timeIncrement*vmax))))),
+    Rule(vce,(-850.5*alpha*f0 - 50.*alpha*f0*k - 472.5*epe*lastlpe - \
+472.5*ese*lastlpe + 472.5*ese*len + 472.5*epe*spe - 472.5*ese*sse + \
+472.5*dse*vel - 
+        62.5*dpe*k*vmax - 62.5*dse*k*vmax - 62.5*epe*k*timeIncrement*vmax - \
+62.5*ese*k*timeIncrement*vmax + 
+        0.5*Sqrt(-4.*k*(945.*dpe + 945.*dse + 945.*epe*timeIncrement + \
+945.*ese*timeIncrement)*
+            (125.*alpha*f0 + 125.*epe*lastlpe + 125.*ese*lastlpe - \
+125.*ese*len - 125.*epe*spe + 125.*ese*sse - 125.*dse*vel)*vmax + 
+           Power(alpha*f0*(1701. + 100.*k) + 945.*epe*lastlpe + \
+945.*ese*lastlpe - 945.*ese*len - 945.*epe*spe + 945.*ese*sse - 945.*dse*vel \
++ 
+             k*(125.*dpe + 125.*dse + 125.*epe*timeIncrement + \
+125.*ese*timeIncrement)*vmax,2)))/
+      (945.*dpe + 945.*dse + 945.*epe*timeIncrement + \
+945.*ese*timeIncrement))))\
+\>", "Output",
+ CellChangeTimes->{3.446058561510017*^9, 3.446108067284358*^9}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Special Conditions", "Subsubtitle"],
+
+Cell["\<\
+The main additional consitions are when the springs are slack. This is common \
+for the parallel element but should probably never happen for the serial \
+element.\
+\>", "Text"],
+
+Cell["lpe <= spe", "Text"],
+
+Cell[BoxData[
+ RowBox[{"eq8b", ":=", 
+  RowBox[{"fpe", "\[Equal]", "0"}]}]], "Input"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Concentric", "Subsubtitle"],
+
+Cell["i.e. vce <= 0", "Text"],
+
+Cell["\<\
+FullSimplify[Solve[{eq2, eq3, eq7, eq8b, eq6, eq9, eq10}, {lpe, lse, fpe, \
+fse, fce, vse, vce}]]\
+\>", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"CForm", "[", 
+  RowBox[{"FullSimplify", "[", 
+   RowBox[{"Solve", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+      "eq2", ",", "eq3", ",", "eq7", ",", "eq8b", ",", "eq6", ",", "eq9", ",",
+        "eq10"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+      "lpe", ",", "lse", ",", "fpe", ",", "fse", ",", "fce", ",", "vse", ",", 
+       "vce"}], "}"}]}], "]"}], "]"}], "]"}]], "Input"],
+
+Cell["\<\
+List(List(Rule(lpe,(dse*(2*lastlpe + timeIncrement*(vel + k*vmax)) + \
+timeIncrement*(alpha*f0*k + ese*(lastlpe + len - sse + k*timeIncrement*vmax)) \
+- 
+        timeIncrement*Sqrt(4*k*(dse + ese*timeIncrement)*(alpha*f0 + \
+ese*(lastlpe - len + sse) - dse*vel)*vmax + 
+           Power(alpha*f0*k + dse*(vel + k*vmax) + ese*(-lastlpe + len - sse \
++ k*timeIncrement*vmax),2)))/(2.*(dse + ese*timeIncrement))),Rule(fpe,0),
+    Rule(fse,(-(alpha*f0*k) - ese*lastlpe + ese*len - ese*sse + dse*vel - \
+dse*k*vmax - ese*k*timeIncrement*vmax + 
+        Sqrt(4*k*(dse + ese*timeIncrement)*(alpha*f0 + ese*(lastlpe - len + \
+sse) - dse*vel)*vmax + 
+          Power(alpha*f0*k + dse*(vel + k*vmax) + ese*(-lastlpe + len - sse + \
+k*timeIncrement*vmax),2)))/2.),
+    Rule(lse,-(dse*(2*lastlpe - 2*len + timeIncrement*(vel + k*vmax)) + \
+timeIncrement*(alpha*f0*k + ese*(lastlpe - len - sse + k*timeIncrement*vmax)) \
+- 
+         timeIncrement*Sqrt(4*k*(dse + ese*timeIncrement)*(alpha*f0 + \
+ese*(lastlpe - len + sse) - dse*vel)*vmax + 
+            Power(alpha*f0*k + dse*(vel + k*vmax) + ese*(-lastlpe + len - sse \
++ k*timeIncrement*vmax),2)))/(2.*(dse + ese*timeIncrement))),
+    Rule(vse,(-(alpha*f0*k) + ese*lastlpe - ese*len + ese*sse + dse*vel + \
+2*ese*timeIncrement*vel - dse*k*vmax - ese*k*timeIncrement*vmax + 
+        Sqrt(4*k*(dse + ese*timeIncrement)*(alpha*f0 + ese*(lastlpe - len + \
+sse) - dse*vel)*vmax + 
+          Power(alpha*f0*k + dse*(vel + k*vmax) + ese*(-lastlpe + len - sse + \
+k*timeIncrement*vmax),2)))/(2.*(dse + ese*timeIncrement))),
+    Rule(fce,(-(alpha*f0*k) - ese*lastlpe + ese*len - ese*sse + dse*vel - \
+dse*k*vmax - ese*k*timeIncrement*vmax + 
+        Sqrt(4*k*(dse + ese*timeIncrement)*(alpha*f0 + ese*(lastlpe - len + \
+sse) - dse*vel)*vmax + 
+          Power(alpha*f0*k + dse*(vel + k*vmax) + ese*(-lastlpe + len - sse + \
+k*timeIncrement*vmax),2)))/2.),
+    Rule(vce,(alpha*f0*k - ese*lastlpe + ese*len - ese*sse + dse*vel + \
+dse*k*vmax + ese*k*timeIncrement*vmax - 
+        Sqrt(4*k*(dse + ese*timeIncrement)*(alpha*f0 + ese*(lastlpe - len + \
+sse) - dse*vel)*vmax + 
+          Power(alpha*f0*k + dse*(vel + k*vmax) + ese*(-lastlpe + len - sse + \
+k*timeIncrement*vmax),2)))/(2.*(dse + ese*timeIncrement)))),
+   List(Rule(lpe,(dse*(2*lastlpe + timeIncrement*(vel + k*vmax)) + \
+timeIncrement*(alpha*f0*k + ese*(lastlpe + len - sse + k*timeIncrement*vmax)) \
++ 
+        timeIncrement*Sqrt(4*k*(dse + ese*timeIncrement)*(alpha*f0 + \
+ese*(lastlpe - len + sse) - dse*vel)*vmax + 
+           Power(alpha*f0*k + dse*(vel + k*vmax) + ese*(-lastlpe + len - sse \
++ k*timeIncrement*vmax),2)))/(2.*(dse + ese*timeIncrement))),Rule(fpe,0),
+    Rule(fse,(-(alpha*f0*k) - ese*lastlpe + ese*len - ese*sse + dse*vel - \
+dse*k*vmax - ese*k*timeIncrement*vmax - 
+        Sqrt(4*k*(dse + ese*timeIncrement)*(alpha*f0 + ese*(lastlpe - len + \
+sse) - dse*vel)*vmax + 
+          Power(alpha*f0*k + dse*(vel + k*vmax) + ese*(-lastlpe + len - sse + \
+k*timeIncrement*vmax),2)))/2.),
+    Rule(lse,-(dse*(2*lastlpe - 2*len + timeIncrement*(vel + k*vmax)) + \
+timeIncrement*(alpha*f0*k + ese*(lastlpe - len - sse + k*timeIncrement*vmax)) \
++ 
+         timeIncrement*Sqrt(4*k*(dse + ese*timeIncrement)*(alpha*f0 + \
+ese*(lastlpe - len + sse) - dse*vel)*vmax + 
+            Power(alpha*f0*k + dse*(vel + k*vmax) + ese*(-lastlpe + len - sse \
++ k*timeIncrement*vmax),2)))/(2.*(dse + ese*timeIncrement))),
+    Rule(vse,-(alpha*f0*k - ese*lastlpe + ese*len - ese*sse - dse*vel - \
+2*ese*timeIncrement*vel + dse*k*vmax + ese*k*timeIncrement*vmax + 
+         Sqrt(4*k*(dse + ese*timeIncrement)*(alpha*f0 + ese*(lastlpe - len + \
+sse) - dse*vel)*vmax + 
+           Power(alpha*f0*k + dse*(vel + k*vmax) + ese*(-lastlpe + len - sse \
++ k*timeIncrement*vmax),2)))/(2.*(dse + ese*timeIncrement))),
+    Rule(fce,(-(alpha*f0*k) - ese*lastlpe + ese*len - ese*sse + dse*vel - \
+dse*k*vmax - ese*k*timeIncrement*vmax - 
+        Sqrt(4*k*(dse + ese*timeIncrement)*(alpha*f0 + ese*(lastlpe - len + \
+sse) - dse*vel)*vmax + 
+          Power(alpha*f0*k + dse*(vel + k*vmax) + ese*(-lastlpe + len - sse + \
+k*timeIncrement*vmax),2)))/2.),
+    Rule(vce,(alpha*f0*k - ese*lastlpe + ese*len - ese*sse + dse*vel + \
+dse*k*vmax + ese*k*timeIncrement*vmax + 
+        Sqrt(4*k*(dse + ese*timeIncrement)*(alpha*f0 + ese*(lastlpe - len + \
+sse) - dse*vel)*vmax + 
+          Power(alpha*f0*k + dse*(vel + k*vmax) + ese*(-lastlpe + len - sse + \
+k*timeIncrement*vmax),2)))/(2.*(dse + ese*timeIncrement)))))\
+\>", "Output",
+ CellChangeTimes->{3.446058610505066*^9, 3.446108109824626*^9}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Eccentric", "Subsubtitle"],
+
+Cell["i.e. vce > 0", "Text"],
+
+Cell["\<\
+FullSimplify[Solve[{eq1, eq3, eq7, eq8b, eq6, eq9, eq10}, {lpe, lse, fpe, \
+fse, fce, vse, vce}]]\
+\>", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"CForm", "[", 
+  RowBox[{"FullSimplify", "[", 
+   RowBox[{"Solve", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+      "eq1", ",", "eq3", ",", "eq7", ",", "eq8b", ",", "eq6", ",", "eq9", ",",
+        "eq10"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+      "lpe", ",", "lse", ",", "fpe", ",", "fse", ",", "fce", ",", "vse", ",", 
+       "vce"}], "}"}]}], "]"}], "]"}], "]"}]], "Input"],
+
+Cell["\<\
+List(List(Rule(lpe,(dse*(945.*lastlpe + 472.5*timeIncrement*vel - \
+62.5*k*timeIncrement*vmax) + 
+        timeIncrement*(alpha*f0*(-850.5 - 50.*k) + ese*(472.5*lastlpe + \
+472.5*len - 472.5*sse - 62.5*k*timeIncrement*vmax) - 
+           0.5*Sqrt(10000.*Power(alpha,2)*Power(f0,2)*(17.009999590960987 + \
+k)*(17.010000409039023 + k) + 
+              Power(dse,2)*(893025.0000000001*Power(vel,2) + \
+236250.00000000003*k*vel*vmax + 15625.*Power(k,2)*Power(vmax,2)) + 
+              dse*ese*(-1.7860500000000002e6*lastlpe*vel + \
+1.7860500000000002e6*len*vel - 1.7860500000000002e6*sse*vel - \
+236250.00000000003*k*lastlpe*vmax + 
+                 236250.00000000003*k*len*vmax - \
+236250.00000000003*k*sse*vmax + 236250.00000000003*k*timeIncrement*vel*vmax + \
+
+                 31250.*Power(k,2)*timeIncrement*Power(vmax,2)) + 
+              Power(ese,2)*(893025.0000000001*Power(lastlpe,2) + \
+893025.0000000005*Power(len,2) - 1.786050000000001e6*len*sse + \
+893025.0000000005*Power(sse,2) + 
+                 236250.00000000003*k*len*timeIncrement*vmax - \
+236250.00000000003*k*sse*timeIncrement*vmax + 
+                 15624.999999999998*Power(k,2)*Power(timeIncrement,2)*Power(\
+vmax,2) + 
+                 lastlpe*(-1.786050000000001e6*len + 1.786050000000001e6*sse \
+- 236250.00000000003*k*timeIncrement*vmax)) + 
+              alpha*f0*(dse*((-3.214890000000001e6 - \
+189000.00000000003*k)*vel + 24999.999999999996*(-1.8900000000000006 + \
+k)*k*vmax) + 
+                 ese*((3.214890000000001e6 + 189000.00000000003*k)*lastlpe - \
+3.214890000000001e6*len + 3.214890000000001e6*sse + 
+                    k*(-189000.00000000003*len + 189000.00000000003*sse + \
+(-47250.00000000001 + 24999.999999999996*k)*timeIncrement*vmax))))))/
+      (945.*dse + 945.*ese*timeIncrement)),Rule(fpe,0.),Rule(fse,
+     alpha*f0*(0.9 + 0.052910052910052914*k) + 0.5000000000000001*dse*vel + \
+0.06613756613756616*dse*k*vmax + 
+      ese*(-0.5000000000000001*lastlpe + 0.5000000000000001*len - \
+0.5000000000000001*sse + 0.06613756613756613*k*timeIncrement*vmax) + 
+      0.0005291005291005291*Sqrt(10000.*Power(alpha,2)*Power(f0,2)*(17.\
+009999590960987 + k)*(17.010000409039023 + k) + 
+         Power(dse,2)*(893025.0000000001*Power(vel,2) + \
+236250.00000000003*k*vel*vmax + 15625.*Power(k,2)*Power(vmax,2)) + 
+         dse*ese*(-1.7860500000000002e6*lastlpe*vel + \
+1.7860500000000002e6*len*vel - 1.7860500000000002e6*sse*vel - \
+236250.00000000003*k*lastlpe*vmax + 
+            236250.00000000003*k*len*vmax - 236250.00000000003*k*sse*vmax + \
+236250.00000000003*k*timeIncrement*vel*vmax + 
+            31250.*Power(k,2)*timeIncrement*Power(vmax,2)) + Power(ese,2)*
+          (893025.0000000001*Power(lastlpe,2) + \
+893025.0000000005*Power(len,2) - 1.786050000000001e6*len*sse + \
+893025.0000000005*Power(sse,2) + 
+            236250.00000000003*k*len*timeIncrement*vmax - \
+236250.00000000003*k*sse*timeIncrement*vmax + 
+            15624.999999999998*Power(k,2)*Power(timeIncrement,2)*Power(vmax,2)\
+ + 
+            lastlpe*(-1.786050000000001e6*len + 1.786050000000001e6*sse - \
+236250.00000000003*k*timeIncrement*vmax)) + 
+         alpha*f0*(dse*((-3.214890000000001e6 - 189000.00000000003*k)*vel + \
+24999.999999999996*(-1.8900000000000006 + k)*k*vmax) + 
+            ese*((3.214890000000001e6 + 189000.00000000003*k)*lastlpe - \
+3.214890000000001e6*len + 3.214890000000001e6*sse + 
+               k*(-189000.00000000003*len + 189000.00000000003*sse + \
+(-47250.00000000001 + 24999.999999999996*k)*timeIncrement*vmax))))),
+    Rule(lse,(dse*(-945.*lastlpe + 945.*len - 472.5*timeIncrement*vel + \
+62.5*k*timeIncrement*vmax) + 
+        timeIncrement*(alpha*f0*(850.5 + 50.*k) + ese*(-472.5*lastlpe + \
+472.5*len + 472.5*sse + 62.5*k*timeIncrement*vmax) + 
+           0.5*Sqrt(10000.*Power(alpha,2)*Power(f0,2)*(17.009999590960987 + \
+k)*(17.010000409039023 + k) + 
+              Power(dse,2)*(893025.0000000001*Power(vel,2) + \
+236250.00000000003*k*vel*vmax + 15625.*Power(k,2)*Power(vmax,2)) + 
+              dse*ese*(-1.7860500000000002e6*lastlpe*vel + \
+1.7860500000000002e6*len*vel - 1.7860500000000002e6*sse*vel - \
+236250.00000000003*k*lastlpe*vmax + 
+                 236250.00000000003*k*len*vmax - \
+236250.00000000003*k*sse*vmax + 236250.00000000003*k*timeIncrement*vel*vmax + \
+
+                 31250.*Power(k,2)*timeIncrement*Power(vmax,2)) + 
+              Power(ese,2)*(893025.0000000001*Power(lastlpe,2) + \
+893025.0000000005*Power(len,2) - 1.786050000000001e6*len*sse + \
+893025.0000000005*Power(sse,2) + 
+                 236250.00000000003*k*len*timeIncrement*vmax - \
+236250.00000000003*k*sse*timeIncrement*vmax + 
+                 15624.999999999998*Power(k,2)*Power(timeIncrement,2)*Power(\
+vmax,2) + 
+                 lastlpe*(-1.786050000000001e6*len + 1.786050000000001e6*sse \
+- 236250.00000000003*k*timeIncrement*vmax)) + 
+              alpha*f0*(dse*((-3.214890000000001e6 - \
+189000.00000000003*k)*vel + 24999.999999999996*(-1.8900000000000006 + \
+k)*k*vmax) + 
+                 ese*((3.214890000000001e6 + 189000.00000000003*k)*lastlpe - \
+3.214890000000001e6*len + 3.214890000000001e6*sse + 
+                    k*(-189000.00000000003*len + 189000.00000000003*sse + \
+(-47250.00000000001 + 24999.999999999996*k)*timeIncrement*vmax))))))/
+      (945.*dse + 945.*ese*timeIncrement)),Rule(vse,(alpha*f0*(850.5 + 50.*k) \
++ 472.5*dse*vel + 62.5*dse*k*vmax + 
+        ese*(472.5*lastlpe - 472.5*len + 472.5*sse + 945.*timeIncrement*vel + \
+62.5*k*timeIncrement*vmax) + 
+        0.5*Sqrt(10000.*Power(alpha,2)*Power(f0,2)*(17.009999590960987 + \
+k)*(17.010000409039023 + k) + 
+           Power(dse,2)*(893025.0000000001*Power(vel,2) + \
+236250.00000000003*k*vel*vmax + 15625.*Power(k,2)*Power(vmax,2)) + 
+           dse*ese*(-1.7860500000000002e6*lastlpe*vel + \
+1.7860500000000002e6*len*vel - 1.7860500000000002e6*sse*vel - \
+236250.00000000003*k*lastlpe*vmax + 
+              236250.00000000003*k*len*vmax - 236250.00000000003*k*sse*vmax + \
+236250.00000000003*k*timeIncrement*vel*vmax + 
+              31250.*Power(k,2)*timeIncrement*Power(vmax,2)) + Power(ese,2)*
+            (893025.0000000001*Power(lastlpe,2) + \
+893025.0000000005*Power(len,2) - 1.786050000000001e6*len*sse + \
+893025.0000000005*Power(sse,2) + 
+              236250.00000000003*k*len*timeIncrement*vmax - \
+236250.00000000003*k*sse*timeIncrement*vmax + 
+              15624.999999999998*Power(k,2)*Power(timeIncrement,2)*Power(vmax,\
+2) + 
+              lastlpe*(-1.786050000000001e6*len + 1.786050000000001e6*sse - \
+236250.00000000003*k*timeIncrement*vmax)) + 
+           alpha*f0*(dse*((-3.214890000000001e6 - 189000.00000000003*k)*vel + \
+24999.999999999996*(-1.8900000000000006 + k)*k*vmax) + 
+              ese*((3.214890000000001e6 + 189000.00000000003*k)*lastlpe - \
+3.214890000000001e6*len + 3.214890000000001e6*sse + 
+                 k*(-189000.00000000003*len + 189000.00000000003*sse + \
+(-47250.00000000001 + 24999.999999999996*k)*timeIncrement*vmax)))))/
+      (945.*dse + 945.*ese*timeIncrement)),Rule(fce,alpha*f0*(0.9 + \
+0.052910052910052914*k) + 0.5000000000000001*dse*vel + \
+0.06613756613756616*dse*k*vmax + 
+      ese*(-0.5000000000000001*lastlpe + 0.5000000000000001*len - \
+0.5000000000000001*sse + 0.06613756613756613*k*timeIncrement*vmax) + 
+      0.0005291005291005291*Sqrt(10000.*Power(alpha,2)*Power(f0,2)*(17.\
+009999590960987 + k)*(17.010000409039023 + k) + 
+         Power(dse,2)*(893025.0000000001*Power(vel,2) + \
+236250.00000000003*k*vel*vmax + 15625.*Power(k,2)*Power(vmax,2)) + 
+         dse*ese*(-1.7860500000000002e6*lastlpe*vel + \
+1.7860500000000002e6*len*vel - 1.7860500000000002e6*sse*vel - \
+236250.00000000003*k*lastlpe*vmax + 
+            236250.00000000003*k*len*vmax - 236250.00000000003*k*sse*vmax + \
+236250.00000000003*k*timeIncrement*vel*vmax + 
+            31250.*Power(k,2)*timeIncrement*Power(vmax,2)) + Power(ese,2)*
+          (893025.0000000001*Power(lastlpe,2) + \
+893025.0000000005*Power(len,2) - 1.786050000000001e6*len*sse + \
+893025.0000000005*Power(sse,2) + 
+            236250.00000000003*k*len*timeIncrement*vmax - \
+236250.00000000003*k*sse*timeIncrement*vmax + 
+            15624.999999999998*Power(k,2)*Power(timeIncrement,2)*Power(vmax,2)\
+ + 
+            lastlpe*(-1.786050000000001e6*len + 1.786050000000001e6*sse - \
+236250.00000000003*k*timeIncrement*vmax)) + 
+         alpha*f0*(dse*((-3.214890000000001e6 - 189000.00000000003*k)*vel + \
+24999.999999999996*(-1.8900000000000006 + k)*k*vmax) + 
+            ese*((3.214890000000001e6 + 189000.00000000003*k)*lastlpe - \
+3.214890000000001e6*len + 3.214890000000001e6*sse + 
+               k*(-189000.00000000003*len + 189000.00000000003*sse + \
+(-47250.00000000001 + 24999.999999999996*k)*timeIncrement*vmax))))),
+    Rule(vce,(-850.5*alpha*f0 - 50.*alpha*f0*k - 472.5*ese*lastlpe + \
+472.5*ese*len - 472.5*ese*sse + 472.5*dse*vel - 62.5*dse*k*vmax - 
+        62.5*ese*k*timeIncrement*vmax - 0.5*Sqrt(-4.*k*(945.*dse + \
+945.*ese*timeIncrement)*
+            (125.*alpha*f0 + ese*(125.*lastlpe - 125.*len + 125.*sse) - \
+125.*dse*vel)*vmax + 
+           Power(alpha*f0*(1701. + 100.*k) - 945.*dse*vel + 125.*dse*k*vmax + \
+ese*(945.*lastlpe - 945.*len + 945.*sse + 125.*k*timeIncrement*vmax),2)))/
+      (945.*dse + 945.*ese*timeIncrement))),List(Rule(lpe,(dse*(945.*lastlpe \
++ 472.5*timeIncrement*vel - 62.5*k*timeIncrement*vmax) + 
+        timeIncrement*(alpha*f0*(-850.5 - 50.*k) + ese*(472.5*lastlpe + \
+472.5*len - 472.5*sse - 62.5*k*timeIncrement*vmax) + 
+           0.5*Sqrt(10000.*Power(alpha,2)*Power(f0,2)*(17.009999590960987 + \
+k)*(17.010000409039023 + k) + 
+              Power(dse,2)*(893025.0000000001*Power(vel,2) + \
+236250.00000000003*k*vel*vmax + 15625.*Power(k,2)*Power(vmax,2)) + 
+              dse*ese*(-1.7860500000000002e6*lastlpe*vel + \
+1.7860500000000002e6*len*vel - 1.7860500000000002e6*sse*vel - \
+236250.00000000003*k*lastlpe*vmax + 
+                 236250.00000000003*k*len*vmax - \
+236250.00000000003*k*sse*vmax + 236250.00000000003*k*timeIncrement*vel*vmax + \
+
+                 31250.*Power(k,2)*timeIncrement*Power(vmax,2)) + 
+              Power(ese,2)*(893025.0000000001*Power(lastlpe,2) + \
+893025.0000000005*Power(len,2) - 1.786050000000001e6*len*sse + \
+893025.0000000005*Power(sse,2) + 
+                 236250.00000000003*k*len*timeIncrement*vmax - \
+236250.00000000003*k*sse*timeIncrement*vmax + 
+                 15624.999999999998*Power(k,2)*Power(timeIncrement,2)*Power(\
+vmax,2) + 
+                 lastlpe*(-1.786050000000001e6*len + 1.786050000000001e6*sse \
+- 236250.00000000003*k*timeIncrement*vmax)) + 
+              alpha*f0*(dse*((-3.214890000000001e6 - \
+189000.00000000003*k)*vel + 24999.999999999996*(-1.8900000000000006 + \
+k)*k*vmax) + 
+                 ese*((3.214890000000001e6 + 189000.00000000003*k)*lastlpe - \
+3.214890000000001e6*len + 3.214890000000001e6*sse + 
+                    k*(-189000.00000000003*len + 189000.00000000003*sse + \
+(-47250.00000000001 + 24999.999999999996*k)*timeIncrement*vmax))))))/
+      (945.*dse + 945.*ese*timeIncrement)),Rule(fpe,0.),Rule(fse,
+     alpha*f0*(0.9 + 0.052910052910052914*k) + 0.5000000000000001*dse*vel + \
+0.06613756613756616*dse*k*vmax + 
+      ese*(-0.5000000000000001*lastlpe + 0.5000000000000001*len - \
+0.5000000000000001*sse + 0.06613756613756613*k*timeIncrement*vmax) - 
+      0.0005291005291005291*Sqrt(10000.*Power(alpha,2)*Power(f0,2)*(17.\
+009999590960987 + k)*(17.010000409039023 + k) + 
+         Power(dse,2)*(893025.0000000001*Power(vel,2) + \
+236250.00000000003*k*vel*vmax + 15625.*Power(k,2)*Power(vmax,2)) + 
+         dse*ese*(-1.7860500000000002e6*lastlpe*vel + \
+1.7860500000000002e6*len*vel - 1.7860500000000002e6*sse*vel - \
+236250.00000000003*k*lastlpe*vmax + 
+            236250.00000000003*k*len*vmax - 236250.00000000003*k*sse*vmax + \
+236250.00000000003*k*timeIncrement*vel*vmax + 
+            31250.*Power(k,2)*timeIncrement*Power(vmax,2)) + Power(ese,2)*
+          (893025.0000000001*Power(lastlpe,2) + \
+893025.0000000005*Power(len,2) - 1.786050000000001e6*len*sse + \
+893025.0000000005*Power(sse,2) + 
+            236250.00000000003*k*len*timeIncrement*vmax - \
+236250.00000000003*k*sse*timeIncrement*vmax + 
+            15624.999999999998*Power(k,2)*Power(timeIncrement,2)*Power(vmax,2)\
+ + 
+            lastlpe*(-1.786050000000001e6*len + 1.786050000000001e6*sse - \
+236250.00000000003*k*timeIncrement*vmax)) + 
+         alpha*f0*(dse*((-3.214890000000001e6 - 189000.00000000003*k)*vel + \
+24999.999999999996*(-1.8900000000000006 + k)*k*vmax) + 
+            ese*((3.214890000000001e6 + 189000.00000000003*k)*lastlpe - \
+3.214890000000001e6*len + 3.214890000000001e6*sse + 
+               k*(-189000.00000000003*len + 189000.00000000003*sse + \
+(-47250.00000000001 + 24999.999999999996*k)*timeIncrement*vmax))))),
+    Rule(lse,(dse*(-945.*lastlpe + 945.*len - 472.5*timeIncrement*vel + \
+62.5*k*timeIncrement*vmax) + 
+        timeIncrement*(alpha*f0*(850.5 + 50.*k) + ese*(-472.5*lastlpe + \
+472.5*len + 472.5*sse + 62.5*k*timeIncrement*vmax) - 
+           0.5*Sqrt(10000.*Power(alpha,2)*Power(f0,2)*(17.009999590960987 + \
+k)*(17.010000409039023 + k) + 
+              Power(dse,2)*(893025.0000000001*Power(vel,2) + \
+236250.00000000003*k*vel*vmax + 15625.*Power(k,2)*Power(vmax,2)) + 
+              dse*ese*(-1.7860500000000002e6*lastlpe*vel + \
+1.7860500000000002e6*len*vel - 1.7860500000000002e6*sse*vel - \
+236250.00000000003*k*lastlpe*vmax + 
+                 236250.00000000003*k*len*vmax - \
+236250.00000000003*k*sse*vmax + 236250.00000000003*k*timeIncrement*vel*vmax + \
+
+                 31250.*Power(k,2)*timeIncrement*Power(vmax,2)) + 
+              Power(ese,2)*(893025.0000000001*Power(lastlpe,2) + \
+893025.0000000005*Power(len,2) - 1.786050000000001e6*len*sse + \
+893025.0000000005*Power(sse,2) + 
+                 236250.00000000003*k*len*timeIncrement*vmax - \
+236250.00000000003*k*sse*timeIncrement*vmax + 
+                 15624.999999999998*Power(k,2)*Power(timeIncrement,2)*Power(\
+vmax,2) + 
+                 lastlpe*(-1.786050000000001e6*len + 1.786050000000001e6*sse \
+- 236250.00000000003*k*timeIncrement*vmax)) + 
+              alpha*f0*(dse*((-3.214890000000001e6 - \
+189000.00000000003*k)*vel + 24999.999999999996*(-1.8900000000000006 + \
+k)*k*vmax) + 
+                 ese*((3.214890000000001e6 + 189000.00000000003*k)*lastlpe - \
+3.214890000000001e6*len + 3.214890000000001e6*sse + 
+                    k*(-189000.00000000003*len + 189000.00000000003*sse + \
+(-47250.00000000001 + 24999.999999999996*k)*timeIncrement*vmax))))))/
+      (945.*dse + 945.*ese*timeIncrement)),Rule(vse,(alpha*f0*(850.5 + 50.*k) \
++ 472.5*dse*vel + 62.5*dse*k*vmax + 
+        ese*(472.5*lastlpe - 472.5*len + 472.5*sse + 945.*timeIncrement*vel + \
+62.5*k*timeIncrement*vmax) - 
+        0.5*Sqrt(10000.*Power(alpha,2)*Power(f0,2)*(17.009999590960987 + \
+k)*(17.010000409039023 + k) + 
+           Power(dse,2)*(893025.0000000001*Power(vel,2) + \
+236250.00000000003*k*vel*vmax + 15625.*Power(k,2)*Power(vmax,2)) + 
+           dse*ese*(-1.7860500000000002e6*lastlpe*vel + \
+1.7860500000000002e6*len*vel - 1.7860500000000002e6*sse*vel - \
+236250.00000000003*k*lastlpe*vmax + 
+              236250.00000000003*k*len*vmax - 236250.00000000003*k*sse*vmax + \
+236250.00000000003*k*timeIncrement*vel*vmax + 
+              31250.*Power(k,2)*timeIncrement*Power(vmax,2)) + Power(ese,2)*
+            (893025.0000000001*Power(lastlpe,2) + \
+893025.0000000005*Power(len,2) - 1.786050000000001e6*len*sse + \
+893025.0000000005*Power(sse,2) + 
+              236250.00000000003*k*len*timeIncrement*vmax - \
+236250.00000000003*k*sse*timeIncrement*vmax + 
+              15624.999999999998*Power(k,2)*Power(timeIncrement,2)*Power(vmax,\
+2) + 
+              lastlpe*(-1.786050000000001e6*len + 1.786050000000001e6*sse - \
+236250.00000000003*k*timeIncrement*vmax)) + 
+           alpha*f0*(dse*((-3.214890000000001e6 - 189000.00000000003*k)*vel + \
+24999.999999999996*(-1.8900000000000006 + k)*k*vmax) + 
+              ese*((3.214890000000001e6 + 189000.00000000003*k)*lastlpe - \
+3.214890000000001e6*len + 3.214890000000001e6*sse + 
+                 k*(-189000.00000000003*len + 189000.00000000003*sse + \
+(-47250.00000000001 + 24999.999999999996*k)*timeIncrement*vmax)))))/
+      (945.*dse + 945.*ese*timeIncrement)),Rule(fce,alpha*f0*(0.9 + \
+0.052910052910052914*k) + 0.5000000000000001*dse*vel + \
+0.06613756613756616*dse*k*vmax + 
+      ese*(-0.5000000000000001*lastlpe + 0.5000000000000001*len - \
+0.5000000000000001*sse + 0.06613756613756613*k*timeIncrement*vmax) - 
+      0.0005291005291005291*Sqrt(10000.*Power(alpha,2)*Power(f0,2)*(17.\
+009999590960987 + k)*(17.010000409039023 + k) + 
+         Power(dse,2)*(893025.0000000001*Power(vel,2) + \
+236250.00000000003*k*vel*vmax + 15625.*Power(k,2)*Power(vmax,2)) + 
+         dse*ese*(-1.7860500000000002e6*lastlpe*vel + \
+1.7860500000000002e6*len*vel - 1.7860500000000002e6*sse*vel - \
+236250.00000000003*k*lastlpe*vmax + 
+            236250.00000000003*k*len*vmax - 236250.00000000003*k*sse*vmax + \
+236250.00000000003*k*timeIncrement*vel*vmax + 
+            31250.*Power(k,2)*timeIncrement*Power(vmax,2)) + Power(ese,2)*
+          (893025.0000000001*Power(lastlpe,2) + \
+893025.0000000005*Power(len,2) - 1.786050000000001e6*len*sse + \
+893025.0000000005*Power(sse,2) + 
+            236250.00000000003*k*len*timeIncrement*vmax - \
+236250.00000000003*k*sse*timeIncrement*vmax + 
+            15624.999999999998*Power(k,2)*Power(timeIncrement,2)*Power(vmax,2)\
+ + 
+            lastlpe*(-1.786050000000001e6*len + 1.786050000000001e6*sse - \
+236250.00000000003*k*timeIncrement*vmax)) + 
+         alpha*f0*(dse*((-3.214890000000001e6 - 189000.00000000003*k)*vel + \
+24999.999999999996*(-1.8900000000000006 + k)*k*vmax) + 
+            ese*((3.214890000000001e6 + 189000.00000000003*k)*lastlpe - \
+3.214890000000001e6*len + 3.214890000000001e6*sse + 
+               k*(-189000.00000000003*len + 189000.00000000003*sse + \
+(-47250.00000000001 + 24999.999999999996*k)*timeIncrement*vmax))))),
+    Rule(vce,(-850.5*alpha*f0 - 50.*alpha*f0*k - 472.5*ese*lastlpe + \
+472.5*ese*len - 472.5*ese*sse + 472.5*dse*vel - 62.5*dse*k*vmax - 
+        62.5*ese*k*timeIncrement*vmax + 0.5*Sqrt(-4.*k*(945.*dse + \
+945.*ese*timeIncrement)*
+            (125.*alpha*f0 + ese*(125.*lastlpe - 125.*len + 125.*sse) - \
+125.*dse*vel)*vmax + 
+           Power(alpha*f0*(1701. + 100.*k) - 945.*dse*vel + 125.*dse*k*vmax + \
+ese*(945.*lastlpe - 945.*len + 945.*sse + 125.*k*timeIncrement*vmax),2)))/
+      (945.*dse + 945.*ese*timeIncrement))))\
+\>", "Output",
+ CellChangeTimes->{3.446058687826179*^9, 3.446108158882654*^9}]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{1299, 1114},
+WindowMargins->{{6, Automatic}, {Automatic, 6}},
+FrontEndVersion->"6.0 for Mac OS X x86 (32-bit) (April 20, 2007)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[590, 23, 58, 0, 73, "Title"],
+Cell[CellGroupData[{
+Cell[673, 27, 33, 0, 65, "Section"],
+Cell[709, 29, 91, 2, 27, "Input"],
+Cell[CellGroupData[{
+Cell[825, 35, 74, 1, 27, "Input"],
+Cell[902, 38, 425, 9, 70, "Message"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[1376, 53, 47, 0, 44, "Subtitle"],
+Cell[1426, 55, 32, 0, 26, "Text"],
+Cell[1461, 57, 244, 13, 180, "Program"],
+Cell[1708, 72, 115, 3, 26, "Text"],
+Cell[1826, 77, 26, 0, 26, "Text"],
+Cell[CellGroupData[{
+Cell[1877, 81, 701, 22, 27, "Input"],
+Cell[2581, 105, 509, 14, 45, "Output"]
+}, Open  ]],
+Cell[3105, 122, 456, 13, 48, "Input"],
+Cell[3564, 137, 27, 0, 26, "Text"],
+Cell[CellGroupData[{
+Cell[3616, 141, 502, 17, 27, "Input"],
+Cell[4121, 160, 352, 10, 46, "Output"]
+}, Open  ]],
+Cell[4488, 173, 291, 9, 47, "Input"],
+Cell[4782, 184, 220, 8, 116, "Text"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[5039, 197, 27, 0, 44, "Subtitle"],
+Cell[5069, 199, 395, 12, 176, "Text"],
+Cell[CellGroupData[{
+Cell[5489, 215, 32, 0, 24, "Subsubtitle"],
+Cell[5524, 217, 112, 3, 27, "Input"],
+Cell[5639, 222, 154, 5, 27, "Input"],
+Cell[5796, 229, 154, 5, 27, "Input"],
+Cell[5953, 236, 106, 3, 27, "Input"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[6108, 245, 35, 0, 44, "Subtitle"],
+Cell[6146, 247, 179, 6, 27, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[6362, 258, 36, 0, 44, "Subtitle"],
+Cell[6401, 260, 33, 0, 24, "Subsubtitle"],
+Cell[6437, 262, 106, 3, 26, "Text"],
+Cell[6546, 267, 64, 0, 26, "Text"],
+Cell[6613, 269, 62, 0, 26, "Text"],
+Cell[6678, 271, 54, 0, 26, "Text"],
+Cell[CellGroupData[{
+Cell[6757, 275, 33, 0, 24, "Subsubtitle"],
+Cell[6793, 277, 29, 0, 26, "Text"],
+Cell[6825, 279, 392, 6, 41, "Text"],
+Cell[7220, 287, 323, 5, 41, "Text"],
+Cell[CellGroupData[{
+Cell[7568, 296, 394, 12, 27, "Input"],
+Cell[7965, 310, 5003, 77, 494, "Output"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[13017, 393, 32, 0, 24, "Subsubtitle"],
+Cell[13052, 395, 28, 0, 26, "Text"],
+Cell[13083, 397, 110, 3, 26, "Text"],
+Cell[CellGroupData[{
+Cell[13218, 404, 394, 12, 27, "Input"],
+Cell[13615, 418, 26869, 471, 2886, "Output"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[40533, 895, 41, 0, 24, "Subsubtitle"],
+Cell[40577, 897, 187, 4, 26, "Text"],
+Cell[40767, 903, 26, 0, 26, "Text"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[40830, 908, 33, 0, 24, "Subsubtitle"],
+Cell[40866, 910, 29, 0, 26, "Text"],
+Cell[40898, 912, 85, 2, 27, "Input"],
+Cell[40986, 916, 111, 3, 26, "Text"],
+Cell[CellGroupData[{
+Cell[41122, 923, 395, 12, 27, "Input"],
+Cell[41520, 937, 2685, 53, 299, "Output"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[44254, 996, 32, 0, 24, "Subsubtitle"],
+Cell[44289, 998, 28, 0, 26, "Text"],
+Cell[44320, 1000, 111, 3, 26, "Text"],
+Cell[CellGroupData[{
+Cell[44456, 1007, 395, 12, 27, "Input"],
+Cell[44854, 1021, 9696, 172, 962, "Output"]
+}, Open  ]],
+Cell[54565, 1196, 26, 0, 26, "Text"],
+Cell[54594, 1198, 157, 3, 26, "Text"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[54800, 1207, 34, 0, 44, "Subtitle"],
+Cell[54837, 1209, 113, 3, 26, "Text"],
+Cell[54953, 1214, 185, 5, 71, "Text"],
+Cell[CellGroupData[{
+Cell[55163, 1223, 32, 0, 24, "Subsubtitle"],
+Cell[55198, 1225, 254, 8, 27, "Input"],
+Cell[55455, 1235, 252, 8, 27, "Input"],
+Cell[55710, 1245, 106, 3, 27, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[55853, 1253, 33, 0, 24, "Subsubtitle"],
+Cell[55889, 1255, 29, 0, 26, "Text"],
+Cell[55921, 1257, 120, 3, 26, "Text"],
+Cell[CellGroupData[{
+Cell[56066, 1264, 420, 12, 27, "Input"],
+Cell[56489, 1278, 10653, 168, 1157, "Output"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[67191, 1452, 32, 0, 24, "Subsubtitle"],
+Cell[67226, 1454, 28, 0, 26, "Text"],
+Cell[67257, 1456, 120, 3, 26, "Text"],
+Cell[CellGroupData[{
+Cell[67402, 1463, 420, 12, 27, "Input"],
+Cell[67825, 1477, 54433, 972, 5850, "Output"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[122307, 2455, 41, 0, 24, "Subsubtitle"],
+Cell[122351, 2457, 187, 4, 26, "Text"],
+Cell[122541, 2463, 26, 0, 26, "Text"],
+Cell[122570, 2465, 85, 2, 27, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[122692, 2472, 33, 0, 24, "Subsubtitle"],
+Cell[122728, 2474, 29, 0, 26, "Text"],
+Cell[122760, 2476, 121, 3, 26, "Text"],
+Cell[CellGroupData[{
+Cell[122906, 2483, 421, 12, 27, "Input"],
+Cell[123330, 2497, 4573, 78, 494, "Output"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[127952, 2581, 32, 0, 24, "Subsubtitle"],
+Cell[127987, 2583, 28, 0, 26, "Text"],
+Cell[128018, 2585, 121, 3, 26, "Text"],
+Cell[CellGroupData[{
+Cell[128164, 2592, 421, 12, 27, "Input"],
+Cell[128588, 2606, 18605, 321, 1989, "Output"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)

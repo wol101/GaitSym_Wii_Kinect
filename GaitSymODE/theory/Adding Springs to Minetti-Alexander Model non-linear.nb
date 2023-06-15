@@ -1,0 +1,714 @@
+(************** Content-type: application/mathematica **************
+                     CreatedBy='Mathematica 5.1'
+
+                    Mathematica-Compatible Notebook
+
+This notebook can be used with any Mathematica-compatible
+application, such as Mathematica, MathReader or Publicon. The data
+for the notebook starts with the line containing stars above.
+
+To get the notebook into a Mathematica-compatible application, do
+one of the following:
+
+* Save the data starting with the line of stars above into a file
+  with a name ending in .nb, then open the file inside the
+  application;
+
+* Copy the data starting with the line of stars above to the
+  clipboard, then use the Paste menu command inside the application.
+
+Data for notebooks contains only printable 7-bit ASCII and can be
+sent directly in email or through ftp in text mode.  Newlines can be
+CR, LF or CRLF (Unix, Macintosh or MS-DOS style).
+
+NOTE: If you modify the data for this notebook not in a Mathematica-
+compatible application, you must delete the line below containing
+the word CacheID, otherwise Mathematica-compatible applications may
+try to use invalid cache data.
+
+For more information on notebooks and Mathematica-compatible 
+applications, contact Wolfram Research:
+  web: http://www.wolfram.com
+  email: info@wolfram.com
+  phone: +1-217-398-0700 (U.S.)
+
+Notebook reader applications are available free of charge from 
+Wolfram Research.
+*******************************************************************)
+
+(*CacheID: 232*)
+
+
+(*NotebookFileLineBreakTest
+NotebookFileLineBreakTest*)
+(*NotebookOptionsPosition[     12461,        505]*)
+(*NotebookOutlinePosition[     13097,        527]*)
+(*  CellTagsIndexPosition[     13053,        523]*)
+(*WindowFrame->Normal*)
+
+
+
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Adding Springs to Minetti-Alexander Model", "Title"],
+
+Cell[CellGroupData[{
+
+Cell["Initialisation", "Section"],
+
+Cell[BoxData[
+    \(Off[General::spell1]\)], "Input"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Remove["\<Global`*\>"]\)], "Input"],
+
+Cell[BoxData[
+    RowBox[{\(Remove::"rmnsm"\), \(\(:\)\(\ \)\), "\<\"There are no symbols \
+matching \\\"\\!\\(\\\"Global`*\\\"\\)\\\". \\!\\(\\*ButtonBox[\\\"More\
+\[Ellipsis]\\\", ButtonStyle->\\\"RefGuideLinkText\\\", ButtonFrame->None, \
+ButtonData:>\\\"Remove::rmnsm\\\"]\\)\"\>"}]], "Message"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Old Minetti-Alexander Model", "Subtitle"],
+
+Cell["Program snippet:", "Text"],
+
+Cell["\<\
+if (v<0) // eccentric
+{
+\tfFull=m_F0*(1.8-0.8*((m_VMax+v)/(m_VMax-(7.56/m_K)*v)));
+}
+else // concentric
+{
+\tfFull=m_F0*(m_VMax-v)/(m_VMax+(v/m_K));
+}
+
+//now set the tension as a proportion of fFull
+fCE=m_Alpha*fFull;
+\
+\>", "Program"],
+
+Cell["\<\
+But, v is positive when muscle shortening which is illogical so we \
+need to do rearranging\
+\>", "Text"],
+
+Cell["eccentric:", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Simplify[
+      fce \[Equal] 
+        alpha \((f0*\((1.8 - 
+                  0.8*\((\((vmax + \((\(-vce\))\))\)/\((vmax - \((7.56/
+                                  k)\)*\((\(-vce\))\))\))\))\))\)]\)], "Input"],
+
+Cell[BoxData[
+    \(fce \[Equal] 
+      alpha\ f0\ \((\(\(1.8`\)\(\[InvisibleSpace]\)\) + \(0.8`\ k\ \((vce - \
+1.`\ vmax)\)\)\/\(7.56`\ vce + k\ vmax\))\)\)], "Output"]
+}, Open  ]],
+
+Cell[BoxData[
+    \(eq1 := 
+      fce \[Equal] 
+        alpha\ f0\ \((\(\(1.8`\)\(\[InvisibleSpace]\)\) + \(0.8`\ k\ \((vce - \
+1.`\ vmax)\)\)\/\(7.56`\ vce + k\ vmax\))\)\)], "Input"],
+
+Cell[BoxData[
+    \(eq1b := vrel == vce/vmax\)], "Input"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Solve[{eq1, eq1b}, fce, vmax]\)], "Input"],
+
+Cell[BoxData[
+    \({{fce \[Rule] \(alpha\ f0\ \((125.`\ k + 1701.`\ vrel + 100.`\ k\ vrel)\
+\)\)\/\(125.`\ k + 945.`\ vrel\)}}\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(CForm[
+      fce \[Rule] \(alpha\ f0\ \((125.`\ k + 1701.`\ vrel + 100.`\ k\ vrel)\)\
+\)\/\(125.`\ k + 945.`\ vrel\)]\)], "Input"],
+
+Cell["\<\
+Rule(fce,(alpha*f0*(125.*k + 1701.*vrel + 100.*k*vrel))/(125.*k + \
+945.*vrel))\
+\>", "Output"]
+}, Open  ]],
+
+Cell["concentric:", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Simplify[
+      fce \[Equal] 
+        alpha \((f0*\((vmax - \((\(-vce\))\))\)/\((vmax + \((\((\(-vce\))\)/
+                        k)\))\))\)]\)], "Input"],
+
+Cell[BoxData[
+    \(fce \[Equal] \(alpha\ f0\ k\ \((vce + vmax)\)\)\/\(\(-vce\) + k\ vmax\)\
+\)], "Output"]
+}, Open  ]],
+
+Cell[BoxData[
+    \(eq2 := 
+      fce \[Equal] \(alpha\ f0\ k\ \((vce + vmax)\)\)\/\(\(-vce\) + k\ vmax\)\
+\)], "Input"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Solve[{eq2, eq1b}, fce, vmax]\)], "Input"],
+
+Cell[BoxData[
+    \({{fce \[Rule] \(alpha\ f0\ k\ \((1 + vrel)\)\)\/\(k - vrel\)}}\)], \
+"Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(CForm[
+      fce \[Rule] \(alpha\ f0\ k\ \((1 + vrel)\)\)\/\(k - vrel\)]\)], "Input"],
+
+Cell["Rule(fce,(alpha*f0*k*(1 + vrel))/(k - vrel))", "Output"]
+}, Open  ]],
+
+Cell["\<\
+Where:
+\tfce contractile element force (N)
+\talpha activation (0 to 1)
+\tk shape constant
+\tvce contractile element velocity (m/s)
+\tvmax maximum shortening velocity (m/s)
+\tf0 isometric force (N)\
+\>", "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Springs", "Subtitle"],
+
+Cell["\<\
+Definitions:
+\tfce contractile force (N)
+\tlpe contractile and parallel length (m)
+\tspe slack length parallel element (m)
+\tepe elastic constant parallel element (N/m)
+\tfpe parallel element force (N)
+\tlse serial length (m)
+\tsse slack length serial element (m)
+\tese elastic constant serial element (N/m)
+\tfse serial element force (N)
+\tlen total length of system (m)\
+\>", "Text"],
+
+Cell[CellGroupData[{
+
+Cell["Equations", "Subsubtitle"],
+
+Cell[BoxData[
+    \(eq3 := fce + fpe \[Equal] fse\)], "Input"],
+
+Cell["\<\
+Now using non-linear springs (force proportional to the square of \
+the extension as recommended by Umberger)\
+\>", "Text"],
+
+Cell[BoxData[
+    \(eq4 := fse == ese \((lse - sse)\)\^2\)], "Input"],
+
+Cell[BoxData[
+    \(eq5 := fpe == epe \((lpe - spe)\)\^2\)], "Input"],
+
+Cell[BoxData[
+    \(eq6 := len == lpe + lse\)], "Input"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Extra Condition", "Subtitle"],
+
+Cell[BoxData[
+    \(eq10 := vce == \((lpe - lastlpe)\)/timeIncrement\)], "Input"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Integrated Model", "Subtitle"],
+
+Cell["Conditions", "Subsubtitle"],
+
+Cell["\<\
+For correction simply assume that we are only worried about length \
+not velocity.\
+\>", "Text"],
+
+Cell["We know  len, ese, epe, sse, spe, alpha, k, vmax", "Text"],
+
+Cell["And we are going to have to assume we know vce", "Text"],
+
+Cell["We don't know  lpe, lse, fpe, fse, fce", "Text"],
+
+Cell[CellGroupData[{
+
+Cell["Concentric", "Subsubtitle"],
+
+Cell["i.e. vce <= 0", "Text"],
+
+Cell[BoxData[
+    \(\(sol1 = 
+        Solve[{eq2, eq3, eq4, eq5, eq6, eq10}, {lpe, lse, fpe, fse, fce, 
+            vce}];\)\)], "Input"],
+
+Cell["\<\
+There are a number of inequalities that can now be applied. For the \
+concentric case vce \[LessEqual] 0. For all cases len > 0, ese > 0, epe > 0, \
+sse > 0, spe > 0, alpha \[GreaterEqual] 0 && alpha \[LessEqual] 1, k \
+\[GreaterEqual] 0, vmax > 0, lpe > 0, lse > 0, fpe \[GreaterEqual] 0, fse \
+\[GreaterEqual] 0, fce \[GreaterEqual] 0, lastlpe > 0, timeIncrement > \
+0\
+\>", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Simplify[sol1, vce \[LessEqual] \ 0]\)], "Input"],
+
+Cell[BoxData[
+    RowBox[{\(Simplify::"time"\), \(\(:\)\(\ \)\), "\<\"Time spent on a \
+transformation exceeded \\!\\(300\\) seconds, and the transformation was \
+aborted. Increasing the value of TimeConstraint option may improve the result \
+of simplification. \\!\\(\\*ButtonBox[\\\"More\[Ellipsis]\\\", \
+ButtonStyle->\\\"RefGuideLinkText\\\", ButtonFrame->None, \
+ButtonData:>\\\"Simplify::time\\\"]\\)\"\>"}]], "Message"]
+}, Open  ]],
+
+Cell[BoxData[
+    \(CForm[
+      FullSimplify[
+        Solve[{eq2, eq3, eq4, eq5, eq6, eq10}, {lpe, lse, fpe, fse, fce, 
+            vce}]]]\)], "Input"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Eccentric", "Subsubtitle"],
+
+Cell["i.e. vce > 0", "Text"],
+
+Cell[BoxData[
+    \(FullSimplify[
+      Solve[{eq1, eq3, eq4, eq5, eq6, eq10}, {lpe, lse, fpe, fse, fce, 
+          vce}]]\)], "Input"],
+
+Cell[BoxData[
+    \(CForm[
+      FullSimplify[
+        Solve[{eq1, eq3, eq4, eq5, eq6, eq10}, {lpe, lse, fpe, fse, fce, 
+            vce}]]]\)], "Input"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Special Conditions", "Subsubtitle"],
+
+Cell["\<\
+The main additional consitions are when the springs are slack. This \
+is common for the parallel element but should probably never happen for the \
+serial element.\
+\>", "Text"],
+
+Cell["lpe <= spe", "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Concentric", "Subsubtitle"],
+
+Cell["i.e. vce <= 0", "Text"],
+
+Cell[BoxData[
+    \(eq5b := fpe \[Equal] 0\)], "Input"],
+
+Cell[BoxData[
+    \(FullSimplify[
+      Solve[{eq2, eq3, eq4, eq5b, eq6, eq10}, {lpe, lse, fpe, fse, fce, 
+          vce}]]\)], "Input"],
+
+Cell[BoxData[
+    \(CForm[
+      FullSimplify[
+        Solve[{eq2, eq3, eq4, eq5b, eq6, eq10}, {lpe, lse, fpe, fse, fce, 
+            vce}]]]\)], "Input"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Eccentric", "Subsubtitle"],
+
+Cell["i.e. vce > 0", "Text"],
+
+Cell[BoxData[
+    \(FullSimplify[
+      Solve[{eq1, eq3, eq4, eq5b, eq6, eq10}, {lpe, lse, fpe, fse, fce, 
+          vce}]]\)], "Input"],
+
+Cell[BoxData[
+    \(CForm[
+      FullSimplify[
+        Solve[{eq1, eq3, eq4, eq5b, eq6, eq10}, {lpe, lse, fpe, fse, fce, 
+            vce}]]]\)], "Input"],
+
+Cell["lse <= sse", "Text"],
+
+Cell["\<\
+Results indeterminate but might as well set the forces to zero, the \
+velocities to zero and lse to that slack length and lpe to zero\
+\>", "Text"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Adding Damping", "Subtitle"],
+
+Cell["\<\
+All that is needed for damping is to rewrite eqations 4 and 5 to \
+include velocity terms\
+\>", "Text"],
+
+Cell["\<\
+vse velocity of the serial element (m/s)
+dse damping constant of serial element (Ns/m)
+dpe damping constant of parallel element (Ns/m)
+vel velocity of the system\
+\>", "Text"],
+
+Cell[CellGroupData[{
+
+Cell["Equations", "Subsubtitle"],
+
+Cell[BoxData[
+    \(eq7 := fse == ese \((lse - sse)\)\^2 - dse\ vse\)], "Input"],
+
+Cell[BoxData[
+    \(eq8 := fpe == epe \((lpe - spe)\)\^2 - dpe\ vce\)], "Input"],
+
+Cell[BoxData[
+    \(eq9 := vel == vce + vse\)], "Input"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Concentric", "Subsubtitle"],
+
+Cell["i.e. vce <= 0", "Text"],
+
+Cell[BoxData[
+    \(FullSimplify[
+      Solve[{eq2, eq3, eq7, eq8, eq6, eq9, eq10}, {lpe, lse, fpe, fse, fce, 
+          vse, vce}]]\)], "Input"],
+
+Cell[BoxData[
+    \(CForm[
+      FullSimplify[
+        Solve[{eq2, eq3, eq7, eq8, eq6, eq9, eq10}, {lpe, lse, fpe, fse, fce, 
+            vse, vce}]]]\)], "Input"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Eccentric", "Subsubtitle"],
+
+Cell["i.e. vce > 0", "Text"],
+
+Cell[BoxData[
+    \(FullSimplify[
+      Solve[{eq1, eq3, eq7, eq8, eq6, eq9, eq10}, {lpe, lse, fpe, fse, fce, 
+          vse, vce}]]\)], "Input"],
+
+Cell[BoxData[
+    \(CForm[
+      FullSimplify[
+        Solve[{eq1, eq3, eq7, eq8, eq6, eq9, eq10}, {lpe, lse, fpe, fse, fce, 
+            vse, vce}]]]\)], "Input"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Special Conditions", "Subsubtitle"],
+
+Cell["\<\
+The main additional consitions are when the springs are slack. This \
+is common for the parallel element but should probably never happen for the \
+serial element.\
+\>", "Text"],
+
+Cell["lpe <= spe", "Text"],
+
+Cell[BoxData[
+    \(eq8b := fpe \[Equal] 0\)], "Input"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Concentric", "Subsubtitle"],
+
+Cell["i.e. vce <= 0", "Text"],
+
+Cell[BoxData[
+    \(FullSimplify[
+      Solve[{eq2, eq3, eq7, eq8b, eq6, eq9, eq10}, {lpe, lse, fpe, fse, fce, 
+          vse, vce}]]\)], "Input"],
+
+Cell[BoxData[
+    \(CForm[
+      FullSimplify[
+        Solve[{eq2, eq3, eq7, eq8b, eq6, eq9, eq10}, {lpe, lse, fpe, fse, 
+            fce, vse, vce}]]]\)], "Input"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Eccentric", "Subsubtitle"],
+
+Cell["i.e. vce > 0", "Text"],
+
+Cell[BoxData[
+    \(FullSimplify[
+      Solve[{eq1, eq3, eq7, eq8b, eq6, eq9, eq10}, {lpe, lse, fpe, fse, fce, 
+          vse, vce}]]\)], "Input"],
+
+Cell[BoxData[
+    \(CForm[
+      FullSimplify[
+        Solve[{eq1, eq3, eq7, eq8b, eq6, eq9, eq10}, {lpe, lse, fpe, fse, 
+            fce, vse, vce}]]]\)], "Input"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+FrontEndVersion->"5.1 for Macintosh",
+ScreenRectangle->{{0, 1246}, {0, 778}},
+WindowSize->{995, 741},
+WindowMargins->{{24, Automatic}, {Automatic, 0}}
+]
+
+(*******************************************************************
+Cached data follows.  If you edit this Notebook file directly, not
+using Mathematica, you must remove the line containing CacheID at
+the top of  the file.  The cache data will then be recreated when
+you save this file from within Mathematica.
+*******************************************************************)
+
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+
+(*NotebookFileOutline
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[1776, 53, 58, 0, 88, "Title"],
+
+Cell[CellGroupData[{
+Cell[1859, 57, 33, 0, 69, "Section"],
+Cell[1895, 59, 53, 1, 27, "Input"],
+
+Cell[CellGroupData[{
+Cell[1973, 64, 55, 1, 27, "Input"],
+Cell[2031, 67, 299, 4, 70, "Message"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[2379, 77, 47, 0, 54, "Subtitle"],
+Cell[2429, 79, 32, 0, 30, "Text"],
+Cell[2464, 81, 244, 13, 205, "Program"],
+Cell[2711, 96, 115, 3, 30, "Text"],
+Cell[2829, 101, 26, 0, 30, "Text"],
+
+Cell[CellGroupData[{
+Cell[2880, 105, 231, 5, 27, "Input"],
+Cell[3114, 112, 169, 3, 42, "Output"]
+}, Open  ]],
+Cell[3298, 118, 184, 4, 42, "Input"],
+Cell[3485, 124, 57, 1, 27, "Input"],
+
+Cell[CellGroupData[{
+Cell[3567, 129, 62, 1, 27, "Input"],
+Cell[3632, 132, 141, 2, 42, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[3810, 139, 150, 3, 42, "Input"],
+Cell[3963, 144, 105, 3, 39, "Output"]
+}, Open  ]],
+Cell[4083, 150, 27, 0, 30, "Text"],
+
+Cell[CellGroupData[{
+Cell[4135, 154, 175, 4, 27, "Input"],
+Cell[4313, 160, 107, 2, 42, "Output"]
+}, Open  ]],
+Cell[4435, 165, 120, 3, 42, "Input"],
+
+Cell[CellGroupData[{
+Cell[4580, 172, 62, 1, 27, "Input"],
+Cell[4645, 175, 98, 2, 42, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[4780, 182, 105, 2, 42, "Input"],
+Cell[4888, 186, 62, 0, 39, "Output"]
+}, Open  ]],
+Cell[4965, 189, 220, 8, 126, "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[5222, 202, 27, 0, 52, "Subtitle"],
+Cell[5252, 204, 395, 12, 190, "Text"],
+
+Cell[CellGroupData[{
+Cell[5672, 220, 32, 0, 28, "Subsubtitle"],
+Cell[5707, 222, 62, 1, 27, "Input"],
+Cell[5772, 225, 133, 3, 30, "Text"],
+Cell[5908, 230, 69, 1, 29, "Input"],
+Cell[5980, 233, 69, 1, 29, "Input"],
+Cell[6052, 236, 56, 1, 27, "Input"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[6157, 243, 35, 0, 52, "Subtitle"],
+Cell[6195, 245, 81, 1, 27, "Input"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[6313, 251, 36, 0, 52, "Subtitle"],
+Cell[6352, 253, 33, 0, 28, "Subsubtitle"],
+Cell[6388, 255, 106, 3, 30, "Text"],
+Cell[6497, 260, 64, 0, 30, "Text"],
+Cell[6564, 262, 62, 0, 30, "Text"],
+Cell[6629, 264, 54, 0, 30, "Text"],
+
+Cell[CellGroupData[{
+Cell[6708, 268, 33, 0, 28, "Subsubtitle"],
+Cell[6744, 270, 29, 0, 30, "Text"],
+Cell[6776, 272, 137, 3, 27, "Input"],
+Cell[6916, 277, 394, 7, 46, "Text"],
+
+Cell[CellGroupData[{
+Cell[7335, 288, 69, 1, 27, "Input"],
+Cell[7407, 291, 426, 6, 35, "Message"]
+}, Open  ]],
+Cell[7848, 300, 153, 4, 27, "Input"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[8038, 309, 32, 0, 28, "Subsubtitle"],
+Cell[8073, 311, 28, 0, 30, "Text"],
+Cell[8104, 313, 135, 3, 27, "Input"],
+Cell[8242, 318, 153, 4, 27, "Input"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[8432, 327, 41, 0, 28, "Subsubtitle"],
+Cell[8476, 329, 187, 4, 30, "Text"],
+Cell[8666, 335, 26, 0, 30, "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[8729, 340, 33, 0, 28, "Subsubtitle"],
+Cell[8765, 342, 29, 0, 30, "Text"],
+Cell[8797, 344, 55, 1, 27, "Input"],
+Cell[8855, 347, 136, 3, 27, "Input"],
+Cell[8994, 352, 154, 4, 27, "Input"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[9185, 361, 32, 0, 28, "Subsubtitle"],
+Cell[9220, 363, 28, 0, 30, "Text"],
+Cell[9251, 365, 136, 3, 27, "Input"],
+Cell[9390, 370, 154, 4, 27, "Input"],
+Cell[9547, 376, 26, 0, 30, "Text"],
+Cell[9576, 378, 157, 3, 30, "Text"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[9782, 387, 34, 0, 52, "Subtitle"],
+Cell[9819, 389, 113, 3, 30, "Text"],
+Cell[9935, 394, 185, 5, 78, "Text"],
+
+Cell[CellGroupData[{
+Cell[10145, 403, 32, 0, 28, "Subsubtitle"],
+Cell[10180, 405, 80, 1, 29, "Input"],
+Cell[10263, 408, 80, 1, 29, "Input"],
+Cell[10346, 411, 56, 1, 27, "Input"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[10439, 417, 33, 0, 28, "Subsubtitle"],
+Cell[10475, 419, 29, 0, 30, "Text"],
+Cell[10507, 421, 145, 3, 27, "Input"],
+Cell[10655, 426, 163, 4, 27, "Input"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[10855, 435, 32, 0, 28, "Subsubtitle"],
+Cell[10890, 437, 28, 0, 30, "Text"],
+Cell[10921, 439, 145, 3, 27, "Input"],
+Cell[11069, 444, 163, 4, 27, "Input"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[11269, 453, 41, 0, 28, "Subsubtitle"],
+Cell[11313, 455, 187, 4, 30, "Text"],
+Cell[11503, 461, 26, 0, 30, "Text"],
+Cell[11532, 463, 55, 1, 27, "Input"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[11624, 469, 33, 0, 28, "Subsubtitle"],
+Cell[11660, 471, 29, 0, 30, "Text"],
+Cell[11692, 473, 146, 3, 27, "Input"],
+Cell[11841, 478, 164, 4, 24, "Input"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[12042, 487, 32, 0, 28, "Subsubtitle"],
+Cell[12077, 489, 28, 0, 30, "Text"],
+Cell[12108, 491, 146, 3, 27, "Input"],
+Cell[12257, 496, 164, 4, 24, "Input"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+
+
+(*******************************************************************
+End of Mathematica Notebook file.
+*******************************************************************)
+

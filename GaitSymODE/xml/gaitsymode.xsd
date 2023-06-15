@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+    
+    <!-- This schema was initially generated using trang and then modified by hand -->
+    
+    <!-- these are some simple data types that are widely used -->
+    
+    <!-- mathematical types -->
+    
+    <xs:simpleType name="p-number-type">
+        <xs:restriction base="xs:double">
+            <xs:maxInclusive value="1.0"/>
+            <xs:minInclusive value="0.0"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="list-of-doubles">
+        <xs:list itemType="xs:double"/>
+    </xs:simpleType>
+
+    <xs:simpleType name="list-of-p-numbers">
+        <xs:list itemType="p-number-type"/>
+    </xs:simpleType>
+
+    <xs:simpleType name="vector-type">
+        <xs:restriction base="list-of-doubles">
+            <xs:length value="3"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="colour-type">
+        <xs:restriction base="list-of-p-numbers">
+            <xs:length value="4"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="quaternion-type">
+        <xs:restriction base="list-of-doubles">
+            <xs:length value="4"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="plane-type">
+        <xs:restriction base="list-of-doubles">
+            <xs:length value="4"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="moi-type">
+        <xs:restriction base="list-of-doubles">
+            <xs:length value="6"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <!-- File name type -->
+    <xs:simpleType name="file-name-type">
+        <xs:restriction base="xs:anyURI">
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <!-- enumerated types -->
+    
+    <xs:simpleType name="fitness-type-type">
+        <xs:restriction base="xs:string">	
+            <xs:enumeration value="DistanceTravelled"/>
+            <xs:enumeration value="KinematicMatch"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="joint-type-type">
+        <xs:restriction base="xs:string">	
+            <xs:enumeration value="Hinge"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="geom-type-type">
+        <xs:restriction base="xs:string">	
+            <xs:enumeration value="CappedCylinder"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="strain-model-type">
+        <xs:restriction base="xs:string">	
+            <xs:enumeration value="Square"/>
+            <xs:enumeration value="Linear"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="muscle-type-type">
+        <xs:restriction base="xs:string">	
+            <xs:enumeration value="UmbergerGerritsenMartin"/>
+            <xs:enumeration value="MinettiAlexander"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="strap-type-type">
+        <xs:restriction base="xs:string">	
+            <xs:enumeration value="TwoPoint"/>
+            <xs:enumeration value="ThreePoint"/>
+            <xs:enumeration value="CylinderWrap"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="driver-type-type">
+        <xs:restriction base="xs:string">	
+            <xs:enumeration value="Cyclic"/>
+            <xs:enumeration value="Step"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="target-data-type-type">
+        <xs:restriction base="xs:string">	
+            <xs:enumeration value="XP"/>
+            <xs:enumeration value="YP"/>
+            <xs:enumeration value="ZP"/>
+            <xs:enumeration value="Q0"/>
+            <xs:enumeration value="Q1"/>
+            <xs:enumeration value="Q2"/>
+            <xs:enumeration value="Q3"/>
+            <xs:enumeration value="XV"/>
+            <xs:enumeration value="YV"/>
+            <xs:enumeration value="ZV"/>
+            <xs:enumeration value="XRV"/>
+            <xs:enumeration value="YRV"/>
+            <xs:enumeration value="ZRV"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+
+  <xs:element name="GAITSYMODE">
+    <xs:complexType>
+      <xs:sequence>
+          <xs:element minOccurs='1' maxOccurs="1" ref="GLOBAL"/>
+        <xs:element minOccurs='0' maxOccurs="1" ref="INTERFACE"/>
+        <xs:element minOccurs='0' maxOccurs="1" ref="ENVIRONMENT"/>
+        <xs:element minOccurs='0' maxOccurs="unbounded" ref="BODY"/>
+        <xs:element minOccurs='0' maxOccurs="unbounded" ref="JOINT"/>
+        <xs:element minOccurs='0' maxOccurs="unbounded" ref="GEOM"/>
+        <xs:element minOccurs='0' maxOccurs="unbounded" ref="MUSCLE"/>
+        <xs:element minOccurs='0' maxOccurs="unbounded" ref="DRIVER"/>
+        <xs:element minOccurs='0' maxOccurs="unbounded" ref="DATATARGET"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="GLOBAL">
+    <xs:complexType>
+      <xs:attribute name="AllowInternalCollisions" use="required" type="xs:boolean"/>
+      <xs:attribute name="BMR" use="required" type="xs:double"/>
+      <xs:attribute name="CFM" use="required" type="xs:double"/>
+      <xs:attribute name="ContactMaxCorrectingVel" use="required" type="xs:double"/>
+      <xs:attribute name="ContactSurfaceLayer" use="required" type="xs:double"/>
+      <xs:attribute name="DistanceTravelledBodyID" use="required" type="xs:IDREF"/>
+      <xs:attribute name="ERP" use="required" type="xs:double"/>
+      <xs:attribute name="FitnessType" use="required" type="fitness-type-type"/>
+      <xs:attribute name="GravityVector" use="required" type="vector-type"/>
+      <xs:attribute name="IntegrationStepSize" use="required" type="xs:double"/>
+      <xs:attribute name="MechanicalEnergyLimit" use="required" type="xs:double"/>
+      <xs:attribute name="MetabolicEnergyLimit" use="required" type="xs:double"/>
+      <xs:attribute name="TimeLimit" use="required" type="xs:double"/>
+      
+      <xs:attribute name='MungeModelState' use='optional' type='xs:boolean'/>
+      <xs:attribute name='OutputModelStateFilename' use='optional' type='file-name-type'/>
+      <xs:attribute name='OutputKinematicsFile' use='optional' type='file-name-type'/>
+      <xs:attribute name='OutputModelStateAtTime' use='optional' type='xs:double'/>
+      <xs:attribute name='OutputModelStateAtCycle' use='optional' type='xs:double'/>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="INTERFACE">
+    <xs:complexType>
+      <xs:attribute name="TrackBodyID" use="optional" type="xs:IDREF"/>
+      <xs:attribute name="BodyAxisSize" use="optional" type="vector-type"/>
+      <xs:attribute name="BodyColour" use="optional" type="colour-type"/>
+      <xs:attribute name="EnvironmentAxisSize" use="optional" type="vector-type"/>
+      <xs:attribute name="EnvironmentColour" use="optional" type="colour-type"/>
+      <xs:attribute name="GeomColour" use="optional" type="colour-type"/>
+      <xs:attribute name="JointAxisSize" use="optional" type="vector-type"/>
+      <xs:attribute name="JointColour" use="optional" type="colour-type"/>
+      <xs:attribute name="StrapColour" use="optional" type="colour-type"/>
+      <xs:attribute name="StrapCylinderColour" use="optional" type="colour-type"/>
+      <xs:attribute name="StrapCylinderLength" use="optional" type="xs:double"/>
+      <xs:attribute name="StrapRadius" use="optional" type="xs:double"/>
+      <xs:attribute name="StrapForceColour" use="optional" type="colour-type"/>
+      <xs:attribute name="StrapForceRadius" use="optional" type="xs:double"/>
+      <xs:attribute name="StrapForceScale" use="optional" type="xs:double"/>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="ENVIRONMENT">
+    <xs:complexType>
+      <xs:attribute name="Plane" use="required" type="plane-type"/>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="BODY">
+    <xs:complexType>
+      <xs:attribute name="AngularVelocity" use="required" type="vector-type"/>
+      <xs:attribute name="GraphicFile" use="required" type="file-name-type"/>
+      <xs:attribute name="ID" use="required" type="xs:ID"/>
+      <xs:attribute name="LinearVelocity" use="required"/>
+      <xs:attribute name="MOI" use="required" type="moi-type"/>
+      <xs:attribute name="Mass" use="required" type="xs:double"/>
+      <xs:attribute name="Position" use="required" type="vector-type"/>
+      <xs:attribute name="Quaternion" use="required" type="quaternion-type"/>
+      <xs:attribute name="Scale" use="required" type="xs:double"/>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="JOINT">
+    <xs:complexType>
+      <xs:attribute name="Body1ID" use="required" type="xs:IDREF"/>
+      <xs:attribute name="Body2ID" use="required" type="xs:IDREF"/>
+      <xs:attribute name="HingeAnchor" use="required" type="vector-type"/>
+      <xs:attribute name="HingeAxis" use="required" type="vector-type"/>
+      <xs:attribute name="ID" use="required" type="xs:ID"/>
+      <xs:attribute name="ParamHiStop" use="required" type="xs:double"/>
+      <xs:attribute name="ParamLoStop" use="required" type="xs:double"/>
+      <xs:attribute name="StartAngleReference" use="required" type="xs:double"/>
+      <xs:attribute name="Type" use="required" type="joint-type-type"/>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="GEOM">
+    <xs:complexType>
+      <xs:attribute name="BodyID" use="required" type="xs:IDREF"/>
+      <xs:attribute name="ID" use="required" type="xs:ID"/>
+      <xs:attribute name="Length" use="required" type="xs:double"/>
+      <xs:attribute name="Position" use="required" type="vector-type"/>
+      <xs:attribute name="Quaternion" use="required" type="quaternion-type"/>
+      <xs:attribute name="Radius" use="required" type="xs:double"/>
+      <xs:attribute name="Type" use="required" type="geom-type-type"/>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="MUSCLE">
+    <xs:complexType>
+      <xs:attribute name="Aerobic" use="required" type="xs:boolean"/>
+      <xs:attribute name="AllowReverseWork" use="required" type="xs:boolean"/>
+      <xs:attribute name="CylinderBodyID" type="xs:IDREF"/>
+      <xs:attribute name="CylinderPosition" type="vector-type"/>
+      <xs:attribute name="CylinderQuaternion" type="quaternion-type"/>
+      <xs:attribute name="CylinderRadius" type="xs:double"/>
+      <xs:attribute name="FastTwitchProportion" use="required" type="xs:double"/>
+      <xs:attribute name="FibreLength" use="required" type="xs:double"/>
+      <xs:attribute name="ForcePerUnitArea" use="required" type="xs:double"/>
+      <xs:attribute name="ID" use="required" type="xs:ID"/>
+      <xs:attribute name="Insertion" use="required" type="vector-type"/>
+      <xs:attribute name="InsertionBodyID" use="required" type="xs:IDREF"/>
+      <xs:attribute name="MuscleDensity" use="required" type="xs:double"/>
+      <xs:attribute name="Origin" use="required" type="vector-type"/>
+      <xs:attribute name="OriginBodyID" use="required" type="xs:IDREF"/>
+      <xs:attribute name="PCA" use="required" type="xs:double"/>
+      <xs:attribute name="ParallelStrainAtFmax" use="required" type="xs:double"/>
+      <xs:attribute name="ParallelStrainModel" use="required" type="strain-model-type"/>
+      <xs:attribute name="SerialStrainAtFmax" use="required" type="xs:double"/>
+      <xs:attribute name="SerialStrainModel" use="required" type="strain-model-type"/>
+      <xs:attribute name="Strap" use="required" type="strap-type-type"/>
+      <xs:attribute name="TendonLength" use="required" type="xs:double"/>
+      <xs:attribute name="Type" use="required" type="muscle-type-type"/>
+      <xs:attribute name="VMaxFactor" use="required" type="xs:double"/>
+      <xs:attribute name="ActivationK" use="required" type="xs:double"/>
+      <xs:attribute name="Width" use="required" type="xs:double"/>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="DRIVER">
+      <xs:complexType>
+          <xs:attribute name="DurationValuePairs" use="required" type="list-of-doubles"/>
+          <xs:attribute name="ID" use="required" type="xs:ID"/>
+          <xs:attribute name="Target" use="required" type="xs:IDREF"/>
+          <xs:attribute name="Type" use="required" type="driver-type-type"/>
+      </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="DATATARGET">
+      <xs:complexType>
+          <xs:attribute name="DataType" use="required" type="target-data-type-type"/>
+          <xs:attribute name="DurationValuePairs" use="required" type="list-of-doubles"/>
+          <xs:attribute name="ID" use="required" type="xs:ID"/>
+          <xs:attribute name="Target" use="required" type="xs:IDREF"/>
+          <xs:attribute name="Type" use="required" type="driver-type-type"/>
+          <xs:attribute name="Weight" use="optional" type="xs:double"/>
+      </xs:complexType>
+  </xs:element>
+</xs:schema>

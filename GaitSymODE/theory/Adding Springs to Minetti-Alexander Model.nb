@@ -1,0 +1,973 @@
+(************** Content-type: application/mathematica **************
+                     CreatedBy='Mathematica 5.1'
+
+                    Mathematica-Compatible Notebook
+
+This notebook can be used with any Mathematica-compatible
+application, such as Mathematica, MathReader or Publicon. The data
+for the notebook starts with the line containing stars above.
+
+To get the notebook into a Mathematica-compatible application, do
+one of the following:
+
+* Save the data starting with the line of stars above into a file
+  with a name ending in .nb, then open the file inside the
+  application;
+
+* Copy the data starting with the line of stars above to the
+  clipboard, then use the Paste menu command inside the application.
+
+Data for notebooks contains only printable 7-bit ASCII and can be
+sent directly in email or through ftp in text mode.  Newlines can be
+CR, LF or CRLF (Unix, Macintosh or MS-DOS style).
+
+NOTE: If you modify the data for this notebook not in a Mathematica-
+compatible application, you must delete the line below containing
+the word CacheID, otherwise Mathematica-compatible applications may
+try to use invalid cache data.
+
+For more information on notebooks and Mathematica-compatible 
+applications, contact Wolfram Research:
+  web: http://www.wolfram.com
+  email: info@wolfram.com
+  phone: +1-217-398-0700 (U.S.)
+
+Notebook reader applications are available free of charge from 
+Wolfram Research.
+*******************************************************************)
+
+(*CacheID: 232*)
+
+
+(*NotebookFileLineBreakTest
+NotebookFileLineBreakTest*)
+(*NotebookOptionsPosition[     23724,        737]*)
+(*NotebookOutlinePosition[     24363,        759]*)
+(*  CellTagsIndexPosition[     24319,        755]*)
+(*WindowFrame->Normal*)
+
+
+
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Adding Springs to Minetti-Alexander Model", "Title"],
+
+Cell[CellGroupData[{
+
+Cell["Initialisation", "Section"],
+
+Cell[BoxData[
+    \(Off[General::spell1]\)], "Input"],
+
+Cell[BoxData[
+    \(Remove["\<Global`*\>"]\)], "Input"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Old Minetti-Alexander Model", "Subtitle"],
+
+Cell["Program snippet:", "Text"],
+
+Cell["\<\
+if (v<0) // eccentric
+{
+\tfFull=m_F0*(1.8-0.8*((m_VMax+v)/(m_VMax-(7.56/m_K)*v)));
+}
+else // concentric
+{
+\tfFull=m_F0*(m_VMax-v)/(m_VMax+(v/m_K));
+}
+
+//now set the tension as a proportion of fFull
+fCE=m_Alpha*fFull;
+\
+\>", "Program"],
+
+Cell["\<\
+But, v is positive when muscle shortening which is illogical so we \
+need to do rearranging\
+\>", "Text"],
+
+Cell["eccentric:", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Simplify[
+      fce \[Equal] 
+        alpha \((f0*\((1.8 - 
+                  0.8*\((\((vmax + \((\(-vce\))\))\)/\((vmax - \((7.56/
+                                  k)\)*\((\(-vce\))\))\))\))\))\)]\)], "Input"],
+
+Cell[BoxData[
+    \(fce \[Equal] 
+      alpha\ f0\ \((\(\(1.8`\)\(\[InvisibleSpace]\)\) + \(0.8`\ k\ \((vce - \
+1.`\ vmax)\)\)\/\(7.56`\ vce + k\ vmax\))\)\)], "Output"]
+}, Open  ]],
+
+Cell[BoxData[
+    \(eq1 := 
+      fce \[Equal] 
+        alpha\ f0\ \((\(\(1.8`\)\(\[InvisibleSpace]\)\) + \(0.8`\ k\ \((vce - \
+1.`\ vmax)\)\)\/\(7.56`\ vce + k\ vmax\))\)\)], "Input"],
+
+Cell["concentric:", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Simplify[
+      fce \[Equal] 
+        alpha \((f0*\((vmax - \((\(-vce\))\))\)/\((vmax + \((\((\(-vce\))\)/
+                        k)\))\))\)]\)], "Input"],
+
+Cell[BoxData[
+    \(fce \[Equal] \(alpha\ f0\ k\ \((vce + vmax)\)\)\/\(\(-vce\) + k\ vmax\)\
+\)], "Output"]
+}, Open  ]],
+
+Cell[BoxData[
+    \(eq2 := 
+      fce \[Equal] \(alpha\ f0\ k\ \((vce + vmax)\)\)\/\(\(-vce\) + k\ vmax\)\
+\)], "Input"],
+
+Cell["\<\
+Where:
+\tfce contractile element force (N)
+\talpha activation (0 to 1)
+\tk shape constant
+\tvce contractile element velocity (m/s)
+\tvmax maximum shortening velocity (m/s)
+\tf0 isometric force (N)\
+\>", "Text"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Springs", "Subtitle"],
+
+Cell["\<\
+Definitions:
+\tfce contractile force (N)
+\tlpe contractile and parallel length (m)
+\tspe slack length parallel element (m)
+\tepe elastic constant parallel element (N/m)
+\tfpe parallel element force (N)
+\tlse serial length (m)
+\tsse slack length serial element (m)
+\tese elastic constant serial element (N/m)
+\tfse serial element force (N)
+\tlen total length of system (m)\
+\>", "Text"],
+
+Cell[CellGroupData[{
+
+Cell["Equations", "Subsubtitle"],
+
+Cell[BoxData[
+    \(eq3 := fce + fpe \[Equal] fse\)], "Input"],
+
+Cell[BoxData[
+    \(eq4 := fse == ese \((lse - sse)\)\)], "Input"],
+
+Cell[BoxData[
+    \(eq5 := fpe == epe \((lpe - spe)\)\)], "Input"],
+
+Cell[BoxData[
+    \(eq6 := len == lpe + lse\)], "Input"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Integrated Model", "Subtitle"],
+
+Cell["Conditions", "Subsubtitle"],
+
+Cell["\<\
+For correction simply assume that we are only worried about length \
+not velocity.\
+\>", "Text"],
+
+Cell["We know  len, ese, epe, sse, spe, alpha, k, vmax", "Text"],
+
+Cell["And we are going to have to assume we know vce", "Text"],
+
+Cell["We don't know  lpe, lse, fpe, fse, fce", "Text"],
+
+Cell[CellGroupData[{
+
+Cell["Concentric", "Subsubtitle"],
+
+Cell["i.e. vce <= 0", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(FullSimplify[
+      Solve[{eq2, eq3, eq4, eq5, eq6}, {lpe, lse, fpe, fse, fce}]]\)], "Input"],
+
+Cell[BoxData[
+    \({{fpe \[Rule] \(epe\ \((alpha\ f0\ k\ \((vce + vmax)\) + ese\ \((len - \
+spe - sse)\)\ \((vce - k\ vmax)\))\)\)\/\(\((epe + ese)\)\ \((vce - k\ \
+vmax)\)\), 
+        lpe \[Rule] \(alpha\ f0\ k\ \((vce + vmax)\) + \((epe\ spe + ese\ \
+\((len - sse)\))\)\ \((vce - k\ vmax)\)\)\/\(\((epe + ese)\)\ \((vce - k\ \
+vmax)\)\), 
+        lse \[Rule] \(\(-alpha\)\ f0\ k\ \((vce + vmax)\) + \((epe\ \((len - \
+spe)\) + ese\ sse)\)\ \((vce - k\ vmax)\)\)\/\(\((epe + ese)\)\ \((vce - k\ \
+vmax)\)\), 
+        fse \[Rule] \(\(-alpha\)\ ese\ f0\ k\ \((vce + vmax)\) + epe\ ese\ \
+\((len - spe - sse)\)\ \((vce - k\ vmax)\)\)\/\(\((epe + ese)\)\ \((vce - k\ \
+vmax)\)\), 
+        fce \[Rule] \(alpha\ f0\ k\ \((vce + vmax)\)\)\/\(\(-vce\) + k\ \
+vmax\)}}\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(CForm[
+      FullSimplify[
+        Solve[{eq2, eq3, eq4, eq5, eq6}, {lpe, lse, fpe, fse, 
+            fce}]]]\)], "Input"],
+
+Cell["\<\
+List(List(Rule(fpe,(epe*(alpha*f0*k*(vce + vmax) + ese*(len - spe - \
+sse)*(vce - k*vmax)))/((epe + ese)*(vce - k*vmax))),
+    Rule(lpe,(alpha*f0*k*(vce + vmax) + (epe*spe + ese*(len - sse))*(vce - \
+k*vmax))/((epe + ese)*(vce - k*vmax))),
+    Rule(lse,(-(alpha*f0*k*(vce + vmax)) + (epe*(len - spe) + ese*sse)*(vce - \
+k*vmax))/((epe + ese)*(vce - k*vmax))),
+    Rule(fse,(-(alpha*ese*f0*k*(vce + vmax)) + epe*ese*(len - spe - sse)*(vce \
+- k*vmax))/((epe + ese)*(vce - k*vmax))),
+    Rule(fce,(alpha*f0*k*(vce + vmax))/(-vce + k*vmax))))\
+\>", "Output"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Eccentric", "Subsubtitle"],
+
+Cell["i.e. vce > 0", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(FullSimplify[
+      Solve[{eq1, eq3, eq4, eq5, eq6}, {lpe, lse, fpe, fse, fce}]]\)], "Input"],
+
+Cell[BoxData[
+    \({{fpe \[Rule] \(epe\^2\ \((1.`\ len - 1.`\ spe - 1.`\ \
+sse)\)\)\/\(\(-1.`\)\ epe - 1.`\ ese\) + 
+            epe\ \((0.`\/\(1.`\ epe + 1.`\ ese\) + 1.`\ len - 1.`\ spe - 
+                  1.`\ sse + \(alpha\ f0\ \((13.607999999999999`\ vce + 0.8`\ \
+k\ vce + 1.`\ k\ vmax)\)\)\/\(\((\(-1.`\)\ epe - 1.`\ ese)\)\ \((7.56`\ vce + \
+k\ vmax)\)\))\), 
+        lpe \[Rule] 
+          0.`\/\(1.`\ epe + 1.`\ ese\) - 
+            1.`\ sse + \(1.`\ ese\ len + 1.`\ epe\ spe + 1.`\ epe\ \
+sse\)\/\(1.`\ epe + 1.`\ ese\) + \(alpha\ f0\ \((\((\(\(13.607999999999999`\)\
+\(\[InvisibleSpace]\)\) + 0.8`\ k)\)\ vce + 1.`\ k\ vmax)\)\)\/\(\((\(-1.`\)\ \
+epe - 1.`\ ese)\)\ \((7.56`\ vce + k\ vmax)\)\), 
+        lse \[Rule] 
+          1.`\ sse - \(1.`\ \((\(ese\ \((\(\(0.`\)\(\[InvisibleSpace]\)\) + \
+epe\ \((1.`\ len - 1.`\ spe - 1.`\ sse)\))\)\)\/\(\(-1.`\)\ epe - 1.`\ ese\) \
++ \(1.`\ alpha\ ese\ f0\ \((\(\(1.8`\)\(\[InvisibleSpace]\)\) + \(0.8`\ k\ \
+\((vce - 1.`\ vmax)\)\)\/\(7.56`\ vce + k\ vmax\))\)\)\/\(\(-1.`\)\ epe - 1.`\
+\ ese\))\)\)\/ese, 
+        fse \[Rule] \(ese\ \((\(\(0.`\)\(\[InvisibleSpace]\)\) + epe\ \
+\((\(-1.`\)\ len + 1.`\ spe + 1.`\ sse)\))\)\)\/\(\(-1.`\)\ epe - 1.`\ ese\) \
+- \(1.`\ alpha\ ese\ f0\ \((\(\(1.8`\)\(\[InvisibleSpace]\)\) + \(0.8`\ k\ \
+\((vce - 1.`\ vmax)\)\)\/\(7.56`\ vce + k\ vmax\))\)\)\/\(\(-1.`\)\ epe - 1.`\
+\ ese\), fce \[Rule] 
+          1.`\ alpha\ f0\ \((\(\(1.8`\)\(\[InvisibleSpace]\)\) + \(0.8`\ k\ \
+\((vce - 1.`\ vmax)\)\)\/\(7.56`\ vce + k\ vmax\))\)}}\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(CForm[
+      FullSimplify[
+        Solve[{eq1, eq3, eq4, eq5, eq6}, {lpe, lse, fpe, fse, 
+            fce}]]]\)], "Input"],
+
+Cell["\<\
+List(List(Rule(fpe,(Power(epe,2)*(1.*len - 1.*spe - \
+1.*sse))/(-1.*epe - 1.*ese) + 
+      epe*(0./(1.*epe + 1.*ese) + 1.*len - 1.*spe - 1.*sse + 
+         (alpha*f0*(13.607999999999999*vce + 0.8*k*vce + \
+1.*k*vmax))/((-1.*epe - 1.*ese)*(7.56*vce + k*vmax)))),
+    Rule(lpe,0./(1.*epe + 1.*ese) - 1.*sse + (1.*ese*len + 1.*epe*spe + \
+1.*epe*sse)/(1.*epe + 1.*ese) + 
+      (alpha*f0*((13.607999999999999 + 0.8*k)*vce + 1.*k*vmax))/((-1.*epe - \
+1.*ese)*(7.56*vce + k*vmax))),
+    Rule(lse,1.*sse - (1.*((ese*(0. + epe*(1.*len - 1.*spe - \
+1.*sse)))/(-1.*epe - 1.*ese) + 
+           (1.*alpha*ese*f0*(1.8 + (0.8*k*(vce - 1.*vmax))/(7.56*vce + \
+k*vmax)))/(-1.*epe - 1.*ese)))/ese),
+    Rule(fse,(ese*(0. + epe*(-1.*len + 1.*spe + 1.*sse)))/(-1.*epe - 1.*ese) \
+- 
+      (1.*alpha*ese*f0*(1.8 + (0.8*k*(vce - 1.*vmax))/(7.56*vce + \
+k*vmax)))/(-1.*epe - 1.*ese)),
+    Rule(fce,1.*alpha*f0*(1.8 + (0.8*k*(vce - 1.*vmax))/(7.56*vce + \
+k*vmax)))))\
+\>", "Output"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Special Conditions", "Subsubtitle"],
+
+Cell["\<\
+The main additional consitions are when the springs are slack. This \
+is common for the parallel element but should probably never happen for the \
+serial element.\
+\>", "Text"],
+
+Cell["lpe <= spe", "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Concentric", "Subsubtitle"],
+
+Cell["i.e. vce <= 0", "Text"],
+
+Cell[BoxData[
+    \(eq5b := fpe \[Equal] 0\)], "Input"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(FullSimplify[
+      Solve[{eq2, eq3, eq4, eq5b, eq6}, {lpe, lse, fpe, fse, 
+          fce}]]\)], "Input"],
+
+Cell[BoxData[
+    \({{lpe \[Rule] 
+          len - sse + \(alpha\ f0\ k\ \((vce + vmax)\)\)\/\(ese\ \((vce - k\ \
+vmax)\)\), 
+        lse \[Rule] 
+          sse - \(alpha\ f0\ k\ \((vce + vmax)\)\)\/\(ese\ \((vce - k\ \
+vmax)\)\), 
+        fse \[Rule] \(alpha\ f0\ k\ \((vce + vmax)\)\)\/\(\(-vce\) + k\ \
+vmax\), fpe \[Rule] 0, 
+        fce \[Rule] \(alpha\ f0\ k\ \((vce + vmax)\)\)\/\(\(-vce\) + k\ \
+vmax\)}}\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(CForm[
+      FullSimplify[
+        Solve[{eq2, eq3, eq4, eq5b, eq6}, {lpe, lse, fpe, fse, 
+            fce}]]]\)], "Input"],
+
+Cell["\<\
+List(List(Rule(lpe,len - sse + (alpha*f0*k*(vce + vmax))/(ese*(vce \
+- k*vmax))),
+    Rule(lse,sse - (alpha*f0*k*(vce + vmax))/(ese*(vce - \
+k*vmax))),Rule(fse,(alpha*f0*k*(vce + vmax))/(-vce + k*vmax)),Rule(fpe,0),
+    Rule(fce,(alpha*f0*k*(vce + vmax))/(-vce + k*vmax))))\
+\>", "Output"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Eccentric", "Subsubtitle"],
+
+Cell["i.e. vce > 0", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(FullSimplify[
+      Solve[{eq1, eq3, eq4, eq5b, eq6}, {lpe, lse, fpe, fse, 
+          fce}]]\)], "Input"],
+
+Cell[BoxData[
+    \({{lpe \[Rule] 
+          1.`\ len - 
+            1.`\ sse + \(\(\(0.`\)\(\[InvisibleSpace]\)\) + \(alpha\ f0\ \
+\((\(-13.607999999999999`\)\ vce - 0.8`\ k\ vce - 1.`\ k\ vmax)\)\)\/\(7.56`\ \
+vce + k\ vmax\)\)\/ese, 
+        lse \[Rule] 
+          1.`\ sse + \(\(\(0.`\)\(\[InvisibleSpace]\)\) + \(alpha\ f0\ \
+\((13.607999999999999`\ vce + 0.8`\ k\ vce + 1.`\ k\ vmax)\)\)\/\(7.56`\ vce \
++ k\ vmax\)\)\/ese, 
+        fse \[Rule] \(\(0.`\)\(\[InvisibleSpace]\)\) + \(alpha\ f0\ \
+\((\((\(\(13.607999999999999`\)\(\[InvisibleSpace]\)\) + 0.8`\ k)\)\ vce + \
+1.`\ k\ vmax)\)\)\/\(7.56`\ vce + k\ vmax\), fpe \[Rule] 0.`, 
+        fce \[Rule] 
+          1.`\ alpha\ f0\ \((\(\(1.8`\)\(\[InvisibleSpace]\)\) + \(0.8`\ k\ \
+\((vce - 1.`\ vmax)\)\)\/\(7.56`\ vce + k\ vmax\))\)}}\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(CForm[
+      FullSimplify[
+        Solve[{eq1, eq3, eq4, eq5b, eq6}, {lpe, lse, fpe, fse, 
+            fce}]]]\)], "Input"],
+
+Cell["\<\
+List(List(Rule(lpe,1.*len - 1.*sse + (0. + \
+(alpha*f0*(-13.607999999999999*vce - 0.8*k*vce - 1.*k*vmax))/(7.56*vce + \
+k*vmax))/ese),
+    Rule(lse,1.*sse + (0. + (alpha*f0*(13.607999999999999*vce + 0.8*k*vce + \
+1.*k*vmax))/(7.56*vce + k*vmax))/ese),
+    Rule(fse,0. + (alpha*f0*((13.607999999999999 + 0.8*k)*vce + \
+1.*k*vmax))/(7.56*vce + k*vmax)),Rule(fpe,0.),
+    Rule(fce,1.*alpha*f0*(1.8 + (0.8*k*(vce - 1.*vmax))/(7.56*vce + \
+k*vmax)))))\
+\>", "Output"]
+}, Open  ]],
+
+Cell["lse <= sse", "Text"],
+
+Cell["\<\
+Results indeterminate but might as well set the forces to zero, the \
+velocities to zero and lse to that slack length and lpe to zero\
+\>", "Text"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Adding Damping", "Subtitle"],
+
+Cell["\<\
+All that is needed for damping is to rewrite eqations 4 and 5 to \
+include velocity terms\
+\>", "Text"],
+
+Cell["\<\
+vse velocity of the serial element (m/s)
+dse damping constant of serial element (Ns/m)
+dpe damping constant of parallel element (Ns/m)
+vel velocity of the system\
+\>", "Text"],
+
+Cell[CellGroupData[{
+
+Cell["Equations", "Subsubtitle"],
+
+Cell[BoxData[
+    \(eq7 := fse == ese \((lse - sse)\) - dse\ vse\)], "Input"],
+
+Cell[BoxData[
+    \(eq8 := fpe == epe \((lpe - spe)\) - dpe\ vce\)], "Input"],
+
+Cell[BoxData[
+    \(eq9 := vel == vce + vse\)], "Input"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Concentric", "Subsubtitle"],
+
+Cell["i.e. vce <= 0", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(FullSimplify[
+      Solve[{eq2, eq3, eq7, eq8, eq6, eq9}, {lpe, lse, fpe, fse, fce, 
+          vse}]]\)], "Input"],
+
+Cell[BoxData[
+    \({{fse \[Rule] \(-\(\(alpha\ ese\ f0\ k\ \((vce + 
+                        vmax)\) + \((dpe\ ese\ vce + 
+                        epe\ \((ese\ \((\(-len\) + spe + sse)\) + 
+                              dse\ \((\(-vce\) + vel)\))\))\)\ \((vce - 
+                        k\ vmax)\)\)\/\(\((epe + ese)\)\ \((vce - 
+                      k\ vmax)\)\)\)\), 
+        lse \[Rule] \(\(-alpha\)\ f0\ k\ \((vce + vmax)\) + \((epe\ \((len - \
+spe)\) + ese\ sse - \((dpe + dse)\)\ vce + dse\ vel)\)\ \((vce - k\ vmax)\)\)\
+\/\(\((epe + ese)\)\ \((vce - k\ vmax)\)\), 
+        lpe \[Rule] \(alpha\ f0\ k\ \((vce + vmax)\) + \((epe\ spe + ese\ \
+\((len - sse)\) + \((dpe + dse)\)\ vce - dse\ vel)\)\ \((vce - k\ vmax)\)\)\/\
+\(\((epe + ese)\)\ \((vce - k\ vmax)\)\), 
+        fpe \[Rule] \(alpha\ epe\ f0\ k\ \((vce + vmax)\) + \((\(-dpe\)\ ese\ \
+vce + epe\ \((ese\ \((len - spe - sse)\) + dse\ \((vce - vel)\))\))\)\ \((vce \
+- k\ vmax)\)\)\/\(\((epe + ese)\)\ \((vce - k\ vmax)\)\), 
+        fce \[Rule] \(alpha\ f0\ k\ \((vce + vmax)\)\)\/\(\(-vce\) + k\ \
+vmax\), vse \[Rule] \(-vce\) + vel}}\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(CForm[
+      FullSimplify[
+        Solve[{eq2, eq3, eq7, eq8, eq6, eq9}, {lpe, lse, fpe, fse, fce, 
+            vse}]]]\)], "Input"],
+
+Cell["\<\
+List(List(Rule(fse,-((alpha*ese*f0*k*(vce + vmax) + (dpe*ese*vce + \
+epe*(ese*(-len + spe + sse) + dse*(-vce + vel)))*(vce - k*vmax))/
+        ((epe + ese)*(vce - k*vmax)))),Rule(lse,(-(alpha*f0*k*(vce + vmax)) + \
+
+        (epe*(len - spe) + ese*sse - (dpe + dse)*vce + dse*vel)*(vce - \
+k*vmax))/((epe + ese)*(vce - k*vmax))),
+    Rule(lpe,(alpha*f0*k*(vce + vmax) + (epe*spe + ese*(len - sse) + (dpe + \
+dse)*vce - dse*vel)*(vce - k*vmax))/
+      ((epe + ese)*(vce - k*vmax))),Rule(fpe,(alpha*epe*f0*k*(vce + vmax) + 
+        (-(dpe*ese*vce) + epe*(ese*(len - spe - sse) + dse*(vce - vel)))*(vce \
+- k*vmax))/((epe + ese)*(vce - k*vmax))),
+    Rule(fce,(alpha*f0*k*(vce + vmax))/(-vce + k*vmax)),Rule(vse,-vce + \
+vel)))\
+\>", "Output"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Eccentric", "Subsubtitle"],
+
+Cell["i.e. vce > 0", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(FullSimplify[
+      Solve[{eq1, eq3, eq7, eq8, eq6, eq9}, {lpe, lse, fpe, fse, fce, 
+          vse}]]\)], "Input"],
+
+Cell[BoxData[
+    \({{fse \[Rule] \(\(0.`\)\(\[InvisibleSpace]\)\) - \(1.`\ dpe\ ese\ vce\)\
+\/\(1.`\ epe + 1.`\ ese\) + \(alpha\ f0\ \((\((\(\(13.607999999999999`\)\(\
+\[InvisibleSpace]\)\) + 0.8`\ k)\)\ vce + 1.`\ k\ vmax)\)\)\/\(7.56`\ vce + k\
+\ vmax\) + 
+            epe\ \((0.`\/\(1.`\ epe + 1.`\ ese\) + \(\(-1.`\)\ alpha\ f0 + \
+1.`\ ese\ len - 1.`\ ese\ spe - 1.`\ ese\ sse + 1.`\ dse\ vce - 1.`\ dse\ vel \
++ \(alpha\ f0\ \((\(-6.047999999999999`\) - 0.8`\ k)\)\ vce\)\/\(7.56`\ vce + \
+1.`\ k\ vmax\)\)\/\(1.`\ epe + 1.`\ ese\))\), 
+        lse \[Rule] 
+          0.`\/\(1.`\ epe + 1.`\ ese\) + 1.`\ len - 
+            1.`\ spe - \(1.`\ dpe\ vce\)\/epe + \(1.`\ alpha\ epe\ f0 + 1.`\ \
+dpe\ ese\ vce + epe\ \((\(-1.`\)\ ese\ len + 1.`\ ese\ spe + 1.`\ ese\ sse - \
+1.`\ dse\ vce + 1.`\ dse\ vel)\) + \(alpha\ epe\ f0\ \
+\((\(\(6.047999999999999`\)\(\[InvisibleSpace]\)\) + 0.8`\ k)\)\ \
+vce\)\/\(7.56`\ vce + 1.`\ k\ vmax\)\)\/\(epe\ \((1.`\ epe + 1.`\ ese)\)\), 
+        lpe \[Rule] 
+          0.`\/\(1.`\ epe + 1.`\ ese\) + 
+            1.`\ spe + \(1.`\ dpe\ vce\)\/epe + \(\(-1.`\)\ alpha\ epe\ f0 - \
+1.`\ dpe\ ese\ vce + epe\ \((1.`\ ese\ len - 1.`\ ese\ spe - 1.`\ ese\ sse + \
+1.`\ dse\ vce - 1.`\ dse\ vel)\) + \(alpha\ epe\ f0\ \((\(-6.047999999999999`\
+\) - 0.8`\ k)\)\ vce\)\/\(7.56`\ vce + 1.`\ k\ vmax\)\)\/\(epe\ \((1.`\ epe + \
+1.`\ ese)\)\), 
+        fpe \[Rule] \(-\(\(1.`\ dpe\ ese\ vce\)\/\(1.`\ epe + 
+                    1.`\ ese\)\)\) + 
+            epe\ \((0.`\/\(1.`\ epe + 1.`\ ese\) + \(\(-1.`\)\ alpha\ f0 + \
+1.`\ ese\ len - 1.`\ ese\ spe - 1.`\ ese\ sse + 1.`\ dse\ vce - 1.`\ dse\ vel \
++ \(alpha\ f0\ \((\(-6.047999999999999`\) - 0.8`\ k)\)\ vce\)\/\(7.56`\ vce + \
+1.`\ k\ vmax\)\)\/\(1.`\ epe + 1.`\ ese\))\), 
+        fce \[Rule] 
+          1.`\ alpha\ f0\ \((\(\(1.8`\)\(\[InvisibleSpace]\)\) + \(0.8`\ k\ \
+\((vce - 1.`\ vmax)\)\)\/\(7.56`\ vce + k\ vmax\))\), 
+        vse \[Rule] \(-1.`\)\ vce + 1.`\ vel}}\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(CForm[
+      FullSimplify[
+        Solve[{eq1, eq3, eq7, eq8, eq6, eq9}, {lpe, lse, fpe, fse, fce, 
+            vse}]]]\)], "Input"],
+
+Cell["\<\
+List(List(Rule(fse,0. - (1.*dpe*ese*vce)/(1.*epe + 1.*ese) + 
+      (alpha*f0*((13.607999999999999 + 0.8*k)*vce + 1.*k*vmax))/(7.56*vce + \
+k*vmax) + 
+      epe*(0./(1.*epe + 1.*ese) + (-1.*alpha*f0 + 1.*ese*len - 1.*ese*spe - \
+1.*ese*sse + 1.*dse*vce - 1.*dse*vel + 
+            (alpha*f0*(-6.047999999999999 - 0.8*k)*vce)/(7.56*vce + \
+1.*k*vmax))/(1.*epe + 1.*ese))),
+    Rule(lse,0./(1.*epe + 1.*ese) + 1.*len - 1.*spe - (1.*dpe*vce)/epe + 
+      (1.*alpha*epe*f0 + 1.*dpe*ese*vce + epe*(-1.*ese*len + 1.*ese*spe + \
+1.*ese*sse - 1.*dse*vce + 1.*dse*vel) + 
+         (alpha*epe*f0*(6.047999999999999 + 0.8*k)*vce)/(7.56*vce + \
+1.*k*vmax))/(epe*(1.*epe + 1.*ese))),
+    Rule(lpe,0./(1.*epe + 1.*ese) + 1.*spe + (1.*dpe*vce)/epe + 
+      (-1.*alpha*epe*f0 - 1.*dpe*ese*vce + epe*(1.*ese*len - 1.*ese*spe - \
+1.*ese*sse + 1.*dse*vce - 1.*dse*vel) + 
+         (alpha*epe*f0*(-6.047999999999999 - 0.8*k)*vce)/(7.56*vce + \
+1.*k*vmax))/(epe*(1.*epe + 1.*ese))),
+    Rule(fpe,(-1.*dpe*ese*vce)/(1.*epe + 1.*ese) + epe*(0./(1.*epe + 1.*ese) \
++ 
+         (-1.*alpha*f0 + 1.*ese*len - 1.*ese*spe - 1.*ese*sse + 1.*dse*vce - \
+1.*dse*vel + 
+            (alpha*f0*(-6.047999999999999 - 0.8*k)*vce)/(7.56*vce + \
+1.*k*vmax))/(1.*epe + 1.*ese))),
+    Rule(fce,1.*alpha*f0*(1.8 + (0.8*k*(vce - 1.*vmax))/(7.56*vce + \
+k*vmax))),Rule(vse,-1.*vce + 1.*vel)))\
+\>", "Output"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Special Conditions", "Subsubtitle"],
+
+Cell["\<\
+The main additional consitions are when the springs are slack. This \
+is common for the parallel element but should probably never happen for the \
+serial element.\
+\>", "Text"],
+
+Cell["lpe <= spe", "Text"],
+
+Cell[BoxData[
+    \(eq8b := fpe \[Equal] 0\)], "Input"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Concentric", "Subsubtitle"],
+
+Cell["i.e. vce <= 0", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(FullSimplify[
+      Solve[{eq2, eq3, eq7, eq8b, eq6, eq9}, {lpe, lse, fpe, fse, fce, 
+          vse}]]\)], "Input"],
+
+Cell[BoxData[
+    \({{lpe \[Rule] 
+          len - sse + \(dse\ \((vce - vel)\)\)\/ese + \(alpha\ f0\ k\ \((vce \
++ vmax)\)\)\/\(ese\ \((vce - k\ vmax)\)\), 
+        lse \[Rule] 
+          sse + \(dse\ \((\(-vce\) + vel)\)\)\/ese - \(alpha\ f0\ k\ \((vce + \
+vmax)\)\)\/\(ese\ \((vce - k\ vmax)\)\), 
+        fse \[Rule] \(alpha\ f0\ k\ \((vce + vmax)\)\)\/\(\(-vce\) + k\ \
+vmax\), fpe \[Rule] 0, 
+        fce \[Rule] \(alpha\ f0\ k\ \((vce + vmax)\)\)\/\(\(-vce\) + k\ \
+vmax\), vse \[Rule] \(-vce\) + vel}}\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(CForm[
+      FullSimplify[
+        Solve[{eq2, eq3, eq7, eq8b, eq6, eq9}, {lpe, lse, fpe, fse, fce, 
+            vse}]]]\)], "Input"],
+
+Cell["\<\
+List(List(Rule(lpe,len - sse + (dse*(vce - vel))/ese + \
+(alpha*f0*k*(vce + vmax))/(ese*(vce - k*vmax))),
+    Rule(lse,sse + (dse*(-vce + vel))/ese - (alpha*f0*k*(vce + \
+vmax))/(ese*(vce - k*vmax))),
+    Rule(fse,(alpha*f0*k*(vce + vmax))/(-vce + \
+k*vmax)),Rule(fpe,0),Rule(fce,(alpha*f0*k*(vce + vmax))/(-vce + k*vmax)),
+    Rule(vse,-vce + vel)))\
+\>", "Output"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Eccentric", "Subsubtitle"],
+
+Cell["i.e. vce > 0", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(FullSimplify[
+      Solve[{eq1, eq3, eq7, eq8b, eq6, eq9}, {lpe, lse, fpe, fse, fce, 
+          vse}]]\)], "Input"],
+
+Cell[BoxData[
+    \({{lpe \[Rule] 
+          1.`\ len - 
+            1.`\ sse + \(\(\(0.`\)\(\[InvisibleSpace]\)\) + dse\ \((1.`\ vce \
+- 1.`\ vel)\) + \(alpha\ f0\ \((\(-13.607999999999999`\)\ vce - 0.8`\ k\ vce \
+- 1.`\ k\ vmax)\)\)\/\(7.56`\ vce + k\ vmax\)\)\/ese, 
+        lse \[Rule] 
+          1.`\ sse + \(\(\(0.`\)\(\[InvisibleSpace]\)\) + dse\ \((\(-1.`\)\ \
+vce + 1.`\ vel)\) + \(alpha\ f0\ \((13.607999999999999`\ vce + 0.8`\ k\ vce + \
+1.`\ k\ vmax)\)\)\/\(7.56`\ vce + k\ vmax\)\)\/ese, 
+        fse \[Rule] \(\(0.`\)\(\[InvisibleSpace]\)\) + \(alpha\ f0\ \
+\((\((\(\(13.607999999999999`\)\(\[InvisibleSpace]\)\) + 0.8`\ k)\)\ vce + \
+1.`\ k\ vmax)\)\)\/\(7.56`\ vce + k\ vmax\), fpe \[Rule] 0.`, 
+        fce \[Rule] 
+          1.`\ alpha\ f0\ \((\(\(1.8`\)\(\[InvisibleSpace]\)\) + \(0.8`\ k\ \
+\((vce - 1.`\ vmax)\)\)\/\(7.56`\ vce + k\ vmax\))\), 
+        vse \[Rule] \(-1.`\)\ vce + 1.`\ vel}}\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(CForm[
+      FullSimplify[
+        Solve[{eq1, eq3, eq7, eq8b, eq6, eq9}, {lpe, lse, fpe, fse, fce, 
+            vse}]]]\)], "Input"],
+
+Cell["\<\
+List(List(Rule(lpe,1.*len - 1.*sse + (0. + dse*(1.*vce - 1.*vel) + 
+         (alpha*f0*(-13.607999999999999*vce - 0.8*k*vce - \
+1.*k*vmax))/(7.56*vce + k*vmax))/ese),
+    Rule(lse,1.*sse + (0. + dse*(-1.*vce + 1.*vel) + \
+(alpha*f0*(13.607999999999999*vce + 0.8*k*vce + 1.*k*vmax))/(7.56*vce + \
+k*vmax))/ese),
+    Rule(fse,0. + (alpha*f0*((13.607999999999999 + 0.8*k)*vce + \
+1.*k*vmax))/(7.56*vce + k*vmax)),Rule(fpe,0.),
+    Rule(fce,1.*alpha*f0*(1.8 + (0.8*k*(vce - 1.*vmax))/(7.56*vce + \
+k*vmax))),Rule(vse,-1.*vce + 1.*vel)))\
+\>", "Output"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+FrontEndVersion->"5.1 for Macintosh",
+ScreenRectangle->{{34, 1280}, {0, 1002}},
+WindowSize->{907, 906},
+WindowMargins->{{24, Automatic}, {Automatic, 13}}
+]
+
+(*******************************************************************
+Cached data follows.  If you edit this Notebook file directly, not
+using Mathematica, you must remove the line containing CacheID at
+the top of  the file.  The cache data will then be recreated when
+you save this file from within Mathematica.
+*******************************************************************)
+
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+
+(*NotebookFileOutline
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[1776, 53, 58, 0, 88, "Title"],
+
+Cell[CellGroupData[{
+Cell[1859, 57, 33, 0, 69, "Section"],
+Cell[1895, 59, 53, 1, 27, "Input"],
+Cell[1951, 62, 55, 1, 27, "Input"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[2043, 68, 47, 0, 54, "Subtitle"],
+Cell[2093, 70, 32, 0, 33, "Text"],
+Cell[2128, 72, 244, 13, 205, "Program"],
+Cell[2375, 87, 115, 3, 33, "Text"],
+Cell[2493, 92, 26, 0, 33, "Text"],
+
+Cell[CellGroupData[{
+Cell[2544, 96, 231, 5, 27, "Input"],
+Cell[2778, 103, 169, 3, 42, "Output"]
+}, Open  ]],
+Cell[2962, 109, 184, 4, 42, "Input"],
+Cell[3149, 115, 27, 0, 33, "Text"],
+
+Cell[CellGroupData[{
+Cell[3201, 119, 175, 4, 27, "Input"],
+Cell[3379, 125, 107, 2, 42, "Output"]
+}, Open  ]],
+Cell[3501, 130, 120, 3, 42, "Input"],
+Cell[3624, 135, 220, 8, 147, "Text"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[3881, 148, 27, 0, 54, "Subtitle"],
+Cell[3911, 150, 395, 12, 223, "Text"],
+
+Cell[CellGroupData[{
+Cell[4331, 166, 32, 0, 31, "Subsubtitle"],
+Cell[4366, 168, 62, 1, 27, "Input"],
+Cell[4431, 171, 66, 1, 27, "Input"],
+Cell[4500, 174, 66, 1, 27, "Input"],
+Cell[4569, 177, 56, 1, 27, "Input"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[4674, 184, 36, 0, 54, "Subtitle"],
+Cell[4713, 186, 33, 0, 31, "Subsubtitle"],
+Cell[4749, 188, 106, 3, 33, "Text"],
+Cell[4858, 193, 64, 0, 33, "Text"],
+Cell[4925, 195, 62, 0, 33, "Text"],
+Cell[4990, 197, 54, 0, 33, "Text"],
+
+Cell[CellGroupData[{
+Cell[5069, 201, 33, 0, 31, "Subsubtitle"],
+Cell[5105, 203, 29, 0, 33, "Text"],
+
+Cell[CellGroupData[{
+Cell[5159, 207, 113, 2, 27, "Input"],
+Cell[5275, 211, 775, 14, 116, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[6087, 230, 142, 4, 27, "Input"],
+Cell[6232, 236, 565, 10, 99, "Output"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[6846, 252, 32, 0, 31, "Subsubtitle"],
+Cell[6881, 254, 28, 0, 33, "Text"],
+
+Cell[CellGroupData[{
+Cell[6934, 258, 113, 2, 27, "Input"],
+Cell[7050, 262, 1540, 25, 196, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[8627, 292, 142, 4, 27, "Input"],
+Cell[8772, 298, 971, 20, 174, "Output"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[9792, 324, 41, 0, 31, "Subsubtitle"],
+Cell[9836, 326, 187, 4, 33, "Text"],
+Cell[10026, 332, 26, 0, 33, "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[10089, 337, 33, 0, 31, "Subsubtitle"],
+Cell[10125, 339, 29, 0, 33, "Text"],
+Cell[10157, 341, 55, 1, 27, "Input"],
+
+Cell[CellGroupData[{
+Cell[10237, 346, 125, 3, 27, "Input"],
+Cell[10365, 351, 426, 10, 44, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[10828, 366, 143, 4, 27, "Input"],
+Cell[10974, 372, 299, 6, 69, "Output"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[11322, 384, 32, 0, 31, "Subsubtitle"],
+Cell[11357, 386, 28, 0, 33, "Text"],
+
+Cell[CellGroupData[{
+Cell[11410, 390, 125, 3, 27, "Input"],
+Cell[11538, 395, 808, 15, 86, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[12383, 415, 143, 4, 27, "Input"],
+Cell[12529, 421, 472, 10, 84, "Output"]
+}, Open  ]],
+Cell[13016, 434, 26, 0, 33, "Text"],
+Cell[13045, 436, 157, 3, 33, "Text"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[13251, 445, 34, 0, 52, "Subtitle"],
+Cell[13288, 447, 113, 3, 33, "Text"],
+Cell[13404, 452, 185, 5, 90, "Text"],
+
+Cell[CellGroupData[{
+Cell[13614, 461, 32, 0, 31, "Subsubtitle"],
+Cell[13649, 463, 77, 1, 27, "Input"],
+Cell[13729, 466, 77, 1, 27, "Input"],
+Cell[13809, 469, 56, 1, 27, "Input"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[13902, 475, 33, 0, 31, "Subsubtitle"],
+Cell[13938, 477, 29, 0, 33, "Text"],
+
+Cell[CellGroupData[{
+Cell[13992, 481, 134, 3, 27, "Input"],
+Cell[14129, 486, 1116, 17, 186, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[15282, 508, 152, 4, 27, "Input"],
+Cell[15437, 514, 749, 14, 174, "Output"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[16235, 534, 32, 0, 31, "Subsubtitle"],
+Cell[16270, 536, 28, 0, 33, "Text"],
+
+Cell[CellGroupData[{
+Cell[16323, 540, 134, 3, 27, "Input"],
+Cell[16460, 545, 1970, 32, 362, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[18467, 582, 152, 4, 27, "Input"],
+Cell[18622, 588, 1374, 26, 279, "Output"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[20045, 620, 41, 0, 31, "Subsubtitle"],
+Cell[20089, 622, 187, 4, 52, "Text"],
+Cell[20279, 628, 26, 0, 33, "Text"],
+Cell[20308, 630, 55, 1, 27, "Input"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[20400, 636, 33, 0, 31, "Subsubtitle"],
+Cell[20436, 638, 29, 0, 33, "Text"],
+
+Cell[CellGroupData[{
+Cell[20490, 642, 135, 3, 27, "Input"],
+Cell[20628, 647, 523, 10, 78, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[21188, 662, 153, 4, 27, "Input"],
+Cell[21344, 668, 376, 8, 99, "Output"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[21769, 682, 32, 0, 31, "Subsubtitle"],
+Cell[21804, 684, 28, 0, 33, "Text"],
+
+Cell[CellGroupData[{
+Cell[21857, 688, 135, 3, 27, "Input"],
+Cell[21995, 693, 926, 16, 165, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[22958, 714, 153, 4, 27, "Input"],
+Cell[23114, 720, 558, 11, 114, "Output"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+
+
+(*******************************************************************
+End of Mathematica Notebook file.
+*******************************************************************)
+

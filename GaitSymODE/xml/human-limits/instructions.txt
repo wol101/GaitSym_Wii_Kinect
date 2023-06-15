@@ -1,0 +1,13 @@
+ReadXMLFile model ../human.xml
+
+# shift the model up 1000m
+
+Operate model v(0)+1000 BODY ID Torso Position 2
+Operate model v(0)+1000 BODY ID RightThigh Position 2
+Operate model v(0)+1000 BODY ID RightLeg Position 2
+Operate model v(0)+1000 BODY ID RightFoot Position 2
+Operate model v(0)+1000 BODY ID LeftThigh Position 2
+Operate model v(0)+1000 BODY ID LeftLeg Position 2
+Operate model v(0)+1000 BODY ID LeftFoot Position 2
+
+WriteXMLFile model "human.xml"

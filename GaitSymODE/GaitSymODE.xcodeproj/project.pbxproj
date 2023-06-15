@@ -1,0 +1,1792 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		5F0071430B830E6100E66D05 /* ErrorHandler.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5F0071410B830E6100E66D05 /* ErrorHandler.h */; };
+		5F0071440B830E6100E66D05 /* ErrorHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F0071420B830E6100E66D05 /* ErrorHandler.cpp */; };
+		5F0071450B830E6100E66D05 /* ErrorHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F0071420B830E6100E66D05 /* ErrorHandler.cpp */; };
+		5F0B2A4208BC6C7F00274A50 /* HingeJoint.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5F0B2A4008BC6C7F00274A50 /* HingeJoint.h */; };
+		5F0B2A4308BC6C7F00274A50 /* HingeJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F0B2A4108BC6C7F00274A50 /* HingeJoint.cpp */; };
+		5F10E89308BF069D00F55CF8 /* GLUtils.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5F10E89108BF069D00F55CF8 /* GLUtils.h */; };
+		5F10E89408BF069D00F55CF8 /* GLUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F10E89208BF069D00F55CF8 /* GLUtils.cpp */; };
+		5F28B1BF096AC47E00662246 /* FacetedSphere.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F28B1BE096AC47E00662246 /* FacetedSphere.cpp */; };
+		5F28B1C0096AC47E00662246 /* FacetedSphere.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5F28B1BD096AC47E00662246 /* FacetedSphere.h */; };
+		5F28B1C1096AC47E00662246 /* FacetedSphere.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F28B1BE096AC47E00662246 /* FacetedSphere.cpp */; };
+		5F30BC7108D84F17001CF1C8 /* PlaneGeom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F30BC6F08D84F17001CF1C8 /* PlaneGeom.cpp */; };
+		5F30BC7208D84F17001CF1C8 /* PlaneGeom.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5F30BC7008D84F17001CF1C8 /* PlaneGeom.h */; };
+		5F30BC8008D85150001CF1C8 /* Environment.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5F5C4FDA08B2284200240932 /* Environment.h */; };
+		5F30BC8108D85155001CF1C8 /* Environment.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F5C4FD908B2284200240932 /* Environment.cpp */; };
+		5F30BCD508D8631D001CF1C8 /* FacetedObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F30BCD308D8631D001CF1C8 /* FacetedObject.cpp */; };
+		5F30BCD608D8631D001CF1C8 /* FacetedObject.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5F30BCD408D8631D001CF1C8 /* FacetedObject.h */; };
+		5F30BCDD08D863EA001CF1C8 /* Face.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F30BCDB08D863EA001CF1C8 /* Face.cpp */; };
+		5F30BCDE08D863EA001CF1C8 /* Face.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5F30BCDC08D863EA001CF1C8 /* Face.h */; };
+		5F36C4CD0E3CE61100D0D657 /* Body.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FEBA22A08B5FBF60081E1B3 /* Body.cpp */; };
+		5F36C4CE0E3CE61100D0D657 /* CappedCylinderGeom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FCDCBD808C21A5900D9DF42 /* CappedCylinderGeom.cpp */; };
+		5F36C4D00E3CE61100D0D657 /* Contact.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FB73D7209A7B45700AA8679 /* Contact.cpp */; };
+		5F36C4D10E3CE61100D0D657 /* CyclicDriver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F5C4FC608B2284200240932 /* CyclicDriver.cpp */; };
+		5F36C4D20E3CE61100D0D657 /* CylinderWrapStrap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F61D51008C357D800C86E94 /* CylinderWrapStrap.cpp */; };
+		5F36C4D30E3CE61100D0D657 /* DampedSpringMuscle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FDECAC009697E6A0092556D /* DampedSpringMuscle.cpp */; };
+		5F36C4D40E3CE61100D0D657 /* DataFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F5C4FCA08B2284200240932 /* DataFile.cpp */; };
+		5F36C4D50E3CE61100D0D657 /* DataTarget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F5C4FCC08B2284200240932 /* DataTarget.cpp */; };
+		5F36C4D60E3CE61100D0D657 /* Environment.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F5C4FD908B2284200240932 /* Environment.cpp */; };
+		5F36C4D70E3CE61100D0D657 /* ErrorHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F0071420B830E6100E66D05 /* ErrorHandler.cpp */; };
+		5F36C4D80E3CE61100D0D657 /* Face.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F30BCDB08D863EA001CF1C8 /* Face.cpp */; };
+		5F36C4D90E3CE61100D0D657 /* FacetedConicSegment.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FAFD24D09726D4600A7C9EC /* FacetedConicSegment.cpp */; };
+		5F36C4DA0E3CE61100D0D657 /* FacetedObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F30BCD308D8631D001CF1C8 /* FacetedObject.cpp */; };
+		5F36C4DB0E3CE61100D0D657 /* FacetedSphere.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F28B1BE096AC47E00662246 /* FacetedSphere.cpp */; };
+		5F36C4DC0E3CE61100D0D657 /* FloatingHingeJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FB5EA710B4696D000554337 /* FloatingHingeJoint.cpp */; };
+		5F36C4DD0E3CE61100D0D657 /* Geom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FCDCBC208C2153900D9DF42 /* Geom.cpp */; };
+		5F36C4DE0E3CE61100D0D657 /* GLUIRoutines.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F5C4FD008B2284200240932 /* GLUIRoutines.cpp */; };
+		5F36C4DF0E3CE61100D0D657 /* GLUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F10E89208BF069D00F55CF8 /* GLUtils.cpp */; };
+		5F36C4E00E3CE61100D0D657 /* HingeJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F0B2A4108BC6C7F00274A50 /* HingeJoint.cpp */; };
+		5F36C4E10E3CE61100D0D657 /* Joint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FBB86FA08B63BA800E786C0 /* Joint.cpp */; };
+		5F36C4E20E3CE61100D0D657 /* MAMuscle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F5C4FD508B2284200240932 /* MAMuscle.cpp */; };
+		5F36C4E30E3CE61100D0D657 /* MAMuscleComplete.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FF75D580B9A0F0400865BAD /* MAMuscleComplete.cpp */; };
+		5F36C4E40E3CE61100D0D657 /* MAMuscleExtended.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F406D2309FB726F002E1E8E /* MAMuscleExtended.cpp */; };
+		5F36C4E50E3CE61100D0D657 /* Muscle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F84266A08C38F5F005394BC /* Muscle.cpp */; };
+		5F36C4E60E3CE61100D0D657 /* NamedObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FBB870008B63CC800E786C0 /* NamedObject.cpp */; };
+		5F36C4E70E3CE61100D0D657 /* ObjectiveMain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F5C4FDF08B2284200240932 /* ObjectiveMain.cpp */; };
+		5F36C4E80E3CE61100D0D657 /* PlaneGeom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F30BC6F08D84F17001CF1C8 /* PlaneGeom.cpp */; };
+		5F36C4E90E3CE61100D0D657 /* Simulation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F5C4FE308B2284200240932 /* Simulation.cpp */; };
+		5F36C4EA0E3CE61100D0D657 /* SphereGeom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FDECADE0969833E0092556D /* SphereGeom.cpp */; };
+		5F36C4EB0E3CE61100D0D657 /* StepDriver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F5C4FE608B2284200240932 /* StepDriver.cpp */; };
+		5F36C4EC0E3CE61100D0D657 /* Strap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F61D4BD08C3526E00C86E94 /* Strap.cpp */; };
+		5F36C4ED0E3CE61100D0D657 /* ThreePointStrap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F61D50A08C3579100C86E94 /* ThreePointStrap.cpp */; };
+		5F36C4EE0E3CE61100D0D657 /* TIFFWrite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F5C4FEC08B2284200240932 /* TIFFWrite.cpp */; };
+		5F36C4EF0E3CE61100D0D657 /* TwoPointStrap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F61D50408C3576B00C86E94 /* TwoPointStrap.cpp */; };
+		5F36C4F00E3CE61100D0D657 /* UGMMuscle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F5C4FEE08B2284200240932 /* UGMMuscle.cpp */; };
+		5F36C5230E3CE61100D0D657 /* UDP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FB1B72E0C382A6500C0EA2D /* UDP.cpp */; };
+		5F36C5240E3CE61100D0D657 /* Util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FA8D5680C4651F000F66EBA /* Util.cpp */; };
+		5F36C5250E3CE61100D0D657 /* FacetedPolyline.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FD9DB9F0C6C40E100D67F27 /* FacetedPolyline.cpp */; };
+		5F36C5260E3CE61100D0D657 /* NPointStrap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F96E9E30CD36772001A821B /* NPointStrap.cpp */; };
+		5F36C5270E3CE61100D0D657 /* fec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F9C3ED20DC705DC008A05FC /* fec.cpp */; };
+		5F36C5550E3CE61100D0D657 /* libglui.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F5C502C08B22AA700240932 /* libglui.a */; };
+		5F36C5560E3CE61100D0D657 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F5C502008B229A700240932 /* GLUT.framework */; };
+		5F36C5570E3CE61100D0D657 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F5C502208B229BB00240932 /* OpenGL.framework */; };
+		5F36C5580E3CE61100D0D657 /* libgsl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F85B43A0DBCDA0600720E86 /* libgsl.a */; };
+		5F36C55A0E3CE61100D0D657 /* libxml2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F85B43C0DBCDA0600720E86 /* libxml2.a */; };
+		5F36C55B0E3CE61100D0D657 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FD4E8470DCF029D001AC233 /* CoreServices.framework */; };
+		5F36C5660E3CE64000D0D657 /* TCP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F36C5640E3CE64000D0D657 /* TCP.cpp */; };
+		5F406D2609FB7270002E1E8E /* MAMuscleExtended.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F406D2309FB726F002E1E8E /* MAMuscleExtended.cpp */; };
+		5F406D2709FB7270002E1E8E /* MAMuscleExtended.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F406D2309FB726F002E1E8E /* MAMuscleExtended.cpp */; };
+		5F406D2809FB7270002E1E8E /* MAMuscleExtended.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5F406D2409FB7270002E1E8E /* MAMuscleExtended.h */; };
+		5F406D2909FB7270002E1E8E /* SimpleStrap.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5F406D2509FB7270002E1E8E /* SimpleStrap.h */; };
+		5F5C4FF208B2284200240932 /* CyclicDriver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F5C4FC608B2284200240932 /* CyclicDriver.cpp */; };
+		5F5C4FF308B2284200240932 /* CyclicDriver.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5F5C4FC708B2284200240932 /* CyclicDriver.h */; };
+		5F5C4FF608B2284200240932 /* DataFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F5C4FCA08B2284200240932 /* DataFile.cpp */; };
+		5F5C4FF708B2284200240932 /* DataFile.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5F5C4FCB08B2284200240932 /* DataFile.h */; };
+		5F5C4FFA08B2284200240932 /* DebugControl.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5F5C4FCE08B2284200240932 /* DebugControl.h */; };
+		5F5C4FFB08B2284200240932 /* Driver.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5F5C4FCF08B2284200240932 /* Driver.h */; };
+		5F5C4FFC08B2284200240932 /* GLUIRoutines.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F5C4FD008B2284200240932 /* GLUIRoutines.cpp */; };
+		5F5C4FFD08B2284200240932 /* GLUIRoutines.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5F5C4FD108B2284200240932 /* GLUIRoutines.h */; };
+		5F5C500B08B2284200240932 /* ObjectiveMain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F5C4FDF08B2284200240932 /* ObjectiveMain.cpp */; };
+		5F5C500C08B2284200240932 /* PGDMath.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5F5C4FE008B2284200240932 /* PGDMath.h */; };
+		5F5C500F08B2284200240932 /* Simulation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F5C4FE308B2284200240932 /* Simulation.cpp */; };
+		5F5C501008B2284200240932 /* Simulation.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5F5C4FE408B2284200240932 /* Simulation.h */; };
+		5F5C501108B2284200240932 /* SocketMessages.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5F5C4FE508B2284200240932 /* SocketMessages.h */; };
+		5F5C501208B2284200240932 /* StepDriver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F5C4FE608B2284200240932 /* StepDriver.cpp */; };
+		5F5C501308B2284200240932 /* StepDriver.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5F5C4FE708B2284200240932 /* StepDriver.h */; };
+		5F5C501808B2284200240932 /* TIFFWrite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F5C4FEC08B2284200240932 /* TIFFWrite.cpp */; };
+		5F5C501908B2284200240932 /* TIFFWrite.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5F5C4FED08B2284200240932 /* TIFFWrite.h */; };
+		5F5C501D08B2284200240932 /* Util.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5F5C4FF108B2284200240932 /* Util.h */; };
+		5F5C502108B229A700240932 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F5C502008B229A700240932 /* GLUT.framework */; };
+		5F5C502308B229BB00240932 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F5C502208B229BB00240932 /* OpenGL.framework */; };
+		5F5C502D08B22AA700240932 /* libglui.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F5C502C08B22AA700240932 /* libglui.a */; };
+		5F61D4BE08C3526E00C86E94 /* Strap.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5F61D4BC08C3526E00C86E94 /* Strap.h */; };
+		5F61D4BF08C3526E00C86E94 /* Strap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F61D4BD08C3526E00C86E94 /* Strap.cpp */; };
+		5F61D4DD08C3549F00C86E94 /* MAMuscle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F5C4FD508B2284200240932 /* MAMuscle.cpp */; };
+		5F61D4DE08C354A200C86E94 /* MAMuscle.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5F5C4FD608B2284200240932 /* MAMuscle.h */; };
+		5F61D4EB08C355A700C86E94 /* UGMMuscle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F5C4FEE08B2284200240932 /* UGMMuscle.cpp */; };
+		5F61D4EC08C355A800C86E94 /* UGMMuscle.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5F5C4FEF08B2284200240932 /* UGMMuscle.h */; };
+		5F61D50508C3576B00C86E94 /* TwoPointStrap.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5F61D50308C3576B00C86E94 /* TwoPointStrap.h */; };
+		5F61D50608C3576B00C86E94 /* TwoPointStrap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F61D50408C3576B00C86E94 /* TwoPointStrap.cpp */; };
+		5F61D50B08C3579100C86E94 /* ThreePointStrap.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5F61D50908C3579100C86E94 /* ThreePointStrap.h */; };
+		5F61D50C08C3579100C86E94 /* ThreePointStrap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F61D50A08C3579100C86E94 /* ThreePointStrap.cpp */; };
+		5F61D51108C357D800C86E94 /* CylinderWrapStrap.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5F61D50F08C357D800C86E94 /* CylinderWrapStrap.h */; };
+		5F61D51208C357D800C86E94 /* CylinderWrapStrap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F61D51008C357D800C86E94 /* CylinderWrapStrap.cpp */; };
+		5F62AE9108CE219300FA8F33 /* DataTarget.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5F5C4FCD08B2284200240932 /* DataTarget.h */; };
+		5F62AE9208CE219400FA8F33 /* DataTarget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F5C4FCC08B2284200240932 /* DataTarget.cpp */; };
+		5F7674F412AA3C2400E0B191 /* libode.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F7674F312AA3C2400E0B191 /* libode.a */; };
+		5F7674F512AA3C2400E0B191 /* libode.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F7674F312AA3C2400E0B191 /* libode.a */; };
+		5F7674F612AA3C2400E0B191 /* libode.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F7674F312AA3C2400E0B191 /* libode.a */; };
+		5F7674F712AA3C2400E0B191 /* libode.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F7674F312AA3C2400E0B191 /* libode.a */; };
+		5F7674F812AA3C2400E0B191 /* libode.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F7674F312AA3C2400E0B191 /* libode.a */; };
+		5F76754412AA3ED900E0B191 /* DataTargetQuaternion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76751F12AA3ED900E0B191 /* DataTargetQuaternion.cpp */; };
+		5F76754512AA3ED900E0B191 /* DataTargetScalar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76752112AA3ED900E0B191 /* DataTargetScalar.cpp */; };
+		5F76754612AA3ED900E0B191 /* DataTargetVector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76752312AA3ED900E0B191 /* DataTargetVector.cpp */; };
+		5F76754712AA3ED900E0B191 /* Driver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76752512AA3ED900E0B191 /* Driver.cpp */; };
+		5F76754812AA3ED900E0B191 /* ExpressionFolder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76752612AA3ED900E0B191 /* ExpressionFolder.cpp */; };
+		5F76754912AA3ED900E0B191 /* ExpressionFunTransform3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76752812AA3ED900E0B191 /* ExpressionFunTransform3D.cpp */; };
+		5F76754A12AA3ED900E0B191 /* ExpressionMat.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76752A12AA3ED900E0B191 /* ExpressionMat.cpp */; };
+		5F76754B12AA3ED900E0B191 /* ExpressionParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76752C12AA3ED900E0B191 /* ExpressionParser.cpp */; };
+		5F76754C12AA3ED900E0B191 /* ExpressionRef.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76752E12AA3ED900E0B191 /* ExpressionRef.cpp */; };
+		5F76754D12AA3ED900E0B191 /* ExpressionVar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76753012AA3ED900E0B191 /* ExpressionVar.cpp */; };
+		5F76754E12AA3ED900E0B191 /* ExpressionVec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76753212AA3ED900E0B191 /* ExpressionVec.cpp */; };
+		5F76754F12AA3ED900E0B191 /* Marker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76753412AA3ED900E0B191 /* Marker.cpp */; };
+		5F76755012AA3ED900E0B191 /* OpenCLRoutines.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76753812AA3ED900E0B191 /* OpenCLRoutines.cpp */; };
+		5F76755112AA3ED900E0B191 /* RayGeom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76753A12AA3ED900E0B191 /* RayGeom.cpp */; };
+		5F76755212AA3ED900E0B191 /* Reporter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76753C12AA3ED900E0B191 /* Reporter.cpp */; };
+		5F76755312AA3ED900E0B191 /* TorqueReporter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76753E12AA3ED900E0B191 /* TorqueReporter.cpp */; };
+		5F76755412AA3ED900E0B191 /* TrimeshGeom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76754012AA3ED900E0B191 /* TrimeshGeom.cpp */; };
+		5F76755512AA3ED900E0B191 /* XMLConverter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76754212AA3ED900E0B191 /* XMLConverter.cpp */; };
+		5F76755612AA3ED900E0B191 /* DataTargetQuaternion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76751F12AA3ED900E0B191 /* DataTargetQuaternion.cpp */; };
+		5F76755712AA3ED900E0B191 /* DataTargetScalar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76752112AA3ED900E0B191 /* DataTargetScalar.cpp */; };
+		5F76755812AA3ED900E0B191 /* DataTargetVector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76752312AA3ED900E0B191 /* DataTargetVector.cpp */; };
+		5F76755912AA3ED900E0B191 /* Driver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76752512AA3ED900E0B191 /* Driver.cpp */; };
+		5F76755A12AA3ED900E0B191 /* ExpressionFolder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76752612AA3ED900E0B191 /* ExpressionFolder.cpp */; };
+		5F76755B12AA3ED900E0B191 /* ExpressionFunTransform3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76752812AA3ED900E0B191 /* ExpressionFunTransform3D.cpp */; };
+		5F76755C12AA3ED900E0B191 /* ExpressionMat.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76752A12AA3ED900E0B191 /* ExpressionMat.cpp */; };
+		5F76755D12AA3ED900E0B191 /* ExpressionParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76752C12AA3ED900E0B191 /* ExpressionParser.cpp */; };
+		5F76755E12AA3ED900E0B191 /* ExpressionRef.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76752E12AA3ED900E0B191 /* ExpressionRef.cpp */; };
+		5F76755F12AA3ED900E0B191 /* ExpressionVar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76753012AA3ED900E0B191 /* ExpressionVar.cpp */; };
+		5F76756012AA3ED900E0B191 /* ExpressionVec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76753212AA3ED900E0B191 /* ExpressionVec.cpp */; };
+		5F76756112AA3ED900E0B191 /* Marker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76753412AA3ED900E0B191 /* Marker.cpp */; };
+		5F76756212AA3ED900E0B191 /* OpenCLRoutines.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76753812AA3ED900E0B191 /* OpenCLRoutines.cpp */; };
+		5F76756312AA3ED900E0B191 /* RayGeom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76753A12AA3ED900E0B191 /* RayGeom.cpp */; };
+		5F76756412AA3ED900E0B191 /* Reporter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76753C12AA3ED900E0B191 /* Reporter.cpp */; };
+		5F76756512AA3ED900E0B191 /* TorqueReporter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76753E12AA3ED900E0B191 /* TorqueReporter.cpp */; };
+		5F76756612AA3ED900E0B191 /* TrimeshGeom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76754012AA3ED900E0B191 /* TrimeshGeom.cpp */; };
+		5F76756712AA3ED900E0B191 /* XMLConverter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76754212AA3ED900E0B191 /* XMLConverter.cpp */; };
+		5F76756812AA3ED900E0B191 /* DataTargetQuaternion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76751F12AA3ED900E0B191 /* DataTargetQuaternion.cpp */; };
+		5F76756912AA3ED900E0B191 /* DataTargetScalar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76752112AA3ED900E0B191 /* DataTargetScalar.cpp */; };
+		5F76756A12AA3ED900E0B191 /* DataTargetVector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76752312AA3ED900E0B191 /* DataTargetVector.cpp */; };
+		5F76756B12AA3ED900E0B191 /* Driver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76752512AA3ED900E0B191 /* Driver.cpp */; };
+		5F76756C12AA3ED900E0B191 /* ExpressionFolder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76752612AA3ED900E0B191 /* ExpressionFolder.cpp */; };
+		5F76756D12AA3ED900E0B191 /* ExpressionFunTransform3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76752812AA3ED900E0B191 /* ExpressionFunTransform3D.cpp */; };
+		5F76756E12AA3ED900E0B191 /* ExpressionMat.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76752A12AA3ED900E0B191 /* ExpressionMat.cpp */; };
+		5F76756F12AA3ED900E0B191 /* ExpressionParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76752C12AA3ED900E0B191 /* ExpressionParser.cpp */; };
+		5F76757012AA3ED900E0B191 /* ExpressionRef.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76752E12AA3ED900E0B191 /* ExpressionRef.cpp */; };
+		5F76757112AA3ED900E0B191 /* ExpressionVar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76753012AA3ED900E0B191 /* ExpressionVar.cpp */; };
+		5F76757212AA3ED900E0B191 /* ExpressionVec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76753212AA3ED900E0B191 /* ExpressionVec.cpp */; };
+		5F76757312AA3ED900E0B191 /* Marker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76753412AA3ED900E0B191 /* Marker.cpp */; };
+		5F76757412AA3ED900E0B191 /* OpenCLRoutines.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76753812AA3ED900E0B191 /* OpenCLRoutines.cpp */; };
+		5F76757512AA3ED900E0B191 /* RayGeom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76753A12AA3ED900E0B191 /* RayGeom.cpp */; };
+		5F76757612AA3ED900E0B191 /* Reporter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76753C12AA3ED900E0B191 /* Reporter.cpp */; };
+		5F76757712AA3ED900E0B191 /* TorqueReporter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76753E12AA3ED900E0B191 /* TorqueReporter.cpp */; };
+		5F76757812AA3ED900E0B191 /* TrimeshGeom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76754012AA3ED900E0B191 /* TrimeshGeom.cpp */; };
+		5F76757912AA3ED900E0B191 /* XMLConverter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76754212AA3ED900E0B191 /* XMLConverter.cpp */; };
+		5F76757A12AA3ED900E0B191 /* DataTargetQuaternion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76751F12AA3ED900E0B191 /* DataTargetQuaternion.cpp */; };
+		5F76757B12AA3ED900E0B191 /* DataTargetScalar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76752112AA3ED900E0B191 /* DataTargetScalar.cpp */; };
+		5F76757C12AA3ED900E0B191 /* DataTargetVector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76752312AA3ED900E0B191 /* DataTargetVector.cpp */; };
+		5F76757D12AA3ED900E0B191 /* Driver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76752512AA3ED900E0B191 /* Driver.cpp */; };
+		5F76757E12AA3ED900E0B191 /* ExpressionFolder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76752612AA3ED900E0B191 /* ExpressionFolder.cpp */; };
+		5F76757F12AA3ED900E0B191 /* ExpressionFunTransform3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76752812AA3ED900E0B191 /* ExpressionFunTransform3D.cpp */; };
+		5F76758012AA3ED900E0B191 /* ExpressionMat.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76752A12AA3ED900E0B191 /* ExpressionMat.cpp */; };
+		5F76758112AA3ED900E0B191 /* ExpressionParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76752C12AA3ED900E0B191 /* ExpressionParser.cpp */; };
+		5F76758212AA3ED900E0B191 /* ExpressionRef.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76752E12AA3ED900E0B191 /* ExpressionRef.cpp */; };
+		5F76758312AA3ED900E0B191 /* ExpressionVar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76753012AA3ED900E0B191 /* ExpressionVar.cpp */; };
+		5F76758412AA3ED900E0B191 /* ExpressionVec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76753212AA3ED900E0B191 /* ExpressionVec.cpp */; };
+		5F76758512AA3ED900E0B191 /* Marker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76753412AA3ED900E0B191 /* Marker.cpp */; };
+		5F76758612AA3ED900E0B191 /* OpenCLRoutines.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76753812AA3ED900E0B191 /* OpenCLRoutines.cpp */; };
+		5F76758712AA3ED900E0B191 /* RayGeom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76753A12AA3ED900E0B191 /* RayGeom.cpp */; };
+		5F76758812AA3ED900E0B191 /* Reporter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76753C12AA3ED900E0B191 /* Reporter.cpp */; };
+		5F76758912AA3ED900E0B191 /* TorqueReporter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76753E12AA3ED900E0B191 /* TorqueReporter.cpp */; };
+		5F76758A12AA3ED900E0B191 /* TrimeshGeom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76754012AA3ED900E0B191 /* TrimeshGeom.cpp */; };
+		5F76758B12AA3ED900E0B191 /* XMLConverter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76754212AA3ED900E0B191 /* XMLConverter.cpp */; };
+		5F76758C12AA3ED900E0B191 /* DataTargetQuaternion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76751F12AA3ED900E0B191 /* DataTargetQuaternion.cpp */; };
+		5F76758D12AA3ED900E0B191 /* DataTargetScalar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76752112AA3ED900E0B191 /* DataTargetScalar.cpp */; };
+		5F76758E12AA3ED900E0B191 /* DataTargetVector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76752312AA3ED900E0B191 /* DataTargetVector.cpp */; };
+		5F76758F12AA3ED900E0B191 /* Driver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76752512AA3ED900E0B191 /* Driver.cpp */; };
+		5F76759012AA3ED900E0B191 /* ExpressionFolder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76752612AA3ED900E0B191 /* ExpressionFolder.cpp */; };
+		5F76759112AA3ED900E0B191 /* ExpressionFunTransform3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76752812AA3ED900E0B191 /* ExpressionFunTransform3D.cpp */; };
+		5F76759212AA3ED900E0B191 /* ExpressionMat.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76752A12AA3ED900E0B191 /* ExpressionMat.cpp */; };
+		5F76759312AA3ED900E0B191 /* ExpressionParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76752C12AA3ED900E0B191 /* ExpressionParser.cpp */; };
+		5F76759412AA3ED900E0B191 /* ExpressionRef.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76752E12AA3ED900E0B191 /* ExpressionRef.cpp */; };
+		5F76759512AA3ED900E0B191 /* ExpressionVar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76753012AA3ED900E0B191 /* ExpressionVar.cpp */; };
+		5F76759612AA3ED900E0B191 /* ExpressionVec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76753212AA3ED900E0B191 /* ExpressionVec.cpp */; };
+		5F76759712AA3ED900E0B191 /* Marker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76753412AA3ED900E0B191 /* Marker.cpp */; };
+		5F76759812AA3ED900E0B191 /* OpenCLRoutines.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76753812AA3ED900E0B191 /* OpenCLRoutines.cpp */; };
+		5F76759912AA3ED900E0B191 /* RayGeom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76753A12AA3ED900E0B191 /* RayGeom.cpp */; };
+		5F76759A12AA3ED900E0B191 /* Reporter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76753C12AA3ED900E0B191 /* Reporter.cpp */; };
+		5F76759B12AA3ED900E0B191 /* TorqueReporter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76753E12AA3ED900E0B191 /* TorqueReporter.cpp */; };
+		5F76759C12AA3ED900E0B191 /* TrimeshGeom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76754012AA3ED900E0B191 /* TrimeshGeom.cpp */; };
+		5F76759D12AA3ED900E0B191 /* XMLConverter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F76754212AA3ED900E0B191 /* XMLConverter.cpp */; };
+		5F7A435E0F59D30800780DCF /* CyclicDriver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F5C4FC608B2284200240932 /* CyclicDriver.cpp */; };
+		5F7A435F0F59D30800780DCF /* DataFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F5C4FCA08B2284200240932 /* DataFile.cpp */; };
+		5F7A43610F59D30800780DCF /* ObjectiveMain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F5C4FDF08B2284200240932 /* ObjectiveMain.cpp */; };
+		5F7A43620F59D30800780DCF /* Simulation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F5C4FE308B2284200240932 /* Simulation.cpp */; };
+		5F7A43630F59D30800780DCF /* StepDriver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F5C4FE608B2284200240932 /* StepDriver.cpp */; };
+		5F7A43640F59D30800780DCF /* TIFFWrite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F5C4FEC08B2284200240932 /* TIFFWrite.cpp */; };
+		5F7A43650F59D30800780DCF /* Body.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FEBA22A08B5FBF60081E1B3 /* Body.cpp */; };
+		5F7A43660F59D30800780DCF /* Joint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FBB86FA08B63BA800E786C0 /* Joint.cpp */; };
+		5F7A43670F59D30800780DCF /* NamedObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FBB870008B63CC800E786C0 /* NamedObject.cpp */; };
+		5F7A43680F59D30800780DCF /* HingeJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F0B2A4108BC6C7F00274A50 /* HingeJoint.cpp */; };
+		5F7A43690F59D30800780DCF /* GLUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F10E89208BF069D00F55CF8 /* GLUtils.cpp */; };
+		5F7A436A0F59D30800780DCF /* Geom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FCDCBC208C2153900D9DF42 /* Geom.cpp */; };
+		5F7A436B0F59D30800780DCF /* CappedCylinderGeom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FCDCBD808C21A5900D9DF42 /* CappedCylinderGeom.cpp */; };
+		5F7A436C0F59D30800780DCF /* Strap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F61D4BD08C3526E00C86E94 /* Strap.cpp */; };
+		5F7A436D0F59D30800780DCF /* MAMuscle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F5C4FD508B2284200240932 /* MAMuscle.cpp */; };
+		5F7A436E0F59D30800780DCF /* UGMMuscle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F5C4FEE08B2284200240932 /* UGMMuscle.cpp */; };
+		5F7A436F0F59D30800780DCF /* TwoPointStrap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F61D50408C3576B00C86E94 /* TwoPointStrap.cpp */; };
+		5F7A43700F59D30800780DCF /* ThreePointStrap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F61D50A08C3579100C86E94 /* ThreePointStrap.cpp */; };
+		5F7A43710F59D30800780DCF /* CylinderWrapStrap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F61D51008C357D800C86E94 /* CylinderWrapStrap.cpp */; };
+		5F7A43720F59D30800780DCF /* Muscle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F84266A08C38F5F005394BC /* Muscle.cpp */; };
+		5F7A43730F59D30800780DCF /* DataTarget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F5C4FCC08B2284200240932 /* DataTarget.cpp */; };
+		5F7A43740F59D30800780DCF /* PlaneGeom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F30BC6F08D84F17001CF1C8 /* PlaneGeom.cpp */; };
+		5F7A43750F59D30800780DCF /* Environment.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F5C4FD908B2284200240932 /* Environment.cpp */; };
+		5F7A43760F59D30800780DCF /* FacetedObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F30BCD308D8631D001CF1C8 /* FacetedObject.cpp */; };
+		5F7A43770F59D30800780DCF /* Face.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F30BCDB08D863EA001CF1C8 /* Face.cpp */; };
+		5F7A43780F59D30800780DCF /* DampedSpringMuscle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FDECAC009697E6A0092556D /* DampedSpringMuscle.cpp */; };
+		5F7A43790F59D30800780DCF /* SphereGeom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FDECADE0969833E0092556D /* SphereGeom.cpp */; };
+		5F7A437A0F59D30800780DCF /* FacetedSphere.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F28B1BE096AC47E00662246 /* FacetedSphere.cpp */; };
+		5F7A437B0F59D30800780DCF /* FacetedConicSegment.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FAFD24D09726D4600A7C9EC /* FacetedConicSegment.cpp */; };
+		5F7A437C0F59D30800780DCF /* Contact.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FB73D7209A7B45700AA8679 /* Contact.cpp */; };
+		5F7A437D0F59D30800780DCF /* MAMuscleExtended.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F406D2309FB726F002E1E8E /* MAMuscleExtended.cpp */; };
+		5F7A43B00F59D30800780DCF /* FloatingHingeJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FB5EA710B4696D000554337 /* FloatingHingeJoint.cpp */; };
+		5F7A43B10F59D30800780DCF /* ErrorHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F0071420B830E6100E66D05 /* ErrorHandler.cpp */; };
+		5F7A43B20F59D30800780DCF /* MAMuscleComplete.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FF75D580B9A0F0400865BAD /* MAMuscleComplete.cpp */; };
+		5F7A43B40F59D30800780DCF /* Util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FA8D5680C4651F000F66EBA /* Util.cpp */; };
+		5F7A43B50F59D30800780DCF /* FacetedPolyline.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FD9DB9F0C6C40E100D67F27 /* FacetedPolyline.cpp */; };
+		5F7A43B60F59D30800780DCF /* NPointStrap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F96E9E30CD36772001A821B /* NPointStrap.cpp */; };
+		5F7A43E30F59D30800780DCF /* FixedJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FB186CF0E851FCC0005243D /* FixedJoint.cpp */; };
+		5F7A43E40F59D30800780DCF /* BallJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FE582060F08F19E00E76D16 /* BallJoint.cpp */; };
+		5F7A43E60F59D30800780DCF /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F5C502008B229A700240932 /* GLUT.framework */; };
+		5F7A43E70F59D30800780DCF /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F5C502208B229BB00240932 /* OpenGL.framework */; };
+		5F7A43EA0F59D30800780DCF /* libgsl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F85B43A0DBCDA0600720E86 /* libgsl.a */; };
+		5F7A43EC0F59D30800780DCF /* libxml2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F85B43C0DBCDA0600720E86 /* libxml2.a */; };
+		5F7A43ED0F59D30800780DCF /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FD4E8470DCF029D001AC233 /* CoreServices.framework */; };
+		5F7A43EF0F59D30800780DCF /* CyclicDriver.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5F5C4FC708B2284200240932 /* CyclicDriver.h */; };
+		5F7A43F00F59D30800780DCF /* DataFile.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5F5C4FCB08B2284200240932 /* DataFile.h */; };
+		5F7A43F10F59D30800780DCF /* DebugControl.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5F5C4FCE08B2284200240932 /* DebugControl.h */; };
+		5F7A43F20F59D30800780DCF /* Driver.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5F5C4FCF08B2284200240932 /* Driver.h */; };
+		5F7A43F40F59D30800780DCF /* PGDMath.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5F5C4FE008B2284200240932 /* PGDMath.h */; };
+		5F7A43F50F59D30800780DCF /* Simulation.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5F5C4FE408B2284200240932 /* Simulation.h */; };
+		5F7A43F60F59D30800780DCF /* SocketMessages.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5F5C4FE508B2284200240932 /* SocketMessages.h */; };
+		5F7A43F70F59D30800780DCF /* StepDriver.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5F5C4FE708B2284200240932 /* StepDriver.h */; };
+		5F7A43F80F59D30800780DCF /* TIFFWrite.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5F5C4FED08B2284200240932 /* TIFFWrite.h */; };
+		5F7A43F90F59D30800780DCF /* Util.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5F5C4FF108B2284200240932 /* Util.h */; };
+		5F7A43FA0F59D30800780DCF /* Body.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5FEBA22908B5FBF60081E1B3 /* Body.h */; };
+		5F7A43FB0F59D30800780DCF /* Joint.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5FBB86F908B63BA800E786C0 /* Joint.h */; };
+		5F7A43FC0F59D30800780DCF /* NamedObject.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5FBB86FF08B63CC800E786C0 /* NamedObject.h */; };
+		5F7A43FD0F59D30800780DCF /* HingeJoint.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5F0B2A4008BC6C7F00274A50 /* HingeJoint.h */; };
+		5F7A43FE0F59D30800780DCF /* GLUtils.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5F10E89108BF069D00F55CF8 /* GLUtils.h */; };
+		5F7A43FF0F59D30800780DCF /* Geom.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5FCDCBC108C2153900D9DF42 /* Geom.h */; };
+		5F7A44000F59D30800780DCF /* CappedCylinderGeom.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5FCDCBD708C21A5900D9DF42 /* CappedCylinderGeom.h */; };
+		5F7A44010F59D30800780DCF /* Strap.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5F61D4BC08C3526E00C86E94 /* Strap.h */; };
+		5F7A44020F59D30800780DCF /* MAMuscle.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5F5C4FD608B2284200240932 /* MAMuscle.h */; };
+		5F7A44030F59D30800780DCF /* UGMMuscle.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5F5C4FEF08B2284200240932 /* UGMMuscle.h */; };
+		5F7A44040F59D30800780DCF /* TwoPointStrap.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5F61D50308C3576B00C86E94 /* TwoPointStrap.h */; };
+		5F7A44050F59D30800780DCF /* ThreePointStrap.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5F61D50908C3579100C86E94 /* ThreePointStrap.h */; };
+		5F7A44060F59D30800780DCF /* CylinderWrapStrap.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5F61D50F08C357D800C86E94 /* CylinderWrapStrap.h */; };
+		5F7A44070F59D30800780DCF /* Muscle.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5F84266908C38F5F005394BC /* Muscle.h */; };
+		5F7A44080F59D30800780DCF /* DataTarget.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5F5C4FCD08B2284200240932 /* DataTarget.h */; };
+		5F7A44090F59D30800780DCF /* Run_2005-01-14_10.07.58_BestGenome_0000768.xml in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5F7AEBB008D5871C0049AA22 /* Run_2005-01-14_10.07.58_BestGenome_0000768.xml */; };
+		5F7A440A0F59D30800780DCF /* PlaneGeom.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5F30BC7008D84F17001CF1C8 /* PlaneGeom.h */; };
+		5F7A440B0F59D30800780DCF /* Environment.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5F5C4FDA08B2284200240932 /* Environment.h */; };
+		5F7A440C0F59D30800780DCF /* FacetedObject.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5F30BCD408D8631D001CF1C8 /* FacetedObject.h */; };
+		5F7A440D0F59D30800780DCF /* Face.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5F30BCDC08D863EA001CF1C8 /* Face.h */; };
+		5F7A440E0F59D30800780DCF /* trex.xml in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5FB5874708FA59D1009364CD /* trex.xml */; };
+		5F7A440F0F59D30800780DCF /* DampedSpringMuscle.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5FDECAC109697E6A0092556D /* DampedSpringMuscle.h */; };
+		5F7A44100F59D30800780DCF /* SphereGeom.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5FDECADF0969833E0092556D /* SphereGeom.h */; };
+		5F7A44110F59D30800780DCF /* FacetedSphere.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5F28B1BD096AC47E00662246 /* FacetedSphere.h */; };
+		5F7A44120F59D30800780DCF /* FacetedConicSegment.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5FAFD24E09726D4600A7C9EC /* FacetedConicSegment.h */; };
+		5F7A44130F59D30800780DCF /* Contact.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5FB73D7309A7B45700AA8679 /* Contact.h */; };
+		5F7A44140F59D30800780DCF /* MAMuscleExtended.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5F406D2409FB7270002E1E8E /* MAMuscleExtended.h */; };
+		5F7A44150F59D30800780DCF /* SimpleStrap.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5F406D2509FB7270002E1E8E /* SimpleStrap.h */; };
+		5F7A443A0F59D30800780DCF /* FloatingHingeJoint.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5FB5EA720B4696D000554337 /* FloatingHingeJoint.h */; };
+		5F7A443B0F59D30800780DCF /* ErrorHandler.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5F0071410B830E6100E66D05 /* ErrorHandler.h */; };
+		5F7A443C0F59D30800780DCF /* MAMuscleComplete.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5FF75D590B9A0F0400865BAD /* MAMuscleComplete.h */; };
+		5F7A443E0F59D30800780DCF /* FacetedPolyline.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5FD9DB9E0C6C40E100D67F27 /* FacetedPolyline.h */; };
+		5F7A443F0F59D30800780DCF /* NPointStrap.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5F96E9E20CD36772001A821B /* NPointStrap.h */; };
+		5F7A446F0F59D3DE00780DCF /* libglui.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F5C502C08B22AA700240932 /* libglui.a */; };
+		5F7A447C0F59D43300780DCF /* IrrlichtRoutines.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F7A447B0F59D43300780DCF /* IrrlichtRoutines.cpp */; };
+		5F7A447D0F59D43300780DCF /* IrrlichtRoutines.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F7A447B0F59D43300780DCF /* IrrlichtRoutines.cpp */; };
+		5F7A447E0F59D43300780DCF /* IrrlichtRoutines.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F7A447B0F59D43300780DCF /* IrrlichtRoutines.cpp */; };
+		5F7A447F0F59D43300780DCF /* IrrlichtRoutines.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F7A447B0F59D43300780DCF /* IrrlichtRoutines.cpp */; };
+		5F7A44800F59D43300780DCF /* IrrlichtRoutines.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F7A447B0F59D43300780DCF /* IrrlichtRoutines.cpp */; };
+		5F7A461F0F59DCDA00780DCF /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F7A461E0F59DCDA00780DCF /* IOKit.framework */; };
+		5F7A46200F59DCDA00780DCF /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F7A461E0F59DCDA00780DCF /* IOKit.framework */; };
+		5F7A46210F59DCDA00780DCF /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F7A461E0F59DCDA00780DCF /* IOKit.framework */; };
+		5F7A46220F59DCDA00780DCF /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F7A461E0F59DCDA00780DCF /* IOKit.framework */; };
+		5F7A46230F59DCDA00780DCF /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F7A461E0F59DCDA00780DCF /* IOKit.framework */; };
+		5F7A46250F59DCE200780DCF /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F7A46240F59DCE200780DCF /* Carbon.framework */; };
+		5F7A46260F59DCE200780DCF /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F7A46240F59DCE200780DCF /* Carbon.framework */; };
+		5F7A46270F59DCE200780DCF /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F7A46240F59DCE200780DCF /* Carbon.framework */; };
+		5F7A46280F59DCE200780DCF /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F7A46240F59DCE200780DCF /* Carbon.framework */; };
+		5F7A46290F59DCE200780DCF /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F7A46240F59DCE200780DCF /* Carbon.framework */; };
+		5F7A462B0F59DCFA00780DCF /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F7A462A0F59DCFA00780DCF /* Cocoa.framework */; };
+		5F7A462C0F59DCFA00780DCF /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F7A462A0F59DCFA00780DCF /* Cocoa.framework */; };
+		5F7A462D0F59DCFA00780DCF /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F7A462A0F59DCFA00780DCF /* Cocoa.framework */; };
+		5F7A462E0F59DCFA00780DCF /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F7A462A0F59DCFA00780DCF /* Cocoa.framework */; };
+		5F7A462F0F59DCFA00780DCF /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F7A462A0F59DCFA00780DCF /* Cocoa.framework */; };
+		5F7AEBB108D5871C0049AA22 /* Run_2005-01-14_10.07.58_BestGenome_0000768.xml in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5F7AEBB008D5871C0049AA22 /* Run_2005-01-14_10.07.58_BestGenome_0000768.xml */; };
+		5F84266B08C38F5F005394BC /* Muscle.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5F84266908C38F5F005394BC /* Muscle.h */; };
+		5F84266C08C38F5F005394BC /* Muscle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F84266A08C38F5F005394BC /* Muscle.cpp */; };
+		5F85B43D0DBCDA0600720E86 /* libgsl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F85B43A0DBCDA0600720E86 /* libgsl.a */; };
+		5F85B43F0DBCDA0600720E86 /* libxml2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F85B43C0DBCDA0600720E86 /* libxml2.a */; };
+		5F85B4400DBCDA0600720E86 /* libgsl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F85B43A0DBCDA0600720E86 /* libgsl.a */; };
+		5F85B4420DBCDA0600720E86 /* libxml2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F85B43C0DBCDA0600720E86 /* libxml2.a */; };
+		5F85B4430DBCDA0600720E86 /* libgsl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F85B43A0DBCDA0600720E86 /* libgsl.a */; };
+		5F85B4450DBCDA0600720E86 /* libxml2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F85B43C0DBCDA0600720E86 /* libxml2.a */; };
+		5F8AACAD08DACE600093A385 /* Simulation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F5C4FE308B2284200240932 /* Simulation.cpp */; };
+		5F8AACAF08DACE740093A385 /* Body.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FEBA22A08B5FBF60081E1B3 /* Body.cpp */; };
+		5F8AACB008DACE770093A385 /* CappedCylinderGeom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FCDCBD808C21A5900D9DF42 /* CappedCylinderGeom.cpp */; };
+		5F8AACB108DACE770093A385 /* CyclicDriver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F5C4FC608B2284200240932 /* CyclicDriver.cpp */; };
+		5F8AACB208DACE780093A385 /* CylinderWrapStrap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F61D51008C357D800C86E94 /* CylinderWrapStrap.cpp */; };
+		5F8AACB308DACE790093A385 /* DataFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F5C4FCA08B2284200240932 /* DataFile.cpp */; };
+		5F8AACB408DACE7A0093A385 /* DataTarget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F5C4FCC08B2284200240932 /* DataTarget.cpp */; };
+		5F8AACB508DACE7B0093A385 /* Environment.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F5C4FD908B2284200240932 /* Environment.cpp */; };
+		5F8AACB608DACE7D0093A385 /* Face.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F30BCDB08D863EA001CF1C8 /* Face.cpp */; };
+		5F8AACB708DACE7E0093A385 /* FacetedObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F30BCD308D8631D001CF1C8 /* FacetedObject.cpp */; };
+		5F8AACB808DACE7F0093A385 /* Geom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FCDCBC208C2153900D9DF42 /* Geom.cpp */; };
+		5F8AACB908DACE800093A385 /* GLUIRoutines.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F5C4FD008B2284200240932 /* GLUIRoutines.cpp */; };
+		5F8AACBA08DACE810093A385 /* GLUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F10E89208BF069D00F55CF8 /* GLUtils.cpp */; };
+		5F8AACBB08DACE810093A385 /* HingeJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F0B2A4108BC6C7F00274A50 /* HingeJoint.cpp */; };
+		5F8AACBC08DACE820093A385 /* Joint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FBB86FA08B63BA800E786C0 /* Joint.cpp */; };
+		5F8AACBD08DACE830093A385 /* MAMuscle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F5C4FD508B2284200240932 /* MAMuscle.cpp */; };
+		5F8AACBE08DACE850093A385 /* Muscle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F84266A08C38F5F005394BC /* Muscle.cpp */; };
+		5F8AACBF08DACE860093A385 /* NamedObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FBB870008B63CC800E786C0 /* NamedObject.cpp */; };
+		5F8AACC008DACE860093A385 /* ObjectiveMain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F5C4FDF08B2284200240932 /* ObjectiveMain.cpp */; };
+		5F8AACC108DACE870093A385 /* PlaneGeom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F30BC6F08D84F17001CF1C8 /* PlaneGeom.cpp */; };
+		5F8AACC208DACE890093A385 /* StepDriver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F5C4FE608B2284200240932 /* StepDriver.cpp */; };
+		5F8AACC308DACE8A0093A385 /* Strap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F61D4BD08C3526E00C86E94 /* Strap.cpp */; };
+		5F8AACC408DACE8B0093A385 /* ThreePointStrap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F61D50A08C3579100C86E94 /* ThreePointStrap.cpp */; };
+		5F8AACC508DACE8B0093A385 /* TIFFWrite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F5C4FEC08B2284200240932 /* TIFFWrite.cpp */; };
+		5F8AACC608DACE8C0093A385 /* TwoPointStrap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F61D50408C3576B00C86E94 /* TwoPointStrap.cpp */; };
+		5F8AACC708DACE8D0093A385 /* UGMMuscle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F5C4FEE08B2284200240932 /* UGMMuscle.cpp */; };
+		5F8AACC808DACE990093A385 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F5C502008B229A700240932 /* GLUT.framework */; };
+		5F8AACC908DACE9A0093A385 /* libglui.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F5C502C08B22AA700240932 /* libglui.a */; };
+		5F8AACCF08DACE9E0093A385 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F5C502208B229BB00240932 /* OpenGL.framework */; };
+		5F9603370F6C4BF80089806D /* MAMuscleExtendedDamped.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F9603360F6C4BF80089806D /* MAMuscleExtendedDamped.cpp */; };
+		5F9603380F6C4BF80089806D /* MAMuscleExtendedDamped.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F9603360F6C4BF80089806D /* MAMuscleExtendedDamped.cpp */; };
+		5F9603390F6C4BF80089806D /* MAMuscleExtendedDamped.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F9603360F6C4BF80089806D /* MAMuscleExtendedDamped.cpp */; };
+		5F96033A0F6C4BF80089806D /* MAMuscleExtendedDamped.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F9603360F6C4BF80089806D /* MAMuscleExtendedDamped.cpp */; };
+		5F96033B0F6C4BF80089806D /* MAMuscleExtendedDamped.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F9603360F6C4BF80089806D /* MAMuscleExtendedDamped.cpp */; };
+		5F96E9E40CD36772001A821B /* NPointStrap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F96E9E30CD36772001A821B /* NPointStrap.cpp */; };
+		5F96E9E50CD36772001A821B /* NPointStrap.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5F96E9E20CD36772001A821B /* NPointStrap.h */; };
+		5F96E9E60CD36772001A821B /* NPointStrap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F96E9E30CD36772001A821B /* NPointStrap.cpp */; };
+		5F96E9E70CD36772001A821B /* NPointStrap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F96E9E30CD36772001A821B /* NPointStrap.cpp */; };
+		5F9C3ED40DC705DC008A05FC /* fec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F9C3ED20DC705DC008A05FC /* fec.cpp */; };
+		5FA48CEA0B5CEBDD00A284B9 /* FloatingHingeJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FB5EA710B4696D000554337 /* FloatingHingeJoint.cpp */; };
+		5FA8D5690C4651F000F66EBA /* Util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FA8D5680C4651F000F66EBA /* Util.cpp */; };
+		5FA8D56A0C4651F000F66EBA /* Util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FA8D5680C4651F000F66EBA /* Util.cpp */; };
+		5FA8D56B0C4651F000F66EBA /* Util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FA8D5680C4651F000F66EBA /* Util.cpp */; };
+		5FAFD24F09726D4600A7C9EC /* FacetedConicSegment.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FAFD24D09726D4600A7C9EC /* FacetedConicSegment.cpp */; };
+		5FAFD25009726D4600A7C9EC /* FacetedConicSegment.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FAFD24D09726D4600A7C9EC /* FacetedConicSegment.cpp */; };
+		5FAFD25109726D4600A7C9EC /* FacetedConicSegment.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5FAFD24E09726D4600A7C9EC /* FacetedConicSegment.h */; };
+		5FB186D00E851FCC0005243D /* FixedJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FB186CF0E851FCC0005243D /* FixedJoint.cpp */; };
+		5FB186D10E851FCC0005243D /* FixedJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FB186CF0E851FCC0005243D /* FixedJoint.cpp */; };
+		5FB186D20E851FCC0005243D /* FixedJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FB186CF0E851FCC0005243D /* FixedJoint.cpp */; };
+		5FB186D30E851FCC0005243D /* FixedJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FB186CF0E851FCC0005243D /* FixedJoint.cpp */; };
+		5FB1B7300C382A6500C0EA2D /* UDP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FB1B72E0C382A6500C0EA2D /* UDP.cpp */; };
+		5FB5874908FA59E0009364CD /* trex.xml in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5FB5874708FA59D1009364CD /* trex.xml */; };
+		5FB5EA730B4696D000554337 /* FloatingHingeJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FB5EA710B4696D000554337 /* FloatingHingeJoint.cpp */; };
+		5FB5EA740B4696D000554337 /* FloatingHingeJoint.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5FB5EA720B4696D000554337 /* FloatingHingeJoint.h */; };
+		5FB73D7409A7B45700AA8679 /* Contact.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FB73D7209A7B45700AA8679 /* Contact.cpp */; };
+		5FB73D7509A7B45700AA8679 /* Contact.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FB73D7209A7B45700AA8679 /* Contact.cpp */; };
+		5FB73D7609A7B45700AA8679 /* Contact.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5FB73D7309A7B45700AA8679 /* Contact.h */; };
+		5FBB86FB08B63BA800E786C0 /* Joint.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5FBB86F908B63BA800E786C0 /* Joint.h */; };
+		5FBB86FC08B63BA800E786C0 /* Joint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FBB86FA08B63BA800E786C0 /* Joint.cpp */; };
+		5FBB870108B63CC800E786C0 /* NamedObject.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5FBB86FF08B63CC800E786C0 /* NamedObject.h */; };
+		5FBB870208B63CC800E786C0 /* NamedObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FBB870008B63CC800E786C0 /* NamedObject.cpp */; };
+		5FBD1CFC0C365D51001AB5E1 /* Body.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FEBA22A08B5FBF60081E1B3 /* Body.cpp */; };
+		5FBD1CFD0C365D52001AB5E1 /* CappedCylinderGeom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FCDCBD808C21A5900D9DF42 /* CappedCylinderGeom.cpp */; };
+		5FBD1CFF0C365D53001AB5E1 /* Contact.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FB73D7209A7B45700AA8679 /* Contact.cpp */; };
+		5FBD1D000C365D54001AB5E1 /* CyclicDriver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F5C4FC608B2284200240932 /* CyclicDriver.cpp */; };
+		5FBD1D010C365D55001AB5E1 /* CylinderWrapStrap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F61D51008C357D800C86E94 /* CylinderWrapStrap.cpp */; };
+		5FBD1D020C365D55001AB5E1 /* DampedSpringMuscle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FDECAC009697E6A0092556D /* DampedSpringMuscle.cpp */; };
+		5FBD1D030C365D58001AB5E1 /* DataFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F5C4FCA08B2284200240932 /* DataFile.cpp */; };
+		5FBD1D040C365D59001AB5E1 /* DataTarget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F5C4FCC08B2284200240932 /* DataTarget.cpp */; };
+		5FBD1D050C365D6B001AB5E1 /* Environment.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F5C4FD908B2284200240932 /* Environment.cpp */; };
+		5FBD1D060C365D6C001AB5E1 /* ErrorHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F0071420B830E6100E66D05 /* ErrorHandler.cpp */; };
+		5FBD1D070C365D6D001AB5E1 /* Face.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F30BCDB08D863EA001CF1C8 /* Face.cpp */; };
+		5FBD1D080C365D6D001AB5E1 /* FacetedConicSegment.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FAFD24D09726D4600A7C9EC /* FacetedConicSegment.cpp */; };
+		5FBD1D090C365D6E001AB5E1 /* FacetedObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F30BCD308D8631D001CF1C8 /* FacetedObject.cpp */; };
+		5FBD1D0A0C365D6F001AB5E1 /* FacetedSphere.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F28B1BE096AC47E00662246 /* FacetedSphere.cpp */; };
+		5FBD1D0B0C365D70001AB5E1 /* FloatingHingeJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FB5EA710B4696D000554337 /* FloatingHingeJoint.cpp */; };
+		5FBD1D0C0C365D71001AB5E1 /* Geom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FCDCBC208C2153900D9DF42 /* Geom.cpp */; };
+		5FBD1D0D0C365D72001AB5E1 /* GLUIRoutines.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F5C4FD008B2284200240932 /* GLUIRoutines.cpp */; };
+		5FBD1D0E0C365D72001AB5E1 /* GLUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F10E89208BF069D00F55CF8 /* GLUtils.cpp */; };
+		5FBD1D0F0C365D73001AB5E1 /* HingeJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F0B2A4108BC6C7F00274A50 /* HingeJoint.cpp */; };
+		5FBD1D100C365D74001AB5E1 /* Joint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FBB86FA08B63BA800E786C0 /* Joint.cpp */; };
+		5FBD1D110C365D75001AB5E1 /* MAMuscle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F5C4FD508B2284200240932 /* MAMuscle.cpp */; };
+		5FBD1D120C365D76001AB5E1 /* MAMuscleComplete.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FF75D580B9A0F0400865BAD /* MAMuscleComplete.cpp */; };
+		5FBD1D130C365D76001AB5E1 /* MAMuscleExtended.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F406D2309FB726F002E1E8E /* MAMuscleExtended.cpp */; };
+		5FBD1D140C365D77001AB5E1 /* Muscle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F84266A08C38F5F005394BC /* Muscle.cpp */; };
+		5FBD1D150C365D78001AB5E1 /* NamedObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FBB870008B63CC800E786C0 /* NamedObject.cpp */; };
+		5FBD1D160C365D78001AB5E1 /* ObjectiveMain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F5C4FDF08B2284200240932 /* ObjectiveMain.cpp */; };
+		5FBD1D170C365D79001AB5E1 /* PlaneGeom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F30BC6F08D84F17001CF1C8 /* PlaneGeom.cpp */; };
+		5FBD1D180C365D7A001AB5E1 /* Simulation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F5C4FE308B2284200240932 /* Simulation.cpp */; };
+		5FBD1D190C365D7B001AB5E1 /* SphereGeom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FDECADE0969833E0092556D /* SphereGeom.cpp */; };
+		5FBD1D1A0C365D7D001AB5E1 /* StepDriver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F5C4FE608B2284200240932 /* StepDriver.cpp */; };
+		5FBD1D1B0C365D7D001AB5E1 /* Strap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F61D4BD08C3526E00C86E94 /* Strap.cpp */; };
+		5FBD1D1C0C365D7E001AB5E1 /* ThreePointStrap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F61D50A08C3579100C86E94 /* ThreePointStrap.cpp */; };
+		5FBD1D1D0C365D7F001AB5E1 /* TIFFWrite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F5C4FEC08B2284200240932 /* TIFFWrite.cpp */; };
+		5FBD1D1E0C365D80001AB5E1 /* TwoPointStrap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F61D50408C3576B00C86E94 /* TwoPointStrap.cpp */; };
+		5FBD1D1F0C365D81001AB5E1 /* UGMMuscle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F5C4FEE08B2284200240932 /* UGMMuscle.cpp */; };
+		5FBD1D660C365ED1001AB5E1 /* libglui.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F5C502C08B22AA700240932 /* libglui.a */; };
+		5FBD1D890C365EF0001AB5E1 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F5C502008B229A700240932 /* GLUT.framework */; };
+		5FBD1D8A0C365EF2001AB5E1 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F5C502208B229BB00240932 /* OpenGL.framework */; };
+		5FCDCBC308C2153900D9DF42 /* Geom.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5FCDCBC108C2153900D9DF42 /* Geom.h */; };
+		5FCDCBC408C2153900D9DF42 /* Geom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FCDCBC208C2153900D9DF42 /* Geom.cpp */; };
+		5FCDCBD908C21A5900D9DF42 /* CappedCylinderGeom.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5FCDCBD708C21A5900D9DF42 /* CappedCylinderGeom.h */; };
+		5FCDCBDA08C21A5900D9DF42 /* CappedCylinderGeom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FCDCBD808C21A5900D9DF42 /* CappedCylinderGeom.cpp */; };
+		5FCFCFE012BFBD8500095369 /* PositionReporter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FCFCFDE12BFBD8500095369 /* PositionReporter.cpp */; };
+		5FCFCFE112BFBD8500095369 /* PositionReporter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FCFCFDE12BFBD8500095369 /* PositionReporter.cpp */; };
+		5FCFCFE212BFBD8500095369 /* PositionReporter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FCFCFDE12BFBD8500095369 /* PositionReporter.cpp */; };
+		5FCFCFE312BFBD8500095369 /* PositionReporter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FCFCFDE12BFBD8500095369 /* PositionReporter.cpp */; };
+		5FCFCFE412BFBD8500095369 /* PositionReporter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FCFCFDE12BFBD8500095369 /* PositionReporter.cpp */; };
+		5FD4E8480DCF029D001AC233 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FD4E8470DCF029D001AC233 /* CoreServices.framework */; };
+		5FD4E8490DCF029D001AC233 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FD4E8470DCF029D001AC233 /* CoreServices.framework */; };
+		5FD4E84A0DCF029D001AC233 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FD4E8470DCF029D001AC233 /* CoreServices.framework */; };
+		5FD9DBA00C6C40E100D67F27 /* FacetedPolyline.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FD9DB9F0C6C40E100D67F27 /* FacetedPolyline.cpp */; };
+		5FD9DBA10C6C40E100D67F27 /* FacetedPolyline.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5FD9DB9E0C6C40E100D67F27 /* FacetedPolyline.h */; };
+		5FD9DBA20C6C40E100D67F27 /* FacetedPolyline.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FD9DB9F0C6C40E100D67F27 /* FacetedPolyline.cpp */; };
+		5FD9DBA30C6C40E100D67F27 /* FacetedPolyline.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FD9DB9F0C6C40E100D67F27 /* FacetedPolyline.cpp */; };
+		5FDECAC209697E6A0092556D /* DampedSpringMuscle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FDECAC009697E6A0092556D /* DampedSpringMuscle.cpp */; };
+		5FDECAC309697E6A0092556D /* DampedSpringMuscle.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5FDECAC109697E6A0092556D /* DampedSpringMuscle.h */; };
+		5FDECAC409697E6A0092556D /* DampedSpringMuscle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FDECAC009697E6A0092556D /* DampedSpringMuscle.cpp */; };
+		5FDECAE00969833E0092556D /* SphereGeom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FDECADE0969833E0092556D /* SphereGeom.cpp */; };
+		5FDECAE10969833E0092556D /* SphereGeom.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5FDECADF0969833E0092556D /* SphereGeom.h */; };
+		5FDECAE20969833E0092556D /* SphereGeom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FDECADE0969833E0092556D /* SphereGeom.cpp */; };
+		5FE582070F08F19E00E76D16 /* BallJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FE582060F08F19E00E76D16 /* BallJoint.cpp */; };
+		5FE582080F08F19E00E76D16 /* BallJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FE582060F08F19E00E76D16 /* BallJoint.cpp */; };
+		5FE582090F08F19E00E76D16 /* BallJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FE582060F08F19E00E76D16 /* BallJoint.cpp */; };
+		5FE5820A0F08F19E00E76D16 /* BallJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FE582060F08F19E00E76D16 /* BallJoint.cpp */; };
+		5FEBA22B08B5FBF60081E1B3 /* Body.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5FEBA22908B5FBF60081E1B3 /* Body.h */; };
+		5FEBA22C08B5FBF60081E1B3 /* Body.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FEBA22A08B5FBF60081E1B3 /* Body.cpp */; };
+		5FEF743F1008DA58007331ED /* StrokeFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FEF743D1008DA58007331ED /* StrokeFont.cpp */; };
+		5FEF74401008DA58007331ED /* StrokeFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FEF743D1008DA58007331ED /* StrokeFont.cpp */; };
+		5FEF74411008DA58007331ED /* StrokeFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FEF743D1008DA58007331ED /* StrokeFont.cpp */; };
+		5FEF74421008DA58007331ED /* StrokeFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FEF743D1008DA58007331ED /* StrokeFont.cpp */; };
+		5FEF74431008DA58007331ED /* StrokeFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FEF743D1008DA58007331ED /* StrokeFont.cpp */; };
+		5FF75D5A0B9A0F0400865BAD /* MAMuscleComplete.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FF75D580B9A0F0400865BAD /* MAMuscleComplete.cpp */; };
+		5FF75D5B0B9A0F0400865BAD /* MAMuscleComplete.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5FF75D590B9A0F0400865BAD /* MAMuscleComplete.h */; };
+		5FF75D5C0B9A0F0400865BAD /* MAMuscleComplete.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FF75D580B9A0F0400865BAD /* MAMuscleComplete.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		5F7A43EE0F59D30800780DCF /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 8;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+				5F7A43EF0F59D30800780DCF /* CyclicDriver.h in CopyFiles */,
+				5F7A43F00F59D30800780DCF /* DataFile.h in CopyFiles */,
+				5F7A43F10F59D30800780DCF /* DebugControl.h in CopyFiles */,
+				5F7A43F20F59D30800780DCF /* Driver.h in CopyFiles */,
+				5F7A43F40F59D30800780DCF /* PGDMath.h in CopyFiles */,
+				5F7A43F50F59D30800780DCF /* Simulation.h in CopyFiles */,
+				5F7A43F60F59D30800780DCF /* SocketMessages.h in CopyFiles */,
+				5F7A43F70F59D30800780DCF /* StepDriver.h in CopyFiles */,
+				5F7A43F80F59D30800780DCF /* TIFFWrite.h in CopyFiles */,
+				5F7A43F90F59D30800780DCF /* Util.h in CopyFiles */,
+				5F7A43FA0F59D30800780DCF /* Body.h in CopyFiles */,
+				5F7A43FB0F59D30800780DCF /* Joint.h in CopyFiles */,
+				5F7A43FC0F59D30800780DCF /* NamedObject.h in CopyFiles */,
+				5F7A43FD0F59D30800780DCF /* HingeJoint.h in CopyFiles */,
+				5F7A43FE0F59D30800780DCF /* GLUtils.h in CopyFiles */,
+				5F7A43FF0F59D30800780DCF /* Geom.h in CopyFiles */,
+				5F7A44000F59D30800780DCF /* CappedCylinderGeom.h in CopyFiles */,
+				5F7A44010F59D30800780DCF /* Strap.h in CopyFiles */,
+				5F7A44020F59D30800780DCF /* MAMuscle.h in CopyFiles */,
+				5F7A44030F59D30800780DCF /* UGMMuscle.h in CopyFiles */,
+				5F7A44040F59D30800780DCF /* TwoPointStrap.h in CopyFiles */,
+				5F7A44050F59D30800780DCF /* ThreePointStrap.h in CopyFiles */,
+				5F7A44060F59D30800780DCF /* CylinderWrapStrap.h in CopyFiles */,
+				5F7A44070F59D30800780DCF /* Muscle.h in CopyFiles */,
+				5F7A44080F59D30800780DCF /* DataTarget.h in CopyFiles */,
+				5F7A44090F59D30800780DCF /* Run_2005-01-14_10.07.58_BestGenome_0000768.xml in CopyFiles */,
+				5F7A440A0F59D30800780DCF /* PlaneGeom.h in CopyFiles */,
+				5F7A440B0F59D30800780DCF /* Environment.h in CopyFiles */,
+				5F7A440C0F59D30800780DCF /* FacetedObject.h in CopyFiles */,
+				5F7A440D0F59D30800780DCF /* Face.h in CopyFiles */,
+				5F7A440E0F59D30800780DCF /* trex.xml in CopyFiles */,
+				5F7A440F0F59D30800780DCF /* DampedSpringMuscle.h in CopyFiles */,
+				5F7A44100F59D30800780DCF /* SphereGeom.h in CopyFiles */,
+				5F7A44110F59D30800780DCF /* FacetedSphere.h in CopyFiles */,
+				5F7A44120F59D30800780DCF /* FacetedConicSegment.h in CopyFiles */,
+				5F7A44130F59D30800780DCF /* Contact.h in CopyFiles */,
+				5F7A44140F59D30800780DCF /* MAMuscleExtended.h in CopyFiles */,
+				5F7A44150F59D30800780DCF /* SimpleStrap.h in CopyFiles */,
+				5F7A443A0F59D30800780DCF /* FloatingHingeJoint.h in CopyFiles */,
+				5F7A443B0F59D30800780DCF /* ErrorHandler.h in CopyFiles */,
+				5F7A443C0F59D30800780DCF /* MAMuscleComplete.h in CopyFiles */,
+				5F7A443E0F59D30800780DCF /* FacetedPolyline.h in CopyFiles */,
+				5F7A443F0F59D30800780DCF /* NPointStrap.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		8DD76F690486A84900D96B5E /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 8;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+				5F5C4FF308B2284200240932 /* CyclicDriver.h in CopyFiles */,
+				5F5C4FF708B2284200240932 /* DataFile.h in CopyFiles */,
+				5F5C4FFA08B2284200240932 /* DebugControl.h in CopyFiles */,
+				5F5C4FFB08B2284200240932 /* Driver.h in CopyFiles */,
+				5F5C4FFD08B2284200240932 /* GLUIRoutines.h in CopyFiles */,
+				5F5C500C08B2284200240932 /* PGDMath.h in CopyFiles */,
+				5F5C501008B2284200240932 /* Simulation.h in CopyFiles */,
+				5F5C501108B2284200240932 /* SocketMessages.h in CopyFiles */,
+				5F5C501308B2284200240932 /* StepDriver.h in CopyFiles */,
+				5F5C501908B2284200240932 /* TIFFWrite.h in CopyFiles */,
+				5F5C501D08B2284200240932 /* Util.h in CopyFiles */,
+				5FEBA22B08B5FBF60081E1B3 /* Body.h in CopyFiles */,
+				5FBB86FB08B63BA800E786C0 /* Joint.h in CopyFiles */,
+				5FBB870108B63CC800E786C0 /* NamedObject.h in CopyFiles */,
+				5F0B2A4208BC6C7F00274A50 /* HingeJoint.h in CopyFiles */,
+				5F10E89308BF069D00F55CF8 /* GLUtils.h in CopyFiles */,
+				5FCDCBC308C2153900D9DF42 /* Geom.h in CopyFiles */,
+				5FCDCBD908C21A5900D9DF42 /* CappedCylinderGeom.h in CopyFiles */,
+				5F61D4BE08C3526E00C86E94 /* Strap.h in CopyFiles */,
+				5F61D4DE08C354A200C86E94 /* MAMuscle.h in CopyFiles */,
+				5F61D4EC08C355A800C86E94 /* UGMMuscle.h in CopyFiles */,
+				5F61D50508C3576B00C86E94 /* TwoPointStrap.h in CopyFiles */,
+				5F61D50B08C3579100C86E94 /* ThreePointStrap.h in CopyFiles */,
+				5F61D51108C357D800C86E94 /* CylinderWrapStrap.h in CopyFiles */,
+				5F84266B08C38F5F005394BC /* Muscle.h in CopyFiles */,
+				5F62AE9108CE219300FA8F33 /* DataTarget.h in CopyFiles */,
+				5F7AEBB108D5871C0049AA22 /* Run_2005-01-14_10.07.58_BestGenome_0000768.xml in CopyFiles */,
+				5F30BC7208D84F17001CF1C8 /* PlaneGeom.h in CopyFiles */,
+				5F30BC8008D85150001CF1C8 /* Environment.h in CopyFiles */,
+				5F30BCD608D8631D001CF1C8 /* FacetedObject.h in CopyFiles */,
+				5F30BCDE08D863EA001CF1C8 /* Face.h in CopyFiles */,
+				5FB5874908FA59E0009364CD /* trex.xml in CopyFiles */,
+				5FDECAC309697E6A0092556D /* DampedSpringMuscle.h in CopyFiles */,
+				5FDECAE10969833E0092556D /* SphereGeom.h in CopyFiles */,
+				5F28B1C0096AC47E00662246 /* FacetedSphere.h in CopyFiles */,
+				5FAFD25109726D4600A7C9EC /* FacetedConicSegment.h in CopyFiles */,
+				5FB73D7609A7B45700AA8679 /* Contact.h in CopyFiles */,
+				5F406D2809FB7270002E1E8E /* MAMuscleExtended.h in CopyFiles */,
+				5F406D2909FB7270002E1E8E /* SimpleStrap.h in CopyFiles */,
+				5FB5EA740B4696D000554337 /* FloatingHingeJoint.h in CopyFiles */,
+				5F0071430B830E6100E66D05 /* ErrorHandler.h in CopyFiles */,
+				5FF75D5B0B9A0F0400865BAD /* MAMuscleComplete.h in CopyFiles */,
+				5FD9DBA10C6C40E100D67F27 /* FacetedPolyline.h in CopyFiles */,
+				5F96E9E50CD36772001A821B /* NPointStrap.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		5F0071410B830E6100E66D05 /* ErrorHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ErrorHandler.h; sourceTree = "<group>"; };
+		5F0071420B830E6100E66D05 /* ErrorHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ErrorHandler.cpp; sourceTree = "<group>"; };
+		5F0B2A4008BC6C7F00274A50 /* HingeJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HingeJoint.h; sourceTree = "<group>"; };
+		5F0B2A4108BC6C7F00274A50 /* HingeJoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HingeJoint.cpp; sourceTree = "<group>"; };
+		5F10E89108BF069D00F55CF8 /* GLUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLUtils.h; sourceTree = "<group>"; };
+		5F10E89208BF069D00F55CF8 /* GLUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GLUtils.cpp; sourceTree = "<group>"; };
+		5F28B1BD096AC47E00662246 /* FacetedSphere.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacetedSphere.h; sourceTree = "<group>"; };
+		5F28B1BE096AC47E00662246 /* FacetedSphere.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FacetedSphere.cpp; sourceTree = "<group>"; };
+		5F30BC6F08D84F17001CF1C8 /* PlaneGeom.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = PlaneGeom.cpp; sourceTree = "<group>"; };
+		5F30BC7008D84F17001CF1C8 /* PlaneGeom.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = PlaneGeom.h; sourceTree = "<group>"; };
+		5F30BCD308D8631D001CF1C8 /* FacetedObject.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = FacetedObject.cpp; sourceTree = "<group>"; };
+		5F30BCD408D8631D001CF1C8 /* FacetedObject.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = FacetedObject.h; sourceTree = "<group>"; };
+		5F30BCDB08D863EA001CF1C8 /* Face.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = Face.cpp; sourceTree = "<group>"; };
+		5F30BCDC08D863EA001CF1C8 /* Face.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Face.h; sourceTree = "<group>"; };
+		5F36C5600E3CE61100D0D657 /* GaitSymODE UDP */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "GaitSymODE UDP"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5F36C5640E3CE64000D0D657 /* TCP.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TCP.cpp; sourceTree = "<group>"; };
+		5F36C5650E3CE64000D0D657 /* TCP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCP.h; sourceTree = "<group>"; };
+		5F406D2309FB726F002E1E8E /* MAMuscleExtended.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = MAMuscleExtended.cpp; sourceTree = "<group>"; };
+		5F406D2409FB7270002E1E8E /* MAMuscleExtended.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = MAMuscleExtended.h; sourceTree = "<group>"; };
+		5F406D2509FB7270002E1E8E /* SimpleStrap.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = SimpleStrap.h; sourceTree = "<group>"; };
+		5F42E9CE08BA30F0009BDAD4 /* human.xml */ = {isa = PBXFileReference; explicitFileType = text.xml; fileEncoding = 30; path = human.xml; sourceTree = "<group>"; };
+		5F42E9CF08BA30F0009BDAD4 /* orang.xml */ = {isa = PBXFileReference; explicitFileType = text.xml; fileEncoding = 30; path = orang.xml; sourceTree = "<group>"; };
+		5F5C4FC608B2284200240932 /* CyclicDriver.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = CyclicDriver.cpp; sourceTree = "<group>"; };
+		5F5C4FC708B2284200240932 /* CyclicDriver.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CyclicDriver.h; sourceTree = "<group>"; };
+		5F5C4FCA08B2284200240932 /* DataFile.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = DataFile.cpp; sourceTree = "<group>"; };
+		5F5C4FCB08B2284200240932 /* DataFile.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DataFile.h; sourceTree = "<group>"; };
+		5F5C4FCC08B2284200240932 /* DataTarget.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = DataTarget.cpp; sourceTree = "<group>"; };
+		5F5C4FCD08B2284200240932 /* DataTarget.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DataTarget.h; sourceTree = "<group>"; };
+		5F5C4FCE08B2284200240932 /* DebugControl.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DebugControl.h; sourceTree = "<group>"; };
+		5F5C4FCF08B2284200240932 /* Driver.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Driver.h; sourceTree = "<group>"; };
+		5F5C4FD008B2284200240932 /* GLUIRoutines.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = GLUIRoutines.cpp; sourceTree = "<group>"; };
+		5F5C4FD108B2284200240932 /* GLUIRoutines.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = GLUIRoutines.h; sourceTree = "<group>"; };
+		5F5C4FD508B2284200240932 /* MAMuscle.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = MAMuscle.cpp; sourceTree = "<group>"; };
+		5F5C4FD608B2284200240932 /* MAMuscle.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = MAMuscle.h; sourceTree = "<group>"; };
+		5F5C4FD908B2284200240932 /* Environment.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = Environment.cpp; sourceTree = "<group>"; };
+		5F5C4FDA08B2284200240932 /* Environment.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Environment.h; sourceTree = "<group>"; };
+		5F5C4FDF08B2284200240932 /* ObjectiveMain.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectiveMain.cpp; sourceTree = "<group>"; };
+		5F5C4FE008B2284200240932 /* PGDMath.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = PGDMath.h; sourceTree = "<group>"; };
+		5F5C4FE308B2284200240932 /* Simulation.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = Simulation.cpp; sourceTree = "<group>"; };
+		5F5C4FE408B2284200240932 /* Simulation.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Simulation.h; sourceTree = "<group>"; };
+		5F5C4FE508B2284200240932 /* SocketMessages.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = SocketMessages.h; sourceTree = "<group>"; };
+		5F5C4FE608B2284200240932 /* StepDriver.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = StepDriver.cpp; sourceTree = "<group>"; };
+		5F5C4FE708B2284200240932 /* StepDriver.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = StepDriver.h; sourceTree = "<group>"; };
+		5F5C4FEC08B2284200240932 /* TIFFWrite.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = TIFFWrite.cpp; sourceTree = "<group>"; };
+		5F5C4FED08B2284200240932 /* TIFFWrite.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = TIFFWrite.h; sourceTree = "<group>"; };
+		5F5C4FEE08B2284200240932 /* UGMMuscle.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = UGMMuscle.cpp; sourceTree = "<group>"; };
+		5F5C4FEF08B2284200240932 /* UGMMuscle.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = UGMMuscle.h; sourceTree = "<group>"; };
+		5F5C4FF108B2284200240932 /* Util.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Util.h; sourceTree = "<group>"; };
+		5F5C502008B229A700240932 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = /System/Library/Frameworks/GLUT.framework; sourceTree = "<absolute>"; };
+		5F5C502208B229BB00240932 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
+		5F5C502C08B22AA700240932 /* libglui.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libglui.a; path = ../../lib/libglui.a; sourceTree = SOURCE_ROOT; };
+		5F61D4BC08C3526E00C86E94 /* Strap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Strap.h; sourceTree = "<group>"; };
+		5F61D4BD08C3526E00C86E94 /* Strap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Strap.cpp; sourceTree = "<group>"; };
+		5F61D50308C3576B00C86E94 /* TwoPointStrap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwoPointStrap.h; sourceTree = "<group>"; };
+		5F61D50408C3576B00C86E94 /* TwoPointStrap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TwoPointStrap.cpp; sourceTree = "<group>"; };
+		5F61D50908C3579100C86E94 /* ThreePointStrap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThreePointStrap.h; sourceTree = "<group>"; };
+		5F61D50A08C3579100C86E94 /* ThreePointStrap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ThreePointStrap.cpp; sourceTree = "<group>"; };
+		5F61D50F08C357D800C86E94 /* CylinderWrapStrap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CylinderWrapStrap.h; sourceTree = "<group>"; };
+		5F61D51008C357D800C86E94 /* CylinderWrapStrap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CylinderWrapStrap.cpp; sourceTree = "<group>"; };
+		5F7674F312AA3C2400E0B191 /* libode.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libode.a; path = ../../lib/libode.a; sourceTree = SOURCE_ROOT; };
+		5F76751F12AA3ED900E0B191 /* DataTargetQuaternion.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DataTargetQuaternion.cpp; sourceTree = "<group>"; };
+		5F76752012AA3ED900E0B191 /* DataTargetQuaternion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataTargetQuaternion.h; sourceTree = "<group>"; };
+		5F76752112AA3ED900E0B191 /* DataTargetScalar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DataTargetScalar.cpp; sourceTree = "<group>"; };
+		5F76752212AA3ED900E0B191 /* DataTargetScalar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataTargetScalar.h; sourceTree = "<group>"; };
+		5F76752312AA3ED900E0B191 /* DataTargetVector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DataTargetVector.cpp; sourceTree = "<group>"; };
+		5F76752412AA3ED900E0B191 /* DataTargetVector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataTargetVector.h; sourceTree = "<group>"; };
+		5F76752512AA3ED900E0B191 /* Driver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Driver.cpp; sourceTree = "<group>"; };
+		5F76752612AA3ED900E0B191 /* ExpressionFolder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExpressionFolder.cpp; sourceTree = "<group>"; };
+		5F76752712AA3ED900E0B191 /* ExpressionFolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpressionFolder.h; sourceTree = "<group>"; };
+		5F76752812AA3ED900E0B191 /* ExpressionFunTransform3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExpressionFunTransform3D.cpp; sourceTree = "<group>"; };
+		5F76752912AA3ED900E0B191 /* ExpressionFunTransform3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpressionFunTransform3D.h; sourceTree = "<group>"; };
+		5F76752A12AA3ED900E0B191 /* ExpressionMat.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExpressionMat.cpp; sourceTree = "<group>"; };
+		5F76752B12AA3ED900E0B191 /* ExpressionMat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpressionMat.h; sourceTree = "<group>"; };
+		5F76752C12AA3ED900E0B191 /* ExpressionParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExpressionParser.cpp; sourceTree = "<group>"; };
+		5F76752D12AA3ED900E0B191 /* ExpressionParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpressionParser.h; sourceTree = "<group>"; };
+		5F76752E12AA3ED900E0B191 /* ExpressionRef.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExpressionRef.cpp; sourceTree = "<group>"; };
+		5F76752F12AA3ED900E0B191 /* ExpressionRef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpressionRef.h; sourceTree = "<group>"; };
+		5F76753012AA3ED900E0B191 /* ExpressionVar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExpressionVar.cpp; sourceTree = "<group>"; };
+		5F76753112AA3ED900E0B191 /* ExpressionVar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpressionVar.h; sourceTree = "<group>"; };
+		5F76753212AA3ED900E0B191 /* ExpressionVec.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExpressionVec.cpp; sourceTree = "<group>"; };
+		5F76753312AA3ED900E0B191 /* ExpressionVec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpressionVec.h; sourceTree = "<group>"; };
+		5F76753412AA3ED900E0B191 /* Marker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Marker.cpp; sourceTree = "<group>"; };
+		5F76753512AA3ED900E0B191 /* Marker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Marker.h; sourceTree = "<group>"; };
+		5F76753612AA3ED900E0B191 /* MPIStuff.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPIStuff.h; sourceTree = "<group>"; };
+		5F76753712AA3ED900E0B191 /* ObjectiveMain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectiveMain.h; sourceTree = "<group>"; };
+		5F76753812AA3ED900E0B191 /* OpenCLRoutines.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpenCLRoutines.cpp; sourceTree = "<group>"; };
+		5F76753912AA3ED900E0B191 /* OpenCLRoutines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenCLRoutines.h; sourceTree = "<group>"; };
+		5F76753A12AA3ED900E0B191 /* RayGeom.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RayGeom.cpp; sourceTree = "<group>"; };
+		5F76753B12AA3ED900E0B191 /* RayGeom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RayGeom.h; sourceTree = "<group>"; };
+		5F76753C12AA3ED900E0B191 /* Reporter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Reporter.cpp; sourceTree = "<group>"; };
+		5F76753D12AA3ED900E0B191 /* Reporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reporter.h; sourceTree = "<group>"; };
+		5F76753E12AA3ED900E0B191 /* TorqueReporter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TorqueReporter.cpp; sourceTree = "<group>"; };
+		5F76753F12AA3ED900E0B191 /* TorqueReporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TorqueReporter.h; sourceTree = "<group>"; };
+		5F76754012AA3ED900E0B191 /* TrimeshGeom.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TrimeshGeom.cpp; sourceTree = "<group>"; };
+		5F76754112AA3ED900E0B191 /* TrimeshGeom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrimeshGeom.h; sourceTree = "<group>"; };
+		5F76754212AA3ED900E0B191 /* XMLConverter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XMLConverter.cpp; sourceTree = "<group>"; };
+		5F76754312AA3ED900E0B191 /* XMLConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLConverter.h; sourceTree = "<group>"; };
+		5F7A44440F59D30800780DCF /* GaitSymODE */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = GaitSymODE; sourceTree = BUILT_PRODUCTS_DIR; };
+		5F7A447A0F59D43300780DCF /* IrrlichtRoutines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IrrlichtRoutines.h; sourceTree = "<group>"; };
+		5F7A447B0F59D43300780DCF /* IrrlichtRoutines.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IrrlichtRoutines.cpp; sourceTree = "<group>"; };
+		5F7A461E0F59DCDA00780DCF /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
+		5F7A46240F59DCE200780DCF /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
+		5F7A462A0F59DCFA00780DCF /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		5F7AEBB008D5871C0049AA22 /* Run_2005-01-14_10.07.58_BestGenome_0000768.xml */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = "Run_2005-01-14_10.07.58_BestGenome_0000768.xml"; sourceTree = "<group>"; };
+		5F84266908C38F5F005394BC /* Muscle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Muscle.h; sourceTree = "<group>"; };
+		5F84266A08C38F5F005394BC /* Muscle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Muscle.cpp; sourceTree = "<group>"; };
+		5F85B43A0DBCDA0600720E86 /* libgsl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgsl.a; path = ../../lib/libgsl.a; sourceTree = SOURCE_ROOT; };
+		5F85B43C0DBCDA0600720E86 /* libxml2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libxml2.a; path = ../../lib/libxml2.a; sourceTree = SOURCE_ROOT; };
+		5F8AACAA08DACE2E0093A385 /* GaitSymODE Socket */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "GaitSymODE Socket"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5F9603350F6C4BF80089806D /* MAMuscleExtendedDamped.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAMuscleExtendedDamped.h; sourceTree = "<group>"; };
+		5F9603360F6C4BF80089806D /* MAMuscleExtendedDamped.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MAMuscleExtendedDamped.cpp; sourceTree = "<group>"; };
+		5F96E9E20CD36772001A821B /* NPointStrap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPointStrap.h; sourceTree = "<group>"; };
+		5F96E9E30CD36772001A821B /* NPointStrap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NPointStrap.cpp; sourceTree = "<group>"; };
+		5F9C3ED20DC705DC008A05FC /* fec.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fec.cpp; sourceTree = "<group>"; };
+		5F9C3ED30DC705DC008A05FC /* fec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fec.h; sourceTree = "<group>"; };
+		5FA8D5680C4651F000F66EBA /* Util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Util.cpp; sourceTree = "<group>"; };
+		5FAFD24D09726D4600A7C9EC /* FacetedConicSegment.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = FacetedConicSegment.cpp; sourceTree = "<group>"; };
+		5FAFD24E09726D4600A7C9EC /* FacetedConicSegment.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = FacetedConicSegment.h; sourceTree = "<group>"; };
+		5FB186CE0E851FCC0005243D /* FixedJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FixedJoint.h; sourceTree = "<group>"; };
+		5FB186CF0E851FCC0005243D /* FixedJoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FixedJoint.cpp; sourceTree = "<group>"; };
+		5FB1B72E0C382A6500C0EA2D /* UDP.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = UDP.cpp; sourceTree = "<group>"; };
+		5FB1B72F0C382A6500C0EA2D /* UDP.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = UDP.h; sourceTree = "<group>"; };
+		5FB5874708FA59D1009364CD /* trex.xml */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = trex.xml; sourceTree = "<group>"; };
+		5FB5EA710B4696D000554337 /* FloatingHingeJoint.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = FloatingHingeJoint.cpp; sourceTree = "<group>"; };
+		5FB5EA720B4696D000554337 /* FloatingHingeJoint.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = FloatingHingeJoint.h; sourceTree = "<group>"; };
+		5FB73D7209A7B45700AA8679 /* Contact.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = Contact.cpp; sourceTree = "<group>"; };
+		5FB73D7309A7B45700AA8679 /* Contact.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Contact.h; sourceTree = "<group>"; };
+		5FBB86F908B63BA800E786C0 /* Joint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Joint.h; sourceTree = "<group>"; };
+		5FBB86FA08B63BA800E786C0 /* Joint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Joint.cpp; sourceTree = "<group>"; };
+		5FBB86FF08B63CC800E786C0 /* NamedObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NamedObject.h; sourceTree = "<group>"; };
+		5FBB870008B63CC800E786C0 /* NamedObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NamedObject.cpp; sourceTree = "<group>"; };
+		5FBD1CFA0C365D3E001AB5E1 /* GaitSymODE UDP */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "GaitSymODE UDP"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5FCDCBC108C2153900D9DF42 /* Geom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Geom.h; sourceTree = "<group>"; };
+		5FCDCBC208C2153900D9DF42 /* Geom.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Geom.cpp; sourceTree = "<group>"; };
+		5FCDCBD708C21A5900D9DF42 /* CappedCylinderGeom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CappedCylinderGeom.h; sourceTree = "<group>"; };
+		5FCDCBD808C21A5900D9DF42 /* CappedCylinderGeom.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CappedCylinderGeom.cpp; sourceTree = "<group>"; };
+		5FCFCFDE12BFBD8500095369 /* PositionReporter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PositionReporter.cpp; sourceTree = "<group>"; };
+		5FCFCFDF12BFBD8500095369 /* PositionReporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PositionReporter.h; sourceTree = "<group>"; };
+		5FD4E8470DCF029D001AC233 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
+		5FD9DB9E0C6C40E100D67F27 /* FacetedPolyline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacetedPolyline.h; sourceTree = "<group>"; };
+		5FD9DB9F0C6C40E100D67F27 /* FacetedPolyline.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FacetedPolyline.cpp; sourceTree = "<group>"; };
+		5FDECAC009697E6A0092556D /* DampedSpringMuscle.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = DampedSpringMuscle.cpp; sourceTree = "<group>"; };
+		5FDECAC109697E6A0092556D /* DampedSpringMuscle.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DampedSpringMuscle.h; sourceTree = "<group>"; };
+		5FDECADE0969833E0092556D /* SphereGeom.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = SphereGeom.cpp; sourceTree = "<group>"; };
+		5FDECADF0969833E0092556D /* SphereGeom.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = SphereGeom.h; sourceTree = "<group>"; };
+		5FE582050F08F19E00E76D16 /* BallJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BallJoint.h; sourceTree = "<group>"; };
+		5FE582060F08F19E00E76D16 /* BallJoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BallJoint.cpp; sourceTree = "<group>"; };
+		5FEBA22908B5FBF60081E1B3 /* Body.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Body.h; sourceTree = "<group>"; };
+		5FEBA22A08B5FBF60081E1B3 /* Body.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Body.cpp; sourceTree = "<group>"; };
+		5FEF743D1008DA58007331ED /* StrokeFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StrokeFont.cpp; sourceTree = "<group>"; };
+		5FEF743E1008DA58007331ED /* StrokeFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StrokeFont.h; sourceTree = "<group>"; };
+		5FF75D580B9A0F0400865BAD /* MAMuscleComplete.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = MAMuscleComplete.cpp; sourceTree = "<group>"; };
+		5FF75D590B9A0F0400865BAD /* MAMuscleComplete.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = MAMuscleComplete.h; sourceTree = "<group>"; };
+		8DD76F6C0486A84900D96B5E /* GaitSymODE */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = GaitSymODE; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		5F36C5540E3CE61100D0D657 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5F36C5550E3CE61100D0D657 /* libglui.a in Frameworks */,
+				5F36C5560E3CE61100D0D657 /* GLUT.framework in Frameworks */,
+				5F36C5570E3CE61100D0D657 /* OpenGL.framework in Frameworks */,
+				5F36C5580E3CE61100D0D657 /* libgsl.a in Frameworks */,
+				5F36C55A0E3CE61100D0D657 /* libxml2.a in Frameworks */,
+				5F36C55B0E3CE61100D0D657 /* CoreServices.framework in Frameworks */,
+				5F7A46220F59DCDA00780DCF /* IOKit.framework in Frameworks */,
+				5F7A46280F59DCE200780DCF /* Carbon.framework in Frameworks */,
+				5F7A462E0F59DCFA00780DCF /* Cocoa.framework in Frameworks */,
+				5F7674F712AA3C2400E0B191 /* libode.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5F7A43E50F59D30800780DCF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5F7A43E60F59D30800780DCF /* GLUT.framework in Frameworks */,
+				5F7A43E70F59D30800780DCF /* OpenGL.framework in Frameworks */,
+				5F7A43EA0F59D30800780DCF /* libgsl.a in Frameworks */,
+				5F7A43EC0F59D30800780DCF /* libxml2.a in Frameworks */,
+				5F7A43ED0F59D30800780DCF /* CoreServices.framework in Frameworks */,
+				5F7A446F0F59D3DE00780DCF /* libglui.a in Frameworks */,
+				5F7A46210F59DCDA00780DCF /* IOKit.framework in Frameworks */,
+				5F7A46270F59DCE200780DCF /* Carbon.framework in Frameworks */,
+				5F7A462D0F59DCFA00780DCF /* Cocoa.framework in Frameworks */,
+				5F7674F812AA3C2400E0B191 /* libode.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5F8AACA808DACE2E0093A385 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5F8AACC808DACE990093A385 /* GLUT.framework in Frameworks */,
+				5F8AACC908DACE9A0093A385 /* libglui.a in Frameworks */,
+				5F8AACCF08DACE9E0093A385 /* OpenGL.framework in Frameworks */,
+				5F85B43D0DBCDA0600720E86 /* libgsl.a in Frameworks */,
+				5F85B43F0DBCDA0600720E86 /* libxml2.a in Frameworks */,
+				5FD4E84A0DCF029D001AC233 /* CoreServices.framework in Frameworks */,
+				5F7A46200F59DCDA00780DCF /* IOKit.framework in Frameworks */,
+				5F7A46260F59DCE200780DCF /* Carbon.framework in Frameworks */,
+				5F7A462C0F59DCFA00780DCF /* Cocoa.framework in Frameworks */,
+				5F7674F512AA3C2400E0B191 /* libode.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5FBD1CF80C365D3E001AB5E1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5FBD1D660C365ED1001AB5E1 /* libglui.a in Frameworks */,
+				5FBD1D890C365EF0001AB5E1 /* GLUT.framework in Frameworks */,
+				5FBD1D8A0C365EF2001AB5E1 /* OpenGL.framework in Frameworks */,
+				5F85B4400DBCDA0600720E86 /* libgsl.a in Frameworks */,
+				5F85B4420DBCDA0600720E86 /* libxml2.a in Frameworks */,
+				5FD4E8480DCF029D001AC233 /* CoreServices.framework in Frameworks */,
+				5F7A461F0F59DCDA00780DCF /* IOKit.framework in Frameworks */,
+				5F7A46250F59DCE200780DCF /* Carbon.framework in Frameworks */,
+				5F7A462B0F59DCFA00780DCF /* Cocoa.framework in Frameworks */,
+				5F7674F612AA3C2400E0B191 /* libode.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8DD76F660486A84900D96B5E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5F5C502108B229A700240932 /* GLUT.framework in Frameworks */,
+				5F5C502308B229BB00240932 /* OpenGL.framework in Frameworks */,
+				5F5C502D08B22AA700240932 /* libglui.a in Frameworks */,
+				5F85B4430DBCDA0600720E86 /* libgsl.a in Frameworks */,
+				5F85B4450DBCDA0600720E86 /* libxml2.a in Frameworks */,
+				5FD4E8490DCF029D001AC233 /* CoreServices.framework in Frameworks */,
+				5F7A46230F59DCDA00780DCF /* IOKit.framework in Frameworks */,
+				5F7A46290F59DCE200780DCF /* Carbon.framework in Frameworks */,
+				5F7A462F0F59DCFA00780DCF /* Cocoa.framework in Frameworks */,
+				5F7674F412AA3C2400E0B191 /* libode.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		08FB7794FE84155DC02AAC07 /* GaitSymODE */ = {
+			isa = PBXGroup;
+			children = (
+				5F5C4FC508B2284200240932 /* src */,
+				5F5C501F08B228A400240932 /* lib */,
+				5F42E9CC08BA30D3009BDAD4 /* xml */,
+				1AB674ADFE9D54B511CA2CBB /* Products */,
+			);
+			name = GaitSymODE;
+			sourceTree = "<group>";
+		};
+		1AB674ADFE9D54B511CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8DD76F6C0486A84900D96B5E /* GaitSymODE */,
+				5F8AACAA08DACE2E0093A385 /* GaitSymODE Socket */,
+				5FBD1CFA0C365D3E001AB5E1 /* GaitSymODE UDP */,
+				5F36C5600E3CE61100D0D657 /* GaitSymODE UDP */,
+				5F7A44440F59D30800780DCF /* GaitSymODE */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		5F42E9CC08BA30D3009BDAD4 /* xml */ = {
+			isa = PBXGroup;
+			children = (
+				5FB5874708FA59D1009364CD /* trex.xml */,
+				5F7AEBB008D5871C0049AA22 /* Run_2005-01-14_10.07.58_BestGenome_0000768.xml */,
+				5F42E9CE08BA30F0009BDAD4 /* human.xml */,
+				5F42E9CF08BA30F0009BDAD4 /* orang.xml */,
+			);
+			path = xml;
+			sourceTree = "<group>";
+		};
+		5F5C4FC508B2284200240932 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				5FCFCFDE12BFBD8500095369 /* PositionReporter.cpp */,
+				5FCFCFDF12BFBD8500095369 /* PositionReporter.h */,
+				5F76751F12AA3ED900E0B191 /* DataTargetQuaternion.cpp */,
+				5F76752012AA3ED900E0B191 /* DataTargetQuaternion.h */,
+				5F76752112AA3ED900E0B191 /* DataTargetScalar.cpp */,
+				5F76752212AA3ED900E0B191 /* DataTargetScalar.h */,
+				5F76752312AA3ED900E0B191 /* DataTargetVector.cpp */,
+				5F76752412AA3ED900E0B191 /* DataTargetVector.h */,
+				5F76752512AA3ED900E0B191 /* Driver.cpp */,
+				5F76752612AA3ED900E0B191 /* ExpressionFolder.cpp */,
+				5F76752712AA3ED900E0B191 /* ExpressionFolder.h */,
+				5F76752812AA3ED900E0B191 /* ExpressionFunTransform3D.cpp */,
+				5F76752912AA3ED900E0B191 /* ExpressionFunTransform3D.h */,
+				5F76752A12AA3ED900E0B191 /* ExpressionMat.cpp */,
+				5F76752B12AA3ED900E0B191 /* ExpressionMat.h */,
+				5F76752C12AA3ED900E0B191 /* ExpressionParser.cpp */,
+				5F76752D12AA3ED900E0B191 /* ExpressionParser.h */,
+				5F76752E12AA3ED900E0B191 /* ExpressionRef.cpp */,
+				5F76752F12AA3ED900E0B191 /* ExpressionRef.h */,
+				5F76753012AA3ED900E0B191 /* ExpressionVar.cpp */,
+				5F76753112AA3ED900E0B191 /* ExpressionVar.h */,
+				5F76753212AA3ED900E0B191 /* ExpressionVec.cpp */,
+				5F76753312AA3ED900E0B191 /* ExpressionVec.h */,
+				5F76753412AA3ED900E0B191 /* Marker.cpp */,
+				5F76753512AA3ED900E0B191 /* Marker.h */,
+				5F76753612AA3ED900E0B191 /* MPIStuff.h */,
+				5F76753712AA3ED900E0B191 /* ObjectiveMain.h */,
+				5F76753812AA3ED900E0B191 /* OpenCLRoutines.cpp */,
+				5F76753912AA3ED900E0B191 /* OpenCLRoutines.h */,
+				5F76753A12AA3ED900E0B191 /* RayGeom.cpp */,
+				5F76753B12AA3ED900E0B191 /* RayGeom.h */,
+				5F76753C12AA3ED900E0B191 /* Reporter.cpp */,
+				5F76753D12AA3ED900E0B191 /* Reporter.h */,
+				5F76753E12AA3ED900E0B191 /* TorqueReporter.cpp */,
+				5F76753F12AA3ED900E0B191 /* TorqueReporter.h */,
+				5F76754012AA3ED900E0B191 /* TrimeshGeom.cpp */,
+				5F76754112AA3ED900E0B191 /* TrimeshGeom.h */,
+				5F76754212AA3ED900E0B191 /* XMLConverter.cpp */,
+				5F76754312AA3ED900E0B191 /* XMLConverter.h */,
+				5FE582050F08F19E00E76D16 /* BallJoint.h */,
+				5FE582060F08F19E00E76D16 /* BallJoint.cpp */,
+				5FEBA22908B5FBF60081E1B3 /* Body.h */,
+				5FEBA22A08B5FBF60081E1B3 /* Body.cpp */,
+				5FCDCBD708C21A5900D9DF42 /* CappedCylinderGeom.h */,
+				5FCDCBD808C21A5900D9DF42 /* CappedCylinderGeom.cpp */,
+				5FB73D7209A7B45700AA8679 /* Contact.cpp */,
+				5FB73D7309A7B45700AA8679 /* Contact.h */,
+				5F5C4FC708B2284200240932 /* CyclicDriver.h */,
+				5F5C4FC608B2284200240932 /* CyclicDriver.cpp */,
+				5F61D50F08C357D800C86E94 /* CylinderWrapStrap.h */,
+				5F61D51008C357D800C86E94 /* CylinderWrapStrap.cpp */,
+				5FDECAC009697E6A0092556D /* DampedSpringMuscle.cpp */,
+				5FDECAC109697E6A0092556D /* DampedSpringMuscle.h */,
+				5F5C4FCB08B2284200240932 /* DataFile.h */,
+				5F5C4FCA08B2284200240932 /* DataFile.cpp */,
+				5F5C4FCD08B2284200240932 /* DataTarget.h */,
+				5F5C4FCC08B2284200240932 /* DataTarget.cpp */,
+				5F5C4FCE08B2284200240932 /* DebugControl.h */,
+				5F5C4FCF08B2284200240932 /* Driver.h */,
+				5F5C4FDA08B2284200240932 /* Environment.h */,
+				5F5C4FD908B2284200240932 /* Environment.cpp */,
+				5F0071410B830E6100E66D05 /* ErrorHandler.h */,
+				5F0071420B830E6100E66D05 /* ErrorHandler.cpp */,
+				5F30BCDB08D863EA001CF1C8 /* Face.cpp */,
+				5F30BCDC08D863EA001CF1C8 /* Face.h */,
+				5FAFD24D09726D4600A7C9EC /* FacetedConicSegment.cpp */,
+				5FAFD24E09726D4600A7C9EC /* FacetedConicSegment.h */,
+				5F30BCD308D8631D001CF1C8 /* FacetedObject.cpp */,
+				5F30BCD408D8631D001CF1C8 /* FacetedObject.h */,
+				5FD9DB9F0C6C40E100D67F27 /* FacetedPolyline.cpp */,
+				5FD9DB9E0C6C40E100D67F27 /* FacetedPolyline.h */,
+				5F28B1BD096AC47E00662246 /* FacetedSphere.h */,
+				5F28B1BE096AC47E00662246 /* FacetedSphere.cpp */,
+				5FB186CE0E851FCC0005243D /* FixedJoint.h */,
+				5FB186CF0E851FCC0005243D /* FixedJoint.cpp */,
+				5FB5EA710B4696D000554337 /* FloatingHingeJoint.cpp */,
+				5FB5EA720B4696D000554337 /* FloatingHingeJoint.h */,
+				5FCDCBC108C2153900D9DF42 /* Geom.h */,
+				5FCDCBC208C2153900D9DF42 /* Geom.cpp */,
+				5F5C4FD108B2284200240932 /* GLUIRoutines.h */,
+				5F5C4FD008B2284200240932 /* GLUIRoutines.cpp */,
+				5F10E89108BF069D00F55CF8 /* GLUtils.h */,
+				5F10E89208BF069D00F55CF8 /* GLUtils.cpp */,
+				5F0B2A4008BC6C7F00274A50 /* HingeJoint.h */,
+				5F0B2A4108BC6C7F00274A50 /* HingeJoint.cpp */,
+				5F7A447A0F59D43300780DCF /* IrrlichtRoutines.h */,
+				5F7A447B0F59D43300780DCF /* IrrlichtRoutines.cpp */,
+				5FBB86F908B63BA800E786C0 /* Joint.h */,
+				5FBB86FA08B63BA800E786C0 /* Joint.cpp */,
+				5F5C4FD608B2284200240932 /* MAMuscle.h */,
+				5F5C4FD508B2284200240932 /* MAMuscle.cpp */,
+				5FF75D590B9A0F0400865BAD /* MAMuscleComplete.h */,
+				5FF75D580B9A0F0400865BAD /* MAMuscleComplete.cpp */,
+				5F406D2409FB7270002E1E8E /* MAMuscleExtended.h */,
+				5F406D2309FB726F002E1E8E /* MAMuscleExtended.cpp */,
+				5F9603350F6C4BF80089806D /* MAMuscleExtendedDamped.h */,
+				5F9603360F6C4BF80089806D /* MAMuscleExtendedDamped.cpp */,
+				5F84266908C38F5F005394BC /* Muscle.h */,
+				5F84266A08C38F5F005394BC /* Muscle.cpp */,
+				5FBB86FF08B63CC800E786C0 /* NamedObject.h */,
+				5FBB870008B63CC800E786C0 /* NamedObject.cpp */,
+				5F5C4FDF08B2284200240932 /* ObjectiveMain.cpp */,
+				5F5C4FE008B2284200240932 /* PGDMath.h */,
+				5F30BC6F08D84F17001CF1C8 /* PlaneGeom.cpp */,
+				5F30BC7008D84F17001CF1C8 /* PlaneGeom.h */,
+				5F406D2509FB7270002E1E8E /* SimpleStrap.h */,
+				5F5C4FE408B2284200240932 /* Simulation.h */,
+				5F5C4FE308B2284200240932 /* Simulation.cpp */,
+				5F5C4FE508B2284200240932 /* SocketMessages.h */,
+				5FDECADE0969833E0092556D /* SphereGeom.cpp */,
+				5FDECADF0969833E0092556D /* SphereGeom.h */,
+				5F5C4FE708B2284200240932 /* StepDriver.h */,
+				5F5C4FE608B2284200240932 /* StepDriver.cpp */,
+				5F61D4BC08C3526E00C86E94 /* Strap.h */,
+				5F61D4BD08C3526E00C86E94 /* Strap.cpp */,
+				5F5C4FED08B2284200240932 /* TIFFWrite.h */,
+				5F5C4FEC08B2284200240932 /* TIFFWrite.cpp */,
+				5F61D50308C3576B00C86E94 /* TwoPointStrap.h */,
+				5F61D50408C3576B00C86E94 /* TwoPointStrap.cpp */,
+				5F5C4FEF08B2284200240932 /* UGMMuscle.h */,
+				5F5C4FEE08B2284200240932 /* UGMMuscle.cpp */,
+				5F5C4FF108B2284200240932 /* Util.h */,
+				5FA8D5680C4651F000F66EBA /* Util.cpp */,
+				5F61D50908C3579100C86E94 /* ThreePointStrap.h */,
+				5F61D50A08C3579100C86E94 /* ThreePointStrap.cpp */,
+				5F96E9E20CD36772001A821B /* NPointStrap.h */,
+				5F96E9E30CD36772001A821B /* NPointStrap.cpp */,
+				5FB1B72E0C382A6500C0EA2D /* UDP.cpp */,
+				5FB1B72F0C382A6500C0EA2D /* UDP.h */,
+				5F36C5640E3CE64000D0D657 /* TCP.cpp */,
+				5F36C5650E3CE64000D0D657 /* TCP.h */,
+				5F9C3ED20DC705DC008A05FC /* fec.cpp */,
+				5F9C3ED30DC705DC008A05FC /* fec.h */,
+				5FEF743D1008DA58007331ED /* StrokeFont.cpp */,
+				5FEF743E1008DA58007331ED /* StrokeFont.h */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		5F5C501F08B228A400240932 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				5F7674F312AA3C2400E0B191 /* libode.a */,
+				5F85B43A0DBCDA0600720E86 /* libgsl.a */,
+				5F85B43C0DBCDA0600720E86 /* libxml2.a */,
+				5F5C502C08B22AA700240932 /* libglui.a */,
+				5F7A461E0F59DCDA00780DCF /* IOKit.framework */,
+				5F7A46240F59DCE200780DCF /* Carbon.framework */,
+				5F7A462A0F59DCFA00780DCF /* Cocoa.framework */,
+				5F5C502008B229A700240932 /* GLUT.framework */,
+				5F5C502208B229BB00240932 /* OpenGL.framework */,
+				5FD4E8470DCF029D001AC233 /* CoreServices.framework */,
+			);
+			name = lib;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		5F36C4CB0E3CE61100D0D657 /* GaitSymODE TCP */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5F36C55C0E3CE61100D0D657 /* Build configuration list for PBXNativeTarget "GaitSymODE TCP" */;
+			buildPhases = (
+				5F36C4CC0E3CE61100D0D657 /* Sources */,
+				5F36C5540E3CE61100D0D657 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "GaitSymODE TCP";
+			productName = "GaitSymODE UDP";
+			productReference = 5F36C5600E3CE61100D0D657 /* GaitSymODE UDP */;
+			productType = "com.apple.product-type.tool";
+		};
+		5F7A435C0F59D30800780DCF /* GaitSymODE Irrlicht */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5F7A44400F59D30800780DCF /* Build configuration list for PBXNativeTarget "GaitSymODE Irrlicht" */;
+			buildPhases = (
+				5F7A435D0F59D30800780DCF /* Sources */,
+				5F7A43E50F59D30800780DCF /* Frameworks */,
+				5F7A43EE0F59D30800780DCF /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "GaitSymODE Irrlicht";
+			productInstallPath = "$(HOME)/bin";
+			productName = GaitSymODE;
+			productReference = 5F7A44440F59D30800780DCF /* GaitSymODE */;
+			productType = "com.apple.product-type.tool";
+		};
+		5F8AACA908DACE2E0093A385 /* GaitSymODE Socket */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5FBCD3F509519D64002587BD /* Build configuration list for PBXNativeTarget "GaitSymODE Socket" */;
+			buildPhases = (
+				5F8AACA708DACE2E0093A385 /* Sources */,
+				5F8AACA808DACE2E0093A385 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "GaitSymODE Socket";
+			productName = "GaitSymODE Socket";
+			productReference = 5F8AACAA08DACE2E0093A385 /* GaitSymODE Socket */;
+			productType = "com.apple.product-type.tool";
+		};
+		5FBD1CF90C365D3E001AB5E1 /* GaitSymODE UDP */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5FBD1D520C365DD7001AB5E1 /* Build configuration list for PBXNativeTarget "GaitSymODE UDP" */;
+			buildPhases = (
+				5FBD1CF70C365D3E001AB5E1 /* Sources */,
+				5FBD1CF80C365D3E001AB5E1 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "GaitSymODE UDP";
+			productName = "GaitSymODE UDP";
+			productReference = 5FBD1CFA0C365D3E001AB5E1 /* GaitSymODE UDP */;
+			productType = "com.apple.product-type.tool";
+		};
+		8DD76F620486A84900D96B5E /* GaitSymODE */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5FBCD3F109519D64002587BD /* Build configuration list for PBXNativeTarget "GaitSymODE" */;
+			buildPhases = (
+				8DD76F640486A84900D96B5E /* Sources */,
+				8DD76F660486A84900D96B5E /* Frameworks */,
+				8DD76F690486A84900D96B5E /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GaitSymODE;
+			productInstallPath = "$(HOME)/bin";
+			productName = GaitSymODE;
+			productReference = 8DD76F6C0486A84900D96B5E /* GaitSymODE */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		08FB7793FE84155DC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 5FBCD3F909519D64002587BD /* Build configuration list for PBXProject "GaitSymODE" */;
+			compatibilityVersion = "Xcode 2.4";
+			hasScannedForEncodings = 1;
+			mainGroup = 08FB7794FE84155DC02AAC07 /* GaitSymODE */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8DD76F620486A84900D96B5E /* GaitSymODE */,
+				5F8AACA908DACE2E0093A385 /* GaitSymODE Socket */,
+				5FBD1CF90C365D3E001AB5E1 /* GaitSymODE UDP */,
+				5F36C4CB0E3CE61100D0D657 /* GaitSymODE TCP */,
+				5F7A435C0F59D30800780DCF /* GaitSymODE Irrlicht */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		5F36C4CC0E3CE61100D0D657 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5F36C4CD0E3CE61100D0D657 /* Body.cpp in Sources */,
+				5F36C4CE0E3CE61100D0D657 /* CappedCylinderGeom.cpp in Sources */,
+				5F36C4D00E3CE61100D0D657 /* Contact.cpp in Sources */,
+				5F36C4D10E3CE61100D0D657 /* CyclicDriver.cpp in Sources */,
+				5F36C4D20E3CE61100D0D657 /* CylinderWrapStrap.cpp in Sources */,
+				5F36C4D30E3CE61100D0D657 /* DampedSpringMuscle.cpp in Sources */,
+				5F36C4D40E3CE61100D0D657 /* DataFile.cpp in Sources */,
+				5F36C4D50E3CE61100D0D657 /* DataTarget.cpp in Sources */,
+				5F36C4D60E3CE61100D0D657 /* Environment.cpp in Sources */,
+				5F36C4D70E3CE61100D0D657 /* ErrorHandler.cpp in Sources */,
+				5F36C4D80E3CE61100D0D657 /* Face.cpp in Sources */,
+				5F36C4D90E3CE61100D0D657 /* FacetedConicSegment.cpp in Sources */,
+				5F36C4DA0E3CE61100D0D657 /* FacetedObject.cpp in Sources */,
+				5F36C4DB0E3CE61100D0D657 /* FacetedSphere.cpp in Sources */,
+				5F36C4DC0E3CE61100D0D657 /* FloatingHingeJoint.cpp in Sources */,
+				5F36C4DD0E3CE61100D0D657 /* Geom.cpp in Sources */,
+				5F36C4DE0E3CE61100D0D657 /* GLUIRoutines.cpp in Sources */,
+				5F36C4DF0E3CE61100D0D657 /* GLUtils.cpp in Sources */,
+				5F36C4E00E3CE61100D0D657 /* HingeJoint.cpp in Sources */,
+				5F36C4E10E3CE61100D0D657 /* Joint.cpp in Sources */,
+				5F36C4E20E3CE61100D0D657 /* MAMuscle.cpp in Sources */,
+				5F36C4E30E3CE61100D0D657 /* MAMuscleComplete.cpp in Sources */,
+				5F36C4E40E3CE61100D0D657 /* MAMuscleExtended.cpp in Sources */,
+				5F36C4E50E3CE61100D0D657 /* Muscle.cpp in Sources */,
+				5F36C4E60E3CE61100D0D657 /* NamedObject.cpp in Sources */,
+				5F36C4E70E3CE61100D0D657 /* ObjectiveMain.cpp in Sources */,
+				5F36C4E80E3CE61100D0D657 /* PlaneGeom.cpp in Sources */,
+				5F36C4E90E3CE61100D0D657 /* Simulation.cpp in Sources */,
+				5F36C4EA0E3CE61100D0D657 /* SphereGeom.cpp in Sources */,
+				5F36C4EB0E3CE61100D0D657 /* StepDriver.cpp in Sources */,
+				5F36C4EC0E3CE61100D0D657 /* Strap.cpp in Sources */,
+				5F36C4ED0E3CE61100D0D657 /* ThreePointStrap.cpp in Sources */,
+				5F36C4EE0E3CE61100D0D657 /* TIFFWrite.cpp in Sources */,
+				5F36C4EF0E3CE61100D0D657 /* TwoPointStrap.cpp in Sources */,
+				5F36C4F00E3CE61100D0D657 /* UGMMuscle.cpp in Sources */,
+				5F36C5230E3CE61100D0D657 /* UDP.cpp in Sources */,
+				5F36C5240E3CE61100D0D657 /* Util.cpp in Sources */,
+				5F36C5250E3CE61100D0D657 /* FacetedPolyline.cpp in Sources */,
+				5F36C5260E3CE61100D0D657 /* NPointStrap.cpp in Sources */,
+				5F36C5270E3CE61100D0D657 /* fec.cpp in Sources */,
+				5F36C5660E3CE64000D0D657 /* TCP.cpp in Sources */,
+				5FB186D00E851FCC0005243D /* FixedJoint.cpp in Sources */,
+				5FE582070F08F19E00E76D16 /* BallJoint.cpp in Sources */,
+				5F7A447F0F59D43300780DCF /* IrrlichtRoutines.cpp in Sources */,
+				5F9603390F6C4BF80089806D /* MAMuscleExtendedDamped.cpp in Sources */,
+				5FEF74421008DA58007331ED /* StrokeFont.cpp in Sources */,
+				5F76757A12AA3ED900E0B191 /* DataTargetQuaternion.cpp in Sources */,
+				5F76757B12AA3ED900E0B191 /* DataTargetScalar.cpp in Sources */,
+				5F76757C12AA3ED900E0B191 /* DataTargetVector.cpp in Sources */,
+				5F76757D12AA3ED900E0B191 /* Driver.cpp in Sources */,
+				5F76757E12AA3ED900E0B191 /* ExpressionFolder.cpp in Sources */,
+				5F76757F12AA3ED900E0B191 /* ExpressionFunTransform3D.cpp in Sources */,
+				5F76758012AA3ED900E0B191 /* ExpressionMat.cpp in Sources */,
+				5F76758112AA3ED900E0B191 /* ExpressionParser.cpp in Sources */,
+				5F76758212AA3ED900E0B191 /* ExpressionRef.cpp in Sources */,
+				5F76758312AA3ED900E0B191 /* ExpressionVar.cpp in Sources */,
+				5F76758412AA3ED900E0B191 /* ExpressionVec.cpp in Sources */,
+				5F76758512AA3ED900E0B191 /* Marker.cpp in Sources */,
+				5F76758612AA3ED900E0B191 /* OpenCLRoutines.cpp in Sources */,
+				5F76758712AA3ED900E0B191 /* RayGeom.cpp in Sources */,
+				5F76758812AA3ED900E0B191 /* Reporter.cpp in Sources */,
+				5F76758912AA3ED900E0B191 /* TorqueReporter.cpp in Sources */,
+				5F76758A12AA3ED900E0B191 /* TrimeshGeom.cpp in Sources */,
+				5F76758B12AA3ED900E0B191 /* XMLConverter.cpp in Sources */,
+				5FCFCFE312BFBD8500095369 /* PositionReporter.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5F7A435D0F59D30800780DCF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5F7A435E0F59D30800780DCF /* CyclicDriver.cpp in Sources */,
+				5F7A435F0F59D30800780DCF /* DataFile.cpp in Sources */,
+				5F7A43610F59D30800780DCF /* ObjectiveMain.cpp in Sources */,
+				5F7A43620F59D30800780DCF /* Simulation.cpp in Sources */,
+				5F7A43630F59D30800780DCF /* StepDriver.cpp in Sources */,
+				5F7A43640F59D30800780DCF /* TIFFWrite.cpp in Sources */,
+				5F7A43650F59D30800780DCF /* Body.cpp in Sources */,
+				5F7A43660F59D30800780DCF /* Joint.cpp in Sources */,
+				5F7A43670F59D30800780DCF /* NamedObject.cpp in Sources */,
+				5F7A43680F59D30800780DCF /* HingeJoint.cpp in Sources */,
+				5F7A43690F59D30800780DCF /* GLUtils.cpp in Sources */,
+				5F7A436A0F59D30800780DCF /* Geom.cpp in Sources */,
+				5F7A436B0F59D30800780DCF /* CappedCylinderGeom.cpp in Sources */,
+				5F7A436C0F59D30800780DCF /* Strap.cpp in Sources */,
+				5F7A436D0F59D30800780DCF /* MAMuscle.cpp in Sources */,
+				5F7A436E0F59D30800780DCF /* UGMMuscle.cpp in Sources */,
+				5F7A436F0F59D30800780DCF /* TwoPointStrap.cpp in Sources */,
+				5F7A43700F59D30800780DCF /* ThreePointStrap.cpp in Sources */,
+				5F7A43710F59D30800780DCF /* CylinderWrapStrap.cpp in Sources */,
+				5F7A43720F59D30800780DCF /* Muscle.cpp in Sources */,
+				5F7A43730F59D30800780DCF /* DataTarget.cpp in Sources */,
+				5F7A43740F59D30800780DCF /* PlaneGeom.cpp in Sources */,
+				5F7A43750F59D30800780DCF /* Environment.cpp in Sources */,
+				5F7A43760F59D30800780DCF /* FacetedObject.cpp in Sources */,
+				5F7A43770F59D30800780DCF /* Face.cpp in Sources */,
+				5F7A43780F59D30800780DCF /* DampedSpringMuscle.cpp in Sources */,
+				5F7A43790F59D30800780DCF /* SphereGeom.cpp in Sources */,
+				5F7A437A0F59D30800780DCF /* FacetedSphere.cpp in Sources */,
+				5F7A437B0F59D30800780DCF /* FacetedConicSegment.cpp in Sources */,
+				5F7A437C0F59D30800780DCF /* Contact.cpp in Sources */,
+				5F7A437D0F59D30800780DCF /* MAMuscleExtended.cpp in Sources */,
+				5F7A43B00F59D30800780DCF /* FloatingHingeJoint.cpp in Sources */,
+				5F7A43B10F59D30800780DCF /* ErrorHandler.cpp in Sources */,
+				5F7A43B20F59D30800780DCF /* MAMuscleComplete.cpp in Sources */,
+				5F7A43B40F59D30800780DCF /* Util.cpp in Sources */,
+				5F7A43B50F59D30800780DCF /* FacetedPolyline.cpp in Sources */,
+				5F7A43B60F59D30800780DCF /* NPointStrap.cpp in Sources */,
+				5F7A43E30F59D30800780DCF /* FixedJoint.cpp in Sources */,
+				5F7A43E40F59D30800780DCF /* BallJoint.cpp in Sources */,
+				5F7A447E0F59D43300780DCF /* IrrlichtRoutines.cpp in Sources */,
+				5F96033B0F6C4BF80089806D /* MAMuscleExtendedDamped.cpp in Sources */,
+				5FEF74431008DA58007331ED /* StrokeFont.cpp in Sources */,
+				5F76758C12AA3ED900E0B191 /* DataTargetQuaternion.cpp in Sources */,
+				5F76758D12AA3ED900E0B191 /* DataTargetScalar.cpp in Sources */,
+				5F76758E12AA3ED900E0B191 /* DataTargetVector.cpp in Sources */,
+				5F76758F12AA3ED900E0B191 /* Driver.cpp in Sources */,
+				5F76759012AA3ED900E0B191 /* ExpressionFolder.cpp in Sources */,
+				5F76759112AA3ED900E0B191 /* ExpressionFunTransform3D.cpp in Sources */,
+				5F76759212AA3ED900E0B191 /* ExpressionMat.cpp in Sources */,
+				5F76759312AA3ED900E0B191 /* ExpressionParser.cpp in Sources */,
+				5F76759412AA3ED900E0B191 /* ExpressionRef.cpp in Sources */,
+				5F76759512AA3ED900E0B191 /* ExpressionVar.cpp in Sources */,
+				5F76759612AA3ED900E0B191 /* ExpressionVec.cpp in Sources */,
+				5F76759712AA3ED900E0B191 /* Marker.cpp in Sources */,
+				5F76759812AA3ED900E0B191 /* OpenCLRoutines.cpp in Sources */,
+				5F76759912AA3ED900E0B191 /* RayGeom.cpp in Sources */,
+				5F76759A12AA3ED900E0B191 /* Reporter.cpp in Sources */,
+				5F76759B12AA3ED900E0B191 /* TorqueReporter.cpp in Sources */,
+				5F76759C12AA3ED900E0B191 /* TrimeshGeom.cpp in Sources */,
+				5F76759D12AA3ED900E0B191 /* XMLConverter.cpp in Sources */,
+				5FCFCFE412BFBD8500095369 /* PositionReporter.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5F8AACA708DACE2E0093A385 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5F8AACAD08DACE600093A385 /* Simulation.cpp in Sources */,
+				5F8AACAF08DACE740093A385 /* Body.cpp in Sources */,
+				5F8AACB008DACE770093A385 /* CappedCylinderGeom.cpp in Sources */,
+				5F8AACB108DACE770093A385 /* CyclicDriver.cpp in Sources */,
+				5F8AACB208DACE780093A385 /* CylinderWrapStrap.cpp in Sources */,
+				5F8AACB308DACE790093A385 /* DataFile.cpp in Sources */,
+				5F8AACB408DACE7A0093A385 /* DataTarget.cpp in Sources */,
+				5F8AACB508DACE7B0093A385 /* Environment.cpp in Sources */,
+				5F8AACB608DACE7D0093A385 /* Face.cpp in Sources */,
+				5F8AACB708DACE7E0093A385 /* FacetedObject.cpp in Sources */,
+				5F8AACB808DACE7F0093A385 /* Geom.cpp in Sources */,
+				5F8AACB908DACE800093A385 /* GLUIRoutines.cpp in Sources */,
+				5F8AACBA08DACE810093A385 /* GLUtils.cpp in Sources */,
+				5F8AACBB08DACE810093A385 /* HingeJoint.cpp in Sources */,
+				5F8AACBC08DACE820093A385 /* Joint.cpp in Sources */,
+				5F8AACBD08DACE830093A385 /* MAMuscle.cpp in Sources */,
+				5F8AACBE08DACE850093A385 /* Muscle.cpp in Sources */,
+				5F8AACBF08DACE860093A385 /* NamedObject.cpp in Sources */,
+				5F8AACC008DACE860093A385 /* ObjectiveMain.cpp in Sources */,
+				5F8AACC108DACE870093A385 /* PlaneGeom.cpp in Sources */,
+				5F8AACC208DACE890093A385 /* StepDriver.cpp in Sources */,
+				5F8AACC308DACE8A0093A385 /* Strap.cpp in Sources */,
+				5F8AACC408DACE8B0093A385 /* ThreePointStrap.cpp in Sources */,
+				5F8AACC508DACE8B0093A385 /* TIFFWrite.cpp in Sources */,
+				5F8AACC608DACE8C0093A385 /* TwoPointStrap.cpp in Sources */,
+				5F8AACC708DACE8D0093A385 /* UGMMuscle.cpp in Sources */,
+				5FDECAC409697E6A0092556D /* DampedSpringMuscle.cpp in Sources */,
+				5FDECAE20969833E0092556D /* SphereGeom.cpp in Sources */,
+				5F28B1BF096AC47E00662246 /* FacetedSphere.cpp in Sources */,
+				5FAFD24F09726D4600A7C9EC /* FacetedConicSegment.cpp in Sources */,
+				5FB73D7409A7B45700AA8679 /* Contact.cpp in Sources */,
+				5F406D2609FB7270002E1E8E /* MAMuscleExtended.cpp in Sources */,
+				5FA48CEA0B5CEBDD00A284B9 /* FloatingHingeJoint.cpp in Sources */,
+				5F0071450B830E6100E66D05 /* ErrorHandler.cpp in Sources */,
+				5FF75D5C0B9A0F0400865BAD /* MAMuscleComplete.cpp in Sources */,
+				5FA8D56A0C4651F000F66EBA /* Util.cpp in Sources */,
+				5FD9DBA30C6C40E100D67F27 /* FacetedPolyline.cpp in Sources */,
+				5F96E9E40CD36772001A821B /* NPointStrap.cpp in Sources */,
+				5FB186D20E851FCC0005243D /* FixedJoint.cpp in Sources */,
+				5FE582090F08F19E00E76D16 /* BallJoint.cpp in Sources */,
+				5F7A447D0F59D43300780DCF /* IrrlichtRoutines.cpp in Sources */,
+				5F9603380F6C4BF80089806D /* MAMuscleExtendedDamped.cpp in Sources */,
+				5FEF74401008DA58007331ED /* StrokeFont.cpp in Sources */,
+				5F76755612AA3ED900E0B191 /* DataTargetQuaternion.cpp in Sources */,
+				5F76755712AA3ED900E0B191 /* DataTargetScalar.cpp in Sources */,
+				5F76755812AA3ED900E0B191 /* DataTargetVector.cpp in Sources */,
+				5F76755912AA3ED900E0B191 /* Driver.cpp in Sources */,
+				5F76755A12AA3ED900E0B191 /* ExpressionFolder.cpp in Sources */,
+				5F76755B12AA3ED900E0B191 /* ExpressionFunTransform3D.cpp in Sources */,
+				5F76755C12AA3ED900E0B191 /* ExpressionMat.cpp in Sources */,
+				5F76755D12AA3ED900E0B191 /* ExpressionParser.cpp in Sources */,
+				5F76755E12AA3ED900E0B191 /* ExpressionRef.cpp in Sources */,
+				5F76755F12AA3ED900E0B191 /* ExpressionVar.cpp in Sources */,
+				5F76756012AA3ED900E0B191 /* ExpressionVec.cpp in Sources */,
+				5F76756112AA3ED900E0B191 /* Marker.cpp in Sources */,
+				5F76756212AA3ED900E0B191 /* OpenCLRoutines.cpp in Sources */,
+				5F76756312AA3ED900E0B191 /* RayGeom.cpp in Sources */,
+				5F76756412AA3ED900E0B191 /* Reporter.cpp in Sources */,
+				5F76756512AA3ED900E0B191 /* TorqueReporter.cpp in Sources */,
+				5F76756612AA3ED900E0B191 /* TrimeshGeom.cpp in Sources */,
+				5F76756712AA3ED900E0B191 /* XMLConverter.cpp in Sources */,
+				5FCFCFE112BFBD8500095369 /* PositionReporter.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5FBD1CF70C365D3E001AB5E1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5FBD1CFC0C365D51001AB5E1 /* Body.cpp in Sources */,
+				5FBD1CFD0C365D52001AB5E1 /* CappedCylinderGeom.cpp in Sources */,
+				5FBD1CFF0C365D53001AB5E1 /* Contact.cpp in Sources */,
+				5FBD1D000C365D54001AB5E1 /* CyclicDriver.cpp in Sources */,
+				5FBD1D010C365D55001AB5E1 /* CylinderWrapStrap.cpp in Sources */,
+				5FBD1D020C365D55001AB5E1 /* DampedSpringMuscle.cpp in Sources */,
+				5FBD1D030C365D58001AB5E1 /* DataFile.cpp in Sources */,
+				5FBD1D040C365D59001AB5E1 /* DataTarget.cpp in Sources */,
+				5FBD1D050C365D6B001AB5E1 /* Environment.cpp in Sources */,
+				5FBD1D060C365D6C001AB5E1 /* ErrorHandler.cpp in Sources */,
+				5FBD1D070C365D6D001AB5E1 /* Face.cpp in Sources */,
+				5FBD1D080C365D6D001AB5E1 /* FacetedConicSegment.cpp in Sources */,
+				5FBD1D090C365D6E001AB5E1 /* FacetedObject.cpp in Sources */,
+				5FBD1D0A0C365D6F001AB5E1 /* FacetedSphere.cpp in Sources */,
+				5FBD1D0B0C365D70001AB5E1 /* FloatingHingeJoint.cpp in Sources */,
+				5FBD1D0C0C365D71001AB5E1 /* Geom.cpp in Sources */,
+				5FBD1D0D0C365D72001AB5E1 /* GLUIRoutines.cpp in Sources */,
+				5FBD1D0E0C365D72001AB5E1 /* GLUtils.cpp in Sources */,
+				5FBD1D0F0C365D73001AB5E1 /* HingeJoint.cpp in Sources */,
+				5FBD1D100C365D74001AB5E1 /* Joint.cpp in Sources */,
+				5FBD1D110C365D75001AB5E1 /* MAMuscle.cpp in Sources */,
+				5FBD1D120C365D76001AB5E1 /* MAMuscleComplete.cpp in Sources */,
+				5FBD1D130C365D76001AB5E1 /* MAMuscleExtended.cpp in Sources */,
+				5FBD1D140C365D77001AB5E1 /* Muscle.cpp in Sources */,
+				5FBD1D150C365D78001AB5E1 /* NamedObject.cpp in Sources */,
+				5FBD1D160C365D78001AB5E1 /* ObjectiveMain.cpp in Sources */,
+				5FBD1D170C365D79001AB5E1 /* PlaneGeom.cpp in Sources */,
+				5FBD1D180C365D7A001AB5E1 /* Simulation.cpp in Sources */,
+				5FBD1D190C365D7B001AB5E1 /* SphereGeom.cpp in Sources */,
+				5FBD1D1A0C365D7D001AB5E1 /* StepDriver.cpp in Sources */,
+				5FBD1D1B0C365D7D001AB5E1 /* Strap.cpp in Sources */,
+				5FBD1D1C0C365D7E001AB5E1 /* ThreePointStrap.cpp in Sources */,
+				5FBD1D1D0C365D7F001AB5E1 /* TIFFWrite.cpp in Sources */,
+				5FBD1D1E0C365D80001AB5E1 /* TwoPointStrap.cpp in Sources */,
+				5FBD1D1F0C365D81001AB5E1 /* UGMMuscle.cpp in Sources */,
+				5FB1B7300C382A6500C0EA2D /* UDP.cpp in Sources */,
+				5FA8D56B0C4651F000F66EBA /* Util.cpp in Sources */,
+				5FD9DBA00C6C40E100D67F27 /* FacetedPolyline.cpp in Sources */,
+				5F96E9E70CD36772001A821B /* NPointStrap.cpp in Sources */,
+				5F9C3ED40DC705DC008A05FC /* fec.cpp in Sources */,
+				5FB186D30E851FCC0005243D /* FixedJoint.cpp in Sources */,
+				5FE582080F08F19E00E76D16 /* BallJoint.cpp in Sources */,
+				5F7A447C0F59D43300780DCF /* IrrlichtRoutines.cpp in Sources */,
+				5F9603370F6C4BF80089806D /* MAMuscleExtendedDamped.cpp in Sources */,
+				5FEF74411008DA58007331ED /* StrokeFont.cpp in Sources */,
+				5F76756812AA3ED900E0B191 /* DataTargetQuaternion.cpp in Sources */,
+				5F76756912AA3ED900E0B191 /* DataTargetScalar.cpp in Sources */,
+				5F76756A12AA3ED900E0B191 /* DataTargetVector.cpp in Sources */,
+				5F76756B12AA3ED900E0B191 /* Driver.cpp in Sources */,
+				5F76756C12AA3ED900E0B191 /* ExpressionFolder.cpp in Sources */,
+				5F76756D12AA3ED900E0B191 /* ExpressionFunTransform3D.cpp in Sources */,
+				5F76756E12AA3ED900E0B191 /* ExpressionMat.cpp in Sources */,
+				5F76756F12AA3ED900E0B191 /* ExpressionParser.cpp in Sources */,
+				5F76757012AA3ED900E0B191 /* ExpressionRef.cpp in Sources */,
+				5F76757112AA3ED900E0B191 /* ExpressionVar.cpp in Sources */,
+				5F76757212AA3ED900E0B191 /* ExpressionVec.cpp in Sources */,
+				5F76757312AA3ED900E0B191 /* Marker.cpp in Sources */,
+				5F76757412AA3ED900E0B191 /* OpenCLRoutines.cpp in Sources */,
+				5F76757512AA3ED900E0B191 /* RayGeom.cpp in Sources */,
+				5F76757612AA3ED900E0B191 /* Reporter.cpp in Sources */,
+				5F76757712AA3ED900E0B191 /* TorqueReporter.cpp in Sources */,
+				5F76757812AA3ED900E0B191 /* TrimeshGeom.cpp in Sources */,
+				5F76757912AA3ED900E0B191 /* XMLConverter.cpp in Sources */,
+				5FCFCFE212BFBD8500095369 /* PositionReporter.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8DD76F640486A84900D96B5E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5F5C4FF208B2284200240932 /* CyclicDriver.cpp in Sources */,
+				5F5C4FF608B2284200240932 /* DataFile.cpp in Sources */,
+				5F5C4FFC08B2284200240932 /* GLUIRoutines.cpp in Sources */,
+				5F5C500B08B2284200240932 /* ObjectiveMain.cpp in Sources */,
+				5F5C500F08B2284200240932 /* Simulation.cpp in Sources */,
+				5F5C501208B2284200240932 /* StepDriver.cpp in Sources */,
+				5F5C501808B2284200240932 /* TIFFWrite.cpp in Sources */,
+				5FEBA22C08B5FBF60081E1B3 /* Body.cpp in Sources */,
+				5FBB86FC08B63BA800E786C0 /* Joint.cpp in Sources */,
+				5FBB870208B63CC800E786C0 /* NamedObject.cpp in Sources */,
+				5F0B2A4308BC6C7F00274A50 /* HingeJoint.cpp in Sources */,
+				5F10E89408BF069D00F55CF8 /* GLUtils.cpp in Sources */,
+				5FCDCBC408C2153900D9DF42 /* Geom.cpp in Sources */,
+				5FCDCBDA08C21A5900D9DF42 /* CappedCylinderGeom.cpp in Sources */,
+				5F61D4BF08C3526E00C86E94 /* Strap.cpp in Sources */,
+				5F61D4DD08C3549F00C86E94 /* MAMuscle.cpp in Sources */,
+				5F61D4EB08C355A700C86E94 /* UGMMuscle.cpp in Sources */,
+				5F61D50608C3576B00C86E94 /* TwoPointStrap.cpp in Sources */,
+				5F61D50C08C3579100C86E94 /* ThreePointStrap.cpp in Sources */,
+				5F61D51208C357D800C86E94 /* CylinderWrapStrap.cpp in Sources */,
+				5F84266C08C38F5F005394BC /* Muscle.cpp in Sources */,
+				5F62AE9208CE219400FA8F33 /* DataTarget.cpp in Sources */,
+				5F30BC7108D84F17001CF1C8 /* PlaneGeom.cpp in Sources */,
+				5F30BC8108D85155001CF1C8 /* Environment.cpp in Sources */,
+				5F30BCD508D8631D001CF1C8 /* FacetedObject.cpp in Sources */,
+				5F30BCDD08D863EA001CF1C8 /* Face.cpp in Sources */,
+				5FDECAC209697E6A0092556D /* DampedSpringMuscle.cpp in Sources */,
+				5FDECAE00969833E0092556D /* SphereGeom.cpp in Sources */,
+				5F28B1C1096AC47E00662246 /* FacetedSphere.cpp in Sources */,
+				5FAFD25009726D4600A7C9EC /* FacetedConicSegment.cpp in Sources */,
+				5FB73D7509A7B45700AA8679 /* Contact.cpp in Sources */,
+				5F406D2709FB7270002E1E8E /* MAMuscleExtended.cpp in Sources */,
+				5FB5EA730B4696D000554337 /* FloatingHingeJoint.cpp in Sources */,
+				5F0071440B830E6100E66D05 /* ErrorHandler.cpp in Sources */,
+				5FF75D5A0B9A0F0400865BAD /* MAMuscleComplete.cpp in Sources */,
+				5FA8D5690C4651F000F66EBA /* Util.cpp in Sources */,
+				5FD9DBA20C6C40E100D67F27 /* FacetedPolyline.cpp in Sources */,
+				5F96E9E60CD36772001A821B /* NPointStrap.cpp in Sources */,
+				5FB186D10E851FCC0005243D /* FixedJoint.cpp in Sources */,
+				5FE5820A0F08F19E00E76D16 /* BallJoint.cpp in Sources */,
+				5F7A44800F59D43300780DCF /* IrrlichtRoutines.cpp in Sources */,
+				5F96033A0F6C4BF80089806D /* MAMuscleExtendedDamped.cpp in Sources */,
+				5FEF743F1008DA58007331ED /* StrokeFont.cpp in Sources */,
+				5F76754412AA3ED900E0B191 /* DataTargetQuaternion.cpp in Sources */,
+				5F76754512AA3ED900E0B191 /* DataTargetScalar.cpp in Sources */,
+				5F76754612AA3ED900E0B191 /* DataTargetVector.cpp in Sources */,
+				5F76754712AA3ED900E0B191 /* Driver.cpp in Sources */,
+				5F76754812AA3ED900E0B191 /* ExpressionFolder.cpp in Sources */,
+				5F76754912AA3ED900E0B191 /* ExpressionFunTransform3D.cpp in Sources */,
+				5F76754A12AA3ED900E0B191 /* ExpressionMat.cpp in Sources */,
+				5F76754B12AA3ED900E0B191 /* ExpressionParser.cpp in Sources */,
+				5F76754C12AA3ED900E0B191 /* ExpressionRef.cpp in Sources */,
+				5F76754D12AA3ED900E0B191 /* ExpressionVar.cpp in Sources */,
+				5F76754E12AA3ED900E0B191 /* ExpressionVec.cpp in Sources */,
+				5F76754F12AA3ED900E0B191 /* Marker.cpp in Sources */,
+				5F76755012AA3ED900E0B191 /* OpenCLRoutines.cpp in Sources */,
+				5F76755112AA3ED900E0B191 /* RayGeom.cpp in Sources */,
+				5F76755212AA3ED900E0B191 /* Reporter.cpp in Sources */,
+				5F76755312AA3ED900E0B191 /* TorqueReporter.cpp in Sources */,
+				5F76755412AA3ED900E0B191 /* TrimeshGeom.cpp in Sources */,
+				5F76755512AA3ED900E0B191 /* XMLConverter.cpp in Sources */,
+				5FCFCFE012BFBD8500095369 /* PositionReporter.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		5F36C55D0E3CE61100D0D657 /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					UPDATE_CONTROLS_ON_IDLE,
+					OPENGL_HEADERS_DIRECTLY_REFERENCED,
+					USE_LIBTIFF,
+					USE_TIFF_LZW,
+					USE_TCP,
+					TCP_DEBUG,
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(HOME)/Unix/include",
+					/usr/local/include/libxml2,
+					/System/Library/Frameworks/GLUT.framework/Headers/,
+					/System/Library/Frameworks/OpenGL.framework/Headers/,
+				);
+				INSTALL_PATH = "$(HOME)/bin";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_1)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_3)",
+				);
+				LIBRARY_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)/../../lib\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../lib\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/../../lib\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)/../../lib\"";
+				PREBINDING = NO;
+				PRODUCT_NAME = "GaitSymODE UDP";
+				ZERO_LINK = NO;
+			};
+			name = Development;
+		};
+		5F7A44410F59D30800780DCF /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = "";
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					USE_IRRLICHT,
+					USE_OPENGL,
+					UPDATE_CONTROLS_ON_IDLE,
+					OPENGL_HEADERS_DIRECTLY_REFERENCED,
+					USE_LIBTIFF,
+					USE_TIFF_LZW,
+				);
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = YES;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = YES;
+				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
+				GCC_WARN_MISSING_PARENTHESES = YES;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = YES;
+				GCC_WARN_PEDANTIC = NO;
+				GCC_WARN_SHADOW = YES;
+				GCC_WARN_SIGN_COMPARE = YES;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNKNOWN_PRAGMAS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
+				GCC_WARN_UNUSED_PARAMETER = YES;
+				GCC_WARN_UNUSED_VALUE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(HOME)/Unix/include/irrlicht",
+					"$(HOME)/Unix/include",
+					/usr/local/include/libxml2,
+					/System/Library/Frameworks/GLUT.framework/Headers/,
+					/System/Library/Frameworks/OpenGL.framework/Headers/,
+				);
+				INSTALL_PATH = "$(HOME)/bin";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOME)/Unix/lib",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+				);
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../lib\"";
+				PREBINDING = NO;
+				PRODUCT_NAME = GaitSymODE;
+				ZERO_LINK = YES;
+			};
+			name = Development;
+		};
+		5FBCD3F209519D64002587BD /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = "";
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					dDOUBLE,
+					USE_OPENGL,
+					UPDATE_CONTROLS_ON_IDLE,
+					OPENGL_HEADERS_DIRECTLY_REFERENCED,
+				);
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = YES;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = YES;
+				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
+				GCC_WARN_MISSING_PARENTHESES = YES;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = YES;
+				GCC_WARN_PEDANTIC = NO;
+				GCC_WARN_SHADOW = YES;
+				GCC_WARN_SIGN_COMPARE = YES;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNKNOWN_PRAGMAS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
+				GCC_WARN_UNUSED_PARAMETER = YES;
+				GCC_WARN_UNUSED_VALUE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(HOME)/Unix/include",
+					/usr/local/include/libxml2,
+					/System/Library/Frameworks/GLUT.framework/Headers/,
+					/System/Library/Frameworks/OpenGL.framework/Headers/,
+				);
+				INSTALL_PATH = "$(HOME)/bin";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOME)/Unix/lib",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+				);
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../lib\"";
+				PREBINDING = NO;
+				PRODUCT_NAME = GaitSymODE;
+				ZERO_LINK = YES;
+			};
+			name = Development;
+		};
+		5FBCD3F609519D64002587BD /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G4;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					USE_OPENGL,
+					UPDATE_CONTROLS_ON_IDLE,
+					OPENGL_HEADERS_DIRECTLY_REFERENCED,
+					USE_LIBTIFF,
+					USE_TIFF_LZW,
+					USE_SOCKETS,
+				);
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = YES;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = YES;
+				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
+				GCC_WARN_MISSING_PARENTHESES = YES;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = YES;
+				GCC_WARN_SHADOW = YES;
+				GCC_WARN_SIGN_COMPARE = YES;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNKNOWN_PRAGMAS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
+				GCC_WARN_UNUSED_PARAMETER = YES;
+				GCC_WARN_UNUSED_VALUE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(HOME)/Unix/include",
+					/usr/local/include/libxml2,
+					/System/Library/Frameworks/GLUT.framework/Headers/,
+					/System/Library/Frameworks/OpenGL.framework/Headers/,
+				);
+				INSTALL_PATH = "$(HOME)/bin";
+				LIBRARY_SEARCH_PATHS = (
+					"$(HOME)/Unix/lib",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+				);
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../lib\"";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PREBINDING = NO;
+				PRODUCT_NAME = "GaitSymODE Socket";
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				ZERO_LINK = YES;
+			};
+			name = Development;
+		};
+		5FBCD3FA09519D64002587BD /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT_PRE_XCODE_3_1)";
+				ARCHS_STANDARD_64_BIT_PRE_XCODE_3_1 = x86_64;
+				GCC_OPTIMIZATION_LEVEL = 1;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					dDOUBLE,
+					USE_OPENGL,
+					UPDATE_CONTROLS_ON_IDLE,
+					OPENGL_HEADERS_DIRECTLY_REFERENCED,
+				);
+				HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = /usr/include/libxml2;
+			};
+			name = Development;
+		};
+		5FBD1D530C365DD7001AB5E1 /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					UPDATE_CONTROLS_ON_IDLE,
+					OPENGL_HEADERS_DIRECTLY_REFERENCED,
+					USE_LIBTIFF,
+					USE_TIFF_LZW,
+					USE_UDP,
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(HOME)/Unix/include",
+					/usr/local/include/libxml2,
+					/System/Library/Frameworks/GLUT.framework/Headers/,
+					/System/Library/Frameworks/OpenGL.framework/Headers/,
+				);
+				INSTALL_PATH = "$(HOME)/bin";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_1)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_3)",
+				);
+				LIBRARY_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)/../../lib\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../lib\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/../../lib\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)/../../lib\"";
+				PREBINDING = NO;
+				PRODUCT_NAME = "GaitSymODE UDP";
+				ZERO_LINK = NO;
+			};
+			name = Development;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		5F36C55C0E3CE61100D0D657 /* Build configuration list for PBXNativeTarget "GaitSymODE TCP" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5F36C55D0E3CE61100D0D657 /* Development */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Development;
+		};
+		5F7A44400F59D30800780DCF /* Build configuration list for PBXNativeTarget "GaitSymODE Irrlicht" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5F7A44410F59D30800780DCF /* Development */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Development;
+		};
+		5FBCD3F109519D64002587BD /* Build configuration list for PBXNativeTarget "GaitSymODE" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5FBCD3F209519D64002587BD /* Development */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Development;
+		};
+		5FBCD3F509519D64002587BD /* Build configuration list for PBXNativeTarget "GaitSymODE Socket" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5FBCD3F609519D64002587BD /* Development */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Development;
+		};
+		5FBCD3F909519D64002587BD /* Build configuration list for PBXProject "GaitSymODE" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5FBCD3FA09519D64002587BD /* Development */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Development;
+		};
+		5FBD1D520C365DD7001AB5E1 /* Build configuration list for PBXNativeTarget "GaitSymODE UDP" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5FBD1D530C365DD7001AB5E1 /* Development */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Development;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 08FB7793FE84155DC02AAC07 /* Project object */;
+}

@@ -1,0 +1,18 @@
+Ankle
+Angle min = 1.397000  max = 1.397010
+Knee
+Angle min = 0.001000  max = 0.001003
+Hip
+Angle min = 0.000999  max = 0.001001
+AnkleFlexor
+m_Length min = 0.424176  max = 0.424200
+AnkleExtensor
+m_Length min = 0.317253  max = 0.317314
+KneeFlexor
+m_Length min = 0.263745  max = 0.263787
+KneeExtensor
+m_Length min = 0.284936  max = 0.285051
+HipFlexor
+m_Length min = 0.244289  max = 0.244336
+HipExtensor
+m_Length min = 0.258684  max = 0.258762

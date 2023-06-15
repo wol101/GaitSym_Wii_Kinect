@@ -1,0 +1,89 @@
+/Developer/Tools/Qt/macdeployqt GaitSymQt.app -verbose=2 -dmg 
+Log: 
+Log: Deploying Qt frameworks found inside: "GaitSymQt.app/Contents/MacOS/GaitSymQt" 
+Log:  copied: "/Library/Frameworks/QtOpenGL.framework/Versions/4/QtOpenGL" 
+Log:  to "GaitSymQt.app/Contents/Frameworks/QtOpenGL.framework/Versions/4/QtOpenGL" 
+Log:  copied: "/Library/Frameworks/QtGui.framework/Versions/4/QtGui" 
+Log:  to "GaitSymQt.app/Contents/Frameworks/QtGui.framework/Versions/4/QtGui" 
+Log:  copied: "/Library/Frameworks/QtGui.framework/Resources/qt_menu.nib/classes.nib" 
+Log:  to "GaitSymQt.app/Contents/Frameworks/QtGui.framework/Resources/qt_menu.nib/classes.nib" 
+Log:  copied: "/Library/Frameworks/QtGui.framework/Resources/qt_menu.nib/info.nib" 
+Log:  to "GaitSymQt.app/Contents/Frameworks/QtGui.framework/Resources/qt_menu.nib/info.nib" 
+Log:  copied: "/Library/Frameworks/QtGui.framework/Resources/qt_menu.nib/keyedobjects.nib" 
+Log:  to "GaitSymQt.app/Contents/Frameworks/QtGui.framework/Resources/qt_menu.nib/keyedobjects.nib" 
+Log:  copied: "/Library/Frameworks/QtCore.framework/Versions/4/QtCore" 
+Log:  to "GaitSymQt.app/Contents/Frameworks/QtCore.framework/Versions/4/QtCore" 
+Log: 
+Log: Deploying plugins from "/Developer/Applications/Qt/plugins" 
+Log: Deploying plugins from "/Developer/Applications/Qt/plugins/accessible" 
+Log:  copied: "/Developer/Applications/Qt/plugins/accessible/libqtaccessiblewidgets.dylib" 
+Log:  to "GaitSymQt.app/Contents/PlugIns/accessible/libqtaccessiblewidgets.dylib" 
+Log: 
+Log: Deploying Qt frameworks found inside: "GaitSymQt.app/Contents/PlugIns/accessible/libqtaccessiblewidgets.dylib" 
+Log: Deploying plugins from "/Developer/Applications/Qt/plugins/bearer" 
+Log:  copied: "/Developer/Applications/Qt/plugins/bearer/libqgenericbearer.dylib" 
+Log:  to "GaitSymQt.app/Contents/PlugIns/bearer/libqgenericbearer.dylib" 
+Log: 
+Log: Deploying Qt frameworks found inside: "GaitSymQt.app/Contents/PlugIns/bearer/libqgenericbearer.dylib" 
+Log:  copied: "/Library/Frameworks/QtNetwork.framework/Versions/4/QtNetwork" 
+Log:  to "GaitSymQt.app/Contents/Frameworks/QtNetwork.framework/Versions/4/QtNetwork" 
+Log:  copied: "/Developer/Applications/Qt/plugins/bearer/libqnmbearer.dylib" 
+Log:  to "GaitSymQt.app/Contents/PlugIns/bearer/libqnmbearer.dylib" 
+Log: 
+Log: Deploying Qt frameworks found inside: "GaitSymQt.app/Contents/PlugIns/bearer/libqnmbearer.dylib" 
+Log:  copied: "/Library/Frameworks/QtDBus.framework/Versions/4/QtDBus" 
+Log:  to "GaitSymQt.app/Contents/Frameworks/QtDBus.framework/Versions/4/QtDBus" 
+Log:  copied: "/Library/Frameworks/QtXml.framework/Versions/4/QtXml" 
+Log:  to "GaitSymQt.app/Contents/Frameworks/QtXml.framework/Versions/4/QtXml" 
+Log: Deploying plugins from "/Developer/Applications/Qt/plugins/codecs" 
+Log:  copied: "/Developer/Applications/Qt/plugins/codecs/libqcncodecs.dylib" 
+Log:  to "GaitSymQt.app/Contents/PlugIns/codecs/libqcncodecs.dylib" 
+Log: 
+Log: Deploying Qt frameworks found inside: "GaitSymQt.app/Contents/PlugIns/codecs/libqcncodecs.dylib" 
+Log:  copied: "/Developer/Applications/Qt/plugins/codecs/libqjpcodecs.dylib" 
+Log:  to "GaitSymQt.app/Contents/PlugIns/codecs/libqjpcodecs.dylib" 
+Log: 
+Log: Deploying Qt frameworks found inside: "GaitSymQt.app/Contents/PlugIns/codecs/libqjpcodecs.dylib" 
+Log:  copied: "/Developer/Applications/Qt/plugins/codecs/libqkrcodecs.dylib" 
+Log:  to "GaitSymQt.app/Contents/PlugIns/codecs/libqkrcodecs.dylib" 
+Log: 
+Log: Deploying Qt frameworks found inside: "GaitSymQt.app/Contents/PlugIns/codecs/libqkrcodecs.dylib" 
+Log:  copied: "/Developer/Applications/Qt/plugins/codecs/libqtwcodecs.dylib" 
+Log:  to "GaitSymQt.app/Contents/PlugIns/codecs/libqtwcodecs.dylib" 
+Log: 
+Log: Deploying Qt frameworks found inside: "GaitSymQt.app/Contents/PlugIns/codecs/libqtwcodecs.dylib" 
+Log: Deploying plugins from "/Developer/Applications/Qt/plugins/designer" 
+Log: Deploying plugins from "/Developer/Applications/Qt/plugins/graphicssystems" 
+Log:  copied: "/Developer/Applications/Qt/plugins/graphicssystems/libqtracegraphicssystem.dylib" 
+Log:  to "GaitSymQt.app/Contents/PlugIns/graphicssystems/libqtracegraphicssystem.dylib" 
+Log: 
+Log: Deploying Qt frameworks found inside: "GaitSymQt.app/Contents/PlugIns/graphicssystems/libqtracegraphicssystem.dylib" 
+Log: Deploying plugins from "/Developer/Applications/Qt/plugins/iconengines" 
+Log: Deploying plugins from "/Developer/Applications/Qt/plugins/imageformats" 
+Log:  copied: "/Developer/Applications/Qt/plugins/imageformats/libqgif.dylib" 
+Log:  to "GaitSymQt.app/Contents/PlugIns/imageformats/libqgif.dylib" 
+Log: 
+Log: Deploying Qt frameworks found inside: "GaitSymQt.app/Contents/PlugIns/imageformats/libqgif.dylib" 
+Log:  copied: "/Developer/Applications/Qt/plugins/imageformats/libqico.dylib" 
+Log:  to "GaitSymQt.app/Contents/PlugIns/imageformats/libqico.dylib" 
+Log: 
+Log: Deploying Qt frameworks found inside: "GaitSymQt.app/Contents/PlugIns/imageformats/libqico.dylib" 
+Log:  copied: "/Developer/Applications/Qt/plugins/imageformats/libqjpeg.dylib" 
+Log:  to "GaitSymQt.app/Contents/PlugIns/imageformats/libqjpeg.dylib" 
+Log: 
+Log: Deploying Qt frameworks found inside: "GaitSymQt.app/Contents/PlugIns/imageformats/libqjpeg.dylib" 
+Log:  copied: "/Developer/Applications/Qt/plugins/imageformats/libqmng.dylib" 
+Log:  to "GaitSymQt.app/Contents/PlugIns/imageformats/libqmng.dylib" 
+Log: 
+Log: Deploying Qt frameworks found inside: "GaitSymQt.app/Contents/PlugIns/imageformats/libqmng.dylib" 
+Log:  copied: "/Developer/Applications/Qt/plugins/imageformats/libqtiff.dylib" 
+Log:  to "GaitSymQt.app/Contents/PlugIns/imageformats/libqtiff.dylib" 
+Log: 
+Log: Deploying Qt frameworks found inside: "GaitSymQt.app/Contents/PlugIns/imageformats/libqtiff.dylib" 
+Log: Deploying plugins from "/Developer/Applications/Qt/plugins/phonon_backend" 
+Log: Deploying plugins from "/Developer/Applications/Qt/plugins/script" 
+Log: Deploying plugins from "/Developer/Applications/Qt/plugins/sqldrivers" 
+Log: Created configuration file: "GaitSymQt.app/Contents/Resources/qt.conf" 
+Log: This file sets the plugin search path to "GaitSymQt.app/Contents/PlugIns" 
+Log: 
+Log: Creating disk image (.dmg) for "GaitSymQt.app" 
